@@ -4,6 +4,7 @@ import { LogInFormSchema, FormState } from "@/lib/zodSchema";
 import { signIn } from "@/auth";
 import type { SignInResponse } from "next-auth/react";
 import { AuthError } from "next-auth";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes/routes";
 
 export async function login(
   prevState: FormState,
@@ -30,7 +31,7 @@ export async function login(
     const res = (await signIn("credentials", {
       email,
       password,
-      redirectTo: "/dashboard",
+      redirectTo: DEFAULT_LOGIN_REDIRECT[0].path,
     })) as SignInResponse;
     
 
@@ -45,7 +46,7 @@ export async function login(
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { message: "", errors: { general: ["Invalid credentials"] } };
+          return { message: "", errors: { general: ["Email already in use with different provider!"] } };
         default:
           return { message: "", errors: { general: [`${error.cause?.err?.message}`] } };
       }

@@ -29,6 +29,11 @@ export const authRoutes =[
         path: "/auth/register",
         name: "Register",
         component: "Register",
+    },
+    {
+        path:"/auth/error",
+        name:"Error",
+        component:"Error"
     }
 ];
 

@@ -50,6 +50,11 @@ export const authOptions = {
           throw new Error("Invalid email or password");
         }
 
+        //this means the user loggin with google or github
+        if(!user.password){
+          return null
+        }
+        
         const isPasswordCorrect = await bcrypt.compare(
           password,
           user.password as string
@@ -67,13 +72,25 @@ export const authOptions = {
       },
     }),
   ],
-  pages: {
-    signIn: "/auth/login",
-  },
+  
   secret: process.env.NEXTAUTH_SECRET,
 };
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  pages:{
+    signIn: "/auth/login",
+    error:"/auth/error",
+  },
+  
+  events:{
+    async linkAccount({user}){
+      await prisma.user.update({
+        where:{id: user.id},
+        data:{ emailVerified: new Date() }
+      })
+    }
+  },
+  
   callbacks: {
     async session({ session, token }) {
       if (token?.sub && session?.user) {
