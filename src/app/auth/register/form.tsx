@@ -9,6 +9,8 @@ import { useFormState, useFormStatus } from "react-dom";
 import { toast } from "@/components/ui/use-toast";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes/routes";
 
 export default function SignUpForm() {
   const [state, action] = useFormState(signup, {
@@ -94,12 +96,22 @@ export default function SignUpForm() {
         </div>
 
         {/*Github Login Button*/}
-        <LogoButton type="button" variant={"outline"} logo={"github"}>
+        <LogoButton type="button" variant={"outline"} logo={"github"} onClick={() => {
+          signIn("github", {
+            callbackUrl: DEFAULT_LOGIN_REDIRECT[0].path,
+            redirect: true,
+          });
+        }}>
           Sign Up with Github
         </LogoButton>
 
         {/*Google Login Button*/}
-        <LogoButton type="button" variant={"outline"} logo={"google"}>
+        <LogoButton type="button" variant={"outline"} logo={"google"} onClick={() => {
+          signIn("google", {
+            callbackUrl: DEFAULT_LOGIN_REDIRECT[0].path,
+            redirect: true,
+          });
+        }}>
           Sign Up with Google
         </LogoButton>
 

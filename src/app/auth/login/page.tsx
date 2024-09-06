@@ -1,36 +1,5 @@
-// "use client"
-// import React, { useState } from 'react'
-// import {useForm} from "react-hook-form";
-// import {signIn} from "next-auth/react";
-// import type {SignInResponse} from "next-auth/react"
-// import { useRouter } from "next/navigation";
 
-
-// export default function LoginPage() {
-//   const { register, handleSubmit, formState: { errors },  } = useForm();
-//   const [errorsDb, setErrorsDb] = useState({
-//     error:""
-//   });
-// const router = useRouter();
-
-
-//   const onSubmit = handleSubmit(async (data) =>{
-//     const res = await signIn("credentials",{
-//       email: data.email,
-//       password: data.password,
-//       redirect: false
-//     }) as SignInResponse
-
-//     console.log(res)
-//     if (res?.error){
-//       setErrorsDb({error: res.error})
-//     } else {
-//       router.push("/dashboard")
-//     }
-    
-    
-//   })
-
+import  LandScapeImage from "../../../../public/landscape.jpg"
 import React from "react";
 import SignUpForm from "./form";
 
@@ -40,8 +9,8 @@ export default function LoginPage() {
       <div className="w-full h-screen flex justify-center items-center">
         <div className=" w-0 sm:w-full">
           <img
-            src="https://img.freepik.com/foto-gratis/paisaje-suroeste-arte-digital_23-2151785612.jpg?t=st=1724447018~exp=1724450618~hmac=2e5acd25bbac0b026ea01e862582927c6402351a9db15f3671681991d6760570&w=1380"
-            alt="paisaje con atardecer, pajaros y montañas"
+            src={LandScapeImage.src}
+            alt="paisaje con atardecer, pajaros y montañas "
             className="w-full h-screen object-cover"
           />
         </div>

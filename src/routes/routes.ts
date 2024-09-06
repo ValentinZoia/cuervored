@@ -11,6 +11,7 @@ export const publicRoutes = [
         component: "Home",
     },
     
+    
 ];
 
 
@@ -44,9 +45,25 @@ export const authRoutes =[
 /**
  * The prefix for API routes
  * Routes that start with this prefix will be protected
- * @type {string}
+ * @type {Array<{path: string, name: string, component: string}>}
  */
-export const apiAuthPrefix ="/api/auth"
+export const apiAuthPrefix =[
+    {
+        path: "/api/auth",
+        name: "ApiAuth",
+        component: "ApiAuth",
+    },
+    {
+        path: "/api/user/[id]",
+        name: "ApiUser",
+        component: "ApiUser",
+    },
+    {
+        path: "/api/user",
+        name: "ApiUserAll",
+        component: "ApiUserAll",
+    }
+]
 
 
 
