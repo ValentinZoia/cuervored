@@ -26,7 +26,7 @@ export default function DailogDeleteImage({
         <Button
           type="button"
           variant="outline"
-          className=" hover:text-white hover:bg-red-500"
+          className=" hover:text-white hover:bg-red-500 w-[115px]"
         >
           <Trash2 className="mr-2 h-5 w-5" />
           Remove
@@ -41,7 +41,7 @@ export default function DailogDeleteImage({
             afterward."
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="flex justify-between">
+        <DialogFooter className="flex justify-between gap-4">
           <DialogClose asChild>
             <Button type="button" variant="secondary">
               Close

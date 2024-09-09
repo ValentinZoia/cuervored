@@ -25,7 +25,6 @@ export default function ProfileFormClient({
 }: ProfileFormClientProps) {
   const [name, setName] = useState(initialName);
   const [image, setImage] = useState(initialImage);
-  
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const router = useRouter();
   const { data: session } = useSession();
@@ -36,7 +35,7 @@ export default function ProfileFormClient({
     e.preventDefault();
     const res = await updateProfile({ name, image });
 
-    if (res.message !== "") {
+    if (res.ok || res.message !== "") {
       toast({
         description: res.message,
         title: "Profile updated",
@@ -55,7 +54,7 @@ export default function ProfileFormClient({
   const removeImage = async () => {
     const res = await deleteImage({ id });
 
-    if (res.message !== "") {
+    if (res.ok || res.message !== "") {
       toast({
         description: res.message,
         title: "Profile updated",
@@ -77,7 +76,7 @@ export default function ProfileFormClient({
   const removeAccount = async () => {
     console.log(id)
     const res = await deleteAccount({ id });
-    if (res.message !== "") {
+    if (res.ok || res.message !== "") {
       toast({
         description: res.message,
         title: "Account deleted successfully",
@@ -139,7 +138,7 @@ export default function ProfileFormClient({
             </Avatar>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center flex-col gap-4 justify-center sm:flex-row">
             <div>
               <DailogUploadImage image={image} setImage={setImage} />
             </div>

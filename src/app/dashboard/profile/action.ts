@@ -11,6 +11,7 @@ export async function updateProfile(formData: { name: string; image: string }) {
   // If the user is not logged in, throw an error
   if (!session?.user?.id) {
     return{
+      ok : false,
       message: "",
       error: "You must be logged in to update your profile",
     }
@@ -33,6 +34,7 @@ export async function updateProfile(formData: { name: string; image: string }) {
     if (!response.ok) {
       const errorData = await response.json();
       return {
+        ok: false,
         message: "",
         error: errorData.error,
       };
@@ -42,11 +44,13 @@ export async function updateProfile(formData: { name: string; image: string }) {
     const SuccessData = await response.json();
     revalidatePath("/profile");
     return {
+      ok: true,
       message: SuccessData.message,
       error: "",
     };
   } catch (error) {
     return {
+      ok: false,
       message: "",
       error: error,
     };
@@ -58,6 +62,7 @@ export async function deleteImage({ id: id }: { id: string | undefined }) {
 
     if (!id) {
       return{
+        ok: false,
         message: "",
         error: "User ID is undefined",
       }
@@ -69,11 +74,13 @@ export async function deleteImage({ id: id }: { id: string | undefined }) {
     });
     revalidatePath("/profile");
     return {
+      ok: true,
       message: "Image deleted successfully",
       error: "",
     };
   } catch (error: any) {
     return {
+      ok: false,
       message: "",
       error: error,
     };
@@ -85,6 +92,7 @@ export async function deleteAccount({ id:id }: { id: string | undefined }) {
     
     if (!id) {
       return{
+        ok: false,
         message: "",
         error: "User ID is undefined",
       }
@@ -102,11 +110,13 @@ export async function deleteAccount({ id:id }: { id: string | undefined }) {
     await signOut({ redirect: false });
 
     return {
+      ok: true,
       message: "Account deleted successfully",
       error: "",
     };
   } catch (error: any) {
     return {
+      ok: false,
       message: "",
       error: error.message || "An error occurred while deleting the account",
     };
