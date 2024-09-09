@@ -74,7 +74,7 @@ export default function DailogDeleteAccount({
         </div>
         <DialogFooter className="flex justify-between gap-4">
           <DialogClose asChild>
-            <Button type="button" variant="secondary">
+            <Button type="button" variant="ghost">
               Cancel
             </Button>
           </DialogClose>

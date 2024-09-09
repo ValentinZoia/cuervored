@@ -34,22 +34,21 @@ export default function DailogDeleteImage({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you sure?</DialogTitle>
+          <DialogTitle>Remove Image Account</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. It will permanently delete your Image
-            Account. You can upload a new Image Account on the Profile Page
-            afterward."
+          Are you sure you want to remove this Image? You can upload a new Image Account on the Profile Page
+            afterward.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex justify-between gap-4">
           <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Close
+            <Button type="button" variant="ghost">
+              Cancel
             </Button>
           </DialogClose>
           <DialogClose asChild>
             <Button type="button" onClick={removeImage}>
-              Yes
+              Remove
             </Button>
           </DialogClose>
         </DialogFooter>

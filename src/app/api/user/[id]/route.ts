@@ -17,7 +17,9 @@ export async function PUT(
     }
 
     const body = await req.json();
-    const { name, image } = body;
+    const { name, imageSrc } = body;
+    const image = imageSrc;
+    
     
    ;
     

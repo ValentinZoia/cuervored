@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma";
 
 import { revalidatePath } from "next/cache";
 
-export async function updateProfile(formData: { name: string; image: string }) {
+export async function updateProfile(formData: { name: string; imageSrc: string }) {
   const session = await auth();
 
   // If the user is not logged in, throw an error
@@ -19,6 +19,8 @@ export async function updateProfile(formData: { name: string; image: string }) {
   }
 
   try {
+    
+
     const response = await fetch(
       `http://localhost:3000/api/user/${session.user.id}`,
       {
