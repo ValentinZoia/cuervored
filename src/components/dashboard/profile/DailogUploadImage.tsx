@@ -45,7 +45,7 @@ export default function DailogUploadImage({
       setInitialImage(imageSrc);
       setPreviewUrl(imageSrc);
       setPreviewType(typeUpload);
-      console.log("Primero", previewType, initialImage, previewUrl)
+      
     }
   }, [isOpen, imageSrc, typeUpload]);
   
@@ -72,7 +72,7 @@ export default function DailogUploadImage({
         setPreviewUrl(reader.result as string);
         setInitialImage(reader.result as string);
         setPreviewType('file');
-        console.log("Paso yo pa", previewType)
+        
       };
       reader.readAsDataURL(file);
       
@@ -81,7 +81,6 @@ export default function DailogUploadImage({
   };
 
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("Estoy pasnado ", previewType)
     const newUrl = e.target.value;
     setInitialImage(newUrl);
     setPreviewUrl(newUrl);
@@ -134,7 +133,7 @@ export default function DailogUploadImage({
             
           />
 
-          {previewUrl && previewType === 'url' && <PreviwImageDialogUploadImage previewUrlSrc={initialImage} handleRemovePreview={handleRemovePreview} />}
+          {previewUrl && previewType === 'url' && <PreviwImageDialogUploadImage previewUrlSrc={previewUrl} handleRemovePreview={handleRemovePreview} />}
 
         </div>
 

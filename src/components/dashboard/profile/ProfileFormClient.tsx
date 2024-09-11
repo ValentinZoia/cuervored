@@ -1,29 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  deleteImage,
-  updateProfile,
-  deleteAccount,
-} from "@/app/dashboard/profile/action";
-import { toast } from "@/components/ui/use-toast";
-import { useSession } from "next-auth/react";
 import DialogImage from "./DialogImage";
 import DailogUploadImage from "./DailogUploadImage";
 import DailogDeleteImage from "./DaialogDeleteImage";
 import DailogDeleteAccount from "./DialogDeleteAccount";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import {useProfileForm} from "@/hooks/useProfileForm";
 
-interface ImageState {
-  src: string;
-  typeUpload: "file" | "url" | null;
-}
 
 interface ProfileFormClientProps {
   initialName: string;
@@ -34,93 +23,22 @@ export default function ProfileFormClient({
   initialName,
   initialImage,
 }: ProfileFormClientProps) {
-  const [name, setName] = useState(initialName);
-  const [image, setImage] = useState<ImageState>({
-    src: initialImage,
-    typeUpload: "url",
-  });
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
-  const router = useRouter();
-  const { data: session } = useSession();
-  const id = session?.user?.id;
+  
 
-  useEffect(() => {
-    if (name !== initialName || image.src !== initialImage) {
-      setShowAlert(true);
-    } else {
-      setShowAlert(false);
-    }
-  }, [name, image, initialName, initialImage]);
+  const {
+    name,
+    setName,
+    image,
+    setImage,
+    isDialogOpen,
+    setIsDialogOpen,
+    showAlert,
+    handleSubmit,
+    removeImage,
+    removeAccount,
+    session,
+  } = useProfileForm({ initialName, initialImage });
 
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const imageSrc: string = image.src;
-    
-    const res = await updateProfile({ name, imageSrc });
-
-    if (res.ok || res.message !== "") {
-      toast({
-        description: res.message,
-        title: "Profile updated",
-        variant: "success",
-      });
-      setShowAlert(false);
-      router.refresh();
-    } else {
-      toast({
-        description: res.error,
-        title: "Profile update failed",
-        variant: "destructive",
-      });
-    }
-    router.refresh();
-  };
-
-  const removeImage = async () => {
-    const res = await deleteImage({ id });
-
-    if (res.ok || res.message !== "") {
-      toast({
-        description: res.message,
-        title: "Profile updated",
-        variant: "default",
-      });
-      setImage({ src: "", typeUpload: null });
-      router.refresh();
-    } else {
-      toast({
-        description: res.error,
-        title: "Profile update failed",
-        variant: "destructive",
-      });
-    }
-    router.refresh();
-    console.log(image);
-  };
-
-  const removeAccount = async () => {
-    console.log(id);
-    const res = await deleteAccount({ id });
-    if (res.ok || res.message !== "") {
-      toast({
-        description: res.message,
-        title: "Account deleted successfully",
-        variant: "default",
-      });
-
-      router.refresh();
-      router.push("/auth/login");
-    } else {
-      toast({
-        description: res.error,
-        title: "Account deletion failed",
-        variant: "destructive",
-      });
-    }
-    router.refresh();
-  };
 
   if (!session) {
     return (
