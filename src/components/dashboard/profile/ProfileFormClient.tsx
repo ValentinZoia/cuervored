@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import DialogImage from "./DialogImage";
-import DailogUploadImage from "./DailogUploadImage";
+import DailogUploadImage from "./ImageUploader/DailogUploadImage";
 import DailogDeleteImage from "./DaialogDeleteImage";
 import DailogDeleteAccount from "./DialogDeleteAccount";
 import { Alert, AlertDescription } from "@/components/ui/alert";

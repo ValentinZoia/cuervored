@@ -34,6 +34,7 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
     }
   }, [name, image, initialName, initialImage]);
 
+  //update profile
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const imageSrc: string = image.src;

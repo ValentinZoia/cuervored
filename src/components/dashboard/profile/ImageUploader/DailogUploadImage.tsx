@@ -12,9 +12,10 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Plus, Upload, X } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
-import PreviwImageDialogUploadImage from "./PreviwImageDialogUploadImage";
+import { Plus, Upload} from "lucide-react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
+import PreviewImageDialogUploadImage from "../PreviewImageDialogUploadImage";
+import { imageUploaderReducer, initialState } from "./imageUploaderReducer";
 
 interface ImageState {
   src: string;
@@ -34,33 +35,26 @@ export default function DailogUploadImage({
 }: DailogUploadImageProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const urlInputRef = useRef<HTMLInputElement>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [previewType, setPreviewType] = useState<'file' | 'url' | null>(null);
-  const [initialImage, setInitialImage] = useState<string>(imageSrc)
-  const [isOpen, setIsOpen] = useState(false);
+  const [state, dispatch] = useReducer(imageUploaderReducer, initialState);
   
   useEffect(() => {
-    if (isOpen) {
-
-      setInitialImage(imageSrc);
-      setPreviewUrl(imageSrc);
-      setPreviewType(typeUpload);
-      
+    if(state.isOpen){
+      dispatch({type:'SET_INITIAL_STATE', payload: {imageSrc, typeUpload}})
     }
-  }, [isOpen, imageSrc, typeUpload]);
+  }, [state.isOpen, imageSrc, typeUpload]);
   
   
-  
+  // handleClick to input Upload photo
   const handleClick = () => {
     fileInputRef.current?.click();
   };
 
   const handleSubmit = ()=>{
     
-    if (previewUrl && previewType) {
-      setImage({ src: previewUrl, typeUpload: previewType });
+    if (state.previewUrl && state.previewType) {
+      setImage({ src: state.previewUrl, typeUpload: state.previewType });
     }
-    setIsOpen(false);
+    dispatch({type:"TOGGLE_DIALOG", payload: false})
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,9 +63,7 @@ export default function DailogUploadImage({
       //creating a reader to read the file and create an URL.
       const reader = new FileReader();
       reader.onload = () => {
-        setPreviewUrl(reader.result as string);
-        setInitialImage(reader.result as string);
-        setPreviewType('file');
+        dispatch({type:'SET_FILE', payload:{previewType:'file', previewUrl: reader.result as string}})
         
       };
       reader.readAsDataURL(file);
@@ -82,15 +74,11 @@ export default function DailogUploadImage({
 
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newUrl = e.target.value;
-    setInitialImage(newUrl);
-    setPreviewUrl(newUrl);
-    setPreviewType('url');
+    dispatch({type:'SET_URL', payload:{previewUrl: newUrl, typeUpload: 'url'}})
   };
 
   const handleRemovePreview = () => {
-    setPreviewUrl(null);
-    setPreviewType(null);
-    setInitialImage("")
+    dispatch({type:'REMOVE_PREVIEW'})
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -100,7 +88,7 @@ export default function DailogUploadImage({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={state.isOpen} onOpenChange={(isOpen) => dispatch({ type: 'TOGGLE_DIALOG', payload: isOpen })}>
       <DialogTrigger asChild>
         <Button
           type="button"
@@ -126,14 +114,14 @@ export default function DailogUploadImage({
           <Input
             id="image"
             ref={urlInputRef}
-            value={previewType === 'url' ? initialImage: ''}
+            value={state.previewType === 'url' ? state.initialImage: ''}
             onChange={handleUrlChange}
             placeholder="https://example.com/avatar.jpg"
-            disabled={previewType === 'file'}
+            disabled={state.previewType === 'file'}
             
           />
 
-          {previewUrl && previewType === 'url' && <PreviwImageDialogUploadImage previewUrlSrc={previewUrl} handleRemovePreview={handleRemovePreview} />}
+          {state.previewUrl && state.previewType === 'url' && <PreviewImageDialogUploadImage previewUrlSrc={state.previewUrl} handleRemovePreview={handleRemovePreview} />}
 
         </div>
 
@@ -148,7 +136,7 @@ export default function DailogUploadImage({
             variant="blue"
             className="w-full"
             onClick={handleClick}
-            disabled={!!previewUrl}
+            disabled={!!state.previewUrl}
           >
             <Plus className="mr-2 h-4 w-4" /> Upload photo
           </Button>
@@ -159,7 +147,7 @@ export default function DailogUploadImage({
             onChange={handleFileChange}
             className="hidden"
           />
-          {previewUrl && previewType === 'file' && <PreviwImageDialogUploadImage previewUrlSrc={previewUrl} handleRemovePreview={handleRemovePreview} />}
+          {state.previewUrl && state.previewType === 'file' && <PreviewImageDialogUploadImage previewUrlSrc={state.previewUrl} handleRemovePreview={handleRemovePreview} />}
         
       
         </div>

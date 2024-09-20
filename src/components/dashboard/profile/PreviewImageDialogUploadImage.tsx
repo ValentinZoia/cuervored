@@ -7,7 +7,7 @@ interface PreviewImageDialogUploadImageProps {
     handleRemovePreview: () => void
 }
 
-export default function PreviwImageDialogUploadImage({previewUrlSrc, handleRemovePreview}: PreviewImageDialogUploadImageProps) {
+export default function PreviewImageDialogUploadImage({previewUrlSrc, handleRemovePreview}: PreviewImageDialogUploadImageProps) {
   return (
     <div className="relative mt-4 rounded-lg overflow-hidden shadow-md">
           <img src={previewUrlSrc} alt="Preview" className="w-32 h-32 object-cover" />
