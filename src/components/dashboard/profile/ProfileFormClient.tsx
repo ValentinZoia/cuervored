@@ -80,7 +80,7 @@ export default function ProfileFormClient({
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex items-center space-x-8 p-5 bg-background rounded-md border-slate-200 border-[1px] ">
+        <div className="flex items-center space-x-8 p-5 bg-card rounded-md border-slate-200 border-[1px] ">
           <div className="">
             <Avatar
               className="h-20 w-20 cursor-pointer"
@@ -104,7 +104,7 @@ export default function ProfileFormClient({
             </div>
           </div>
         </div>
-        <div className="space-y-12 p-5 bg-background rounded-md border-slate-200 border-[1px]">
+        <div className="space-y-12 p-5 bg-card rounded-md border-slate-200 border-[1px]">
           <div>
             <Label htmlFor="name">Name</Label>
             <Input

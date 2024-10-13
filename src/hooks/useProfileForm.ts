@@ -34,72 +34,143 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
     }
   }, [name, image, initialName, initialImage]);
 
+  const uploadToCloudinary = async (imageData: string) =>{
+    try {
+      const formData = new FormData();
+      formData.append('file', imageData);
+      formData.append('upload_preset', 'ml_default');
+
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+      if(!response.ok){
+        throw new Error('Failed to upload image');
+      }
+
+      const data = await response.json();
+      return data.secure_url
+
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      throw error;
+    }
+  }
+
+
   //update profile
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const imageSrc: string = image.src;
-    
-    const res = await updateProfile({ name, imageSrc });
+    let imageSrc: string = image.src;
 
-    if (res.ok || res.message !== "") {
+    if(image.typeUpload === 'file'){
+      try {
+        imageSrc = await uploadToCloudinary(image.src);
+      } catch (error) {
+        toast({
+          description: "Failed to upload image to Cloudinary",
+          title: "Profile update failed",
+          variant: "destructive",
+        });
+        return;
+      }
+    }
+
+    try{
+      const res = await updateProfile({ name, imageSrc });
+
+      if (res.ok || res.message !== "") {
+        toast({
+          description: res.message,
+          title: "Profile updated",
+          variant: "success",
+        });
+        setShowAlert(false);
+        router.refresh();
+      } else {
+        toast({
+          description: res.error,
+          title: "Profile update failed",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
       toast({
-        description: res.message,
-        title: "Profile updated",
-        variant: "success",
-      });
-      setShowAlert(false);
-      router.refresh();
-    } else {
-      toast({
-        description: res.error,
+        description: "Failed to update profile",
         title: "Profile update failed",
         variant: "destructive",
-      });
+      })
     }
+    
+   
     router.refresh();
   };
 
   const removeImage = async () => {
-    const res = await deleteImage({ id });
+    try {
+      const res = await deleteImage({ id });
 
-    if (res.ok || res.message !== "") {
+      if (res.ok || res.message !== "") {
+        toast({
+          description: res.message,
+          title: "Profile updated",
+          variant: "default",
+        });
+        setImage({ src: "", typeUpload: null });
+        router.refresh();
+      } else{
+        toast({
+          description: res.error,
+          title: "Profile update failed",
+          variant: "destructive",
+        });
+      }
+
+    } catch (error) {
       toast({
-        description: res.message,
-        title: "Profile updated",
-        variant: "default",
-      });
-      setImage({ src: "", typeUpload: null });
-      router.refresh();
-    } else {
-      toast({
-        description: res.error,
+        description: "Failed to delete image",
         title: "Profile update failed",
         variant: "destructive",
-      });
+      })
     }
+
     router.refresh();
   };
 
   const removeAccount = async () => {
-    const res = await deleteAccount({ id });
-    if (res.ok || res.message !== "") {
+    try {
+      const res = await deleteAccount({ id });
+      if (res.ok || res.message !== "") {
+        toast({
+          description: res.message,
+          title: "Account deleted successfully",
+          variant: "default",
+        });
+        router.refresh();
+        router.push("/auth/login");
+      } else {
+        toast({
+          description: res.error,
+          title: "Account deletion failed",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
       toast({
-        description: res.message,
-        title: "Account deleted successfully",
-        variant: "default",
-      });
-
-      router.refresh();
-      router.push("/auth/login");
-    } else {
-      toast({
-        description: res.error,
+        description: "Failed to delete account",
         title: "Account deletion failed",
         variant: "destructive",
-      });
+      })
     }
+
     router.refresh();
   };
+
+
 
   return {
     name,

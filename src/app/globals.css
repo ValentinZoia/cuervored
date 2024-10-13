@@ -2,67 +2,125 @@
 @tailwind components;
 @tailwind utilities;
 
+.example2 {
+  --background: #e7ecef; /* Gris muy claro */
+  --foreground: #001f44; /* Azul oscuro */
+  --card: #ffffff; /* Blanco */
+  --card-foreground: #001f44; /* Azul oscuro */
+  --popover: #ffffff; /* Blanco */
+  --popover-foreground: #1b1d1f; /* Gris oscuro */
+  --primary: #121214; /* Gris casi negro */
+  --primary-foreground: #fafafa; /* Blanco */
+  --secondary: #f5f7fa; /* Gris claro */
+  --secondary-foreground: #121214; /* Gris oscuro */
+  --muted: #f5f7fa; /* Gris claro */
+  --muted-foreground: #777d8a; /* Gris oscuro */
+  --accent: #f5f7fa; /* Gris claro */
+  --accent-foreground: #121214; /* Gris oscuro */
+  --destructive: #d94a3d; /* Rojo intenso */
+  --destructive-foreground: #fafafa; /* Blanco */
+  --border: #e1e4e8; /* Gris claro */
+  --input: #e1e4e8; /* Gris claro */
+  --ring: #121214; /* Gris oscuro */
+  --radius: 0.5rem; /* Valor de border-radius */
+  --chart-1: #d32f2f; /* Rojo */
+  --chart-2: #67b38f; /* Verde */
+  --chart-3: #4f6b8e; /* Azul */
+  --chart-4: #1aa991; /* Verde intenso */
+  --chart-5: #ffa000; /* Amarillo */
+}
+
+.example {
+  --radius: 0.5rem; /* border-radius para tema oscuro */
+    --background: #001f44; /* Azul muy oscuro */
+    --foreground: #ffffff; /* Blanco */
+    --card: #1b3a5b; /* Azul ligeramente más claro */
+    --card-foreground: #ffffff; /* Blanco */
+    --popover: #1b3a5b; /* Azul oscuro */
+    --popover-foreground: #ffffff; /* Blanco */
+    --primary: #d94a3d; /* Rojo San Lorenzo */
+    --primary-foreground: #ffffff; /* Blanco */
+    --secondary: #003366; /* Azul San Lorenzo */
+    --secondary-foreground: #ffffff; /* Blanco */
+    --muted: #1b3a5b; /* Azul ligeramente más claro */
+    --muted-foreground: #cdd6db; /* Gris claro */
+    --accent: #d94a3d; /* Rojo San Lorenzo */
+    --accent-foreground: #ffffff; /* Blanco */
+    --destructive: #c44537; /* Rojo fuerte */
+    --destructive-foreground: #ffffff; /* Blanco */
+    --border: #3a516c; /* Gris azulado oscuro */
+    --input: #1b3a5b; /* Azul muy oscuro */
+    --ring: #d94a3d; /* Rojo San Lorenzo */
+    --chart-1: #d94a3d; /* Rojo */
+    --chart-2: #003366; /* Azul */
+    --chart-3: #ffa000; /* Amarillo */
+    --chart-4: #1aa991; /* Verde */
+    --chart-5: #4f6b8e; /* Azul */
+}
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    
+    --background: 210 16% 96%; /* Gris muy claro */
+    --foreground: 230 100% 22%; /* Azul oscuro */
+    --card: 0 0% 100%; /* Blanco */
+    --card-foreground: 240 5.9% 10%; /* Azul oscuro */
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 0 0% 98%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 208.125 59.25925925925925% 21.176470588235297%; 
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
     --radius: 0.5rem;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --input-text-autocomlpete: var(--primary) ;
-    
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --input-text-autocomlpete: rgb(255, 255, 255);
+    --radius: 0.5rem; /* border-radius para tema oscuro */
+    --background: 230 100% 22%; /* Azul muy oscuro */
+    --foreground: 0 0% 100%; /* Blanco */
+    --card: 230 60% 14%; /* Azul ligeramente más claro */
+    --card-foreground: 0 0% 100%; /* Blanco */
+    --popover: 230 60% 14%; /* Azul oscuro */
+    --popover-foreground: 0 0% 100%; /* Blanco */
+    --primary: 0 83% 47%; /* Rojo San Lorenzo */
+    --primary-foreground: 0 0% 100%; /* Blanco */
+    --secondary: 220 100% 32%; /* Azul San Lorenzo */
+    --secondary-foreground: 0 0% 100%; /* Blanco */
+    --muted: 230 60% 14%; /* Azul ligeramente más claro */
+    --muted-foreground: 210 15% 80%; /* Gris claro */
+    --accent: 0 83% 47%; /* Rojo San Lorenzo */
+    --accent-foreground: 0 0% 100%; /* Blanco */
+    --destructive: 0 79% 52%; /* Rojo fuerte */
+    --destructive-foreground: 0 0% 100%; /* Blanco */
+    --border: 230 22% 33%; /* Gris azulado oscuro */
+    --input: 230 60% 14%; /* Azul muy oscuro */
+    --ring: 0 83% 47%; /* Rojo San Lorenzo */
+    --chart-1: 0 83% 47%; /* Rojo */
+    --chart-2: 220 100% 32%; /* Azul */
+    --chart-3: 45 100% 51%; /* Amarillo */
+    --chart-4: 120 61% 34%; /* Verde */
+    --chart-5: 186 72% 42%; /* Cyan */
   }
+
   input:-webkit-autofill {
-    -webkit-text-fill-color: var(--input-text-autocomlpete); /* Color del texto autocompletado */
-    caret-color: var(--input-text-autocomlpete);
+    -webkit-text-fill-color: var(
+      --input-text-autocomplete
+    ); /* Color del texto autocompletado */
+    caret-color: var(--input-text-autocomplete);
   }
 }
 

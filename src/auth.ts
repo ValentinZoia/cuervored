@@ -140,7 +140,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             imageUrl = (profile as any)?.picture || imageUrl;
             name = (profile as any)?.name || name;
           }
-          // Añadir más proveedores según sea necesario
+          
 
           // Actualizar usuario solo si hay cambios
           if (imageUrl !== existingUser.image || name !== existingUser.name) {

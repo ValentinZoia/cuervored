@@ -114,7 +114,7 @@ export default function DailogUploadImage({
           <Input
             id="image"
             ref={urlInputRef}
-            value={state.previewType === 'url' ? state.initialImage: ''}
+            value={state.previewType === 'url' ? state.previewUrl as string : ''}
             onChange={handleUrlChange}
             placeholder="https://example.com/avatar.jpg"
             disabled={state.previewType === 'file'}

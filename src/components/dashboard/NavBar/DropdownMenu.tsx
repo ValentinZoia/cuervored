@@ -5,16 +5,11 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { PersonIcon } from "@radix-ui/react-icons";
-// import { signOut} from "next-auth/react";
+
+
 
 
 import { DefaultSession } from "next-auth";
@@ -23,6 +18,8 @@ import { signOut } from "@/auth"
 import Link from "next/link";
 import { LogOut, Settings, User } from "lucide-react";
 import { getUserById } from "@/data/user";
+
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
  
   
   interface DropdownMenuMyAccountProps {
@@ -35,29 +32,37 @@ import { getUserById } from "@/data/user";
 export async function DropdownMenuMyAccount({sessionProp}: DropdownMenuMyAccountProps) {
     const session = sessionProp;
     const user = await getUserById(session?.user?.id as string);
-    
+    const fallback = user?.name?.[0] || <User className="h-4 w-4" />
     
     
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="flex items-center cursor-pointer">
-            <PersonIcon />
-            <span className="ml-2">My Account</span>
-        </div>
+        
+        <Avatar className="text-black">
+              {user?.image ? (
+                <AvatarImage
+                  src={user.image}
+                  alt={user.name || "User avatar"}
+                />
+              ) : null}
+              <AvatarFallback>{fallback}</AvatarFallback>
+            </Avatar>
+            
+        
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel className="flex items-center  gap-2">
-        {user?.image ?(
-                <img
-                src={user?.image}
-                alt={`${user?.name}'s avatar`}
-                className="w-8 h-8 rounded-full " 
-              />
-            ):(
-                <div className="w-8 h-8 rounded-full bg-slate-300 pr-8 "></div>
-            )}
+        <Avatar className="h-8 w-8">
+              {user?.image ? (
+                <AvatarImage
+                  src={user.image}
+                  alt={user.name || "User avatar"}
+                />
+              ) : null}
+              <AvatarFallback>{fallback}</AvatarFallback>
+            </Avatar>
             <p className="text-sm overflow-hidden">{user?.name}</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

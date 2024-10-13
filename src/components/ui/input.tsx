@@ -3,6 +3,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils";
 import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
 
+
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
     
@@ -10,7 +11,11 @@ export interface InputProps
 {/*  NORMAL INPUT */}
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, autoComplete, ...props }, ref) => {
+
+    
+
     return (
+      <>
       <input
         type={type}
         className={cn(
@@ -26,6 +31,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {...props}
 
       />
+      
+      </>
     )
   }
 )
