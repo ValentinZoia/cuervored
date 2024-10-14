@@ -6,6 +6,8 @@ import { DropdownMenuMyAccount } from "./DropdownMenu";
 import { auth } from "@/auth";
 import { Input } from "@/components/ui/input";
 import { Bell, Home, MessageSquare, Search, SearchIcon, User } from 'lucide-react'
+import SearchField from "./SearchField";
+import MenuBar from "./MenuBar";
 
 export default async function NavBar() {
   
@@ -20,23 +22,18 @@ export default async function NavBar() {
             LOGO
           </Link>
           <div className="flex items-center gap-4 list-none">
-            <Input
+            {/* <Input
               type="search"
               placeholder="Search..."
               className="hidden md:block w-64 bg-card text-foreground"
               style={{ WebkitBackgroundClip: "none" }}
             />
-            <SearchIcon className="md:hidden lg:hidden h-6 w-6" />
-            <Link href="/dashboard">
-              <Home className="h-6 w-6" />
-            </Link>
-            <Link href="/dashboard/messages">
-              <MessageSquare className="h-6 w-6" />
-            </Link>
-            <Link href="/dashboard/notifications">
-              <Bell className="h-6 w-6" />
-            </Link>
+            <SearchIcon className="md:hidden lg:hidden h-6 w-6" /> */}
 
+              <SearchField />
+
+              <MenuBar className="hidden md:flex items-center space-x-5" />
+              
             <DropdownMenuMyAccount sessionProp={session} />
           </div>
         </div>

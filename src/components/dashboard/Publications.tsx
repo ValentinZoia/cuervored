@@ -6,7 +6,7 @@ import { Post } from "./Post";
 export default function Publications() {
   return (
     <>
-      <Card className="max-w-[680px] bg-transparent border-none shadow-none lg:col-span-2">
+      <Card className="max-w-[680px] bg-transparent border-none shadow-none lg:col-span-2 sm:mx-auto">
         
         <CardContent>
           <NewPost />

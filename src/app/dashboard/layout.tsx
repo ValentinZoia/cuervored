@@ -1,3 +1,4 @@
+import MenuBar from "@/components/dashboard/NavBar/MenuBar";
 import NavBar from "@/components/dashboard/NavBar/NavBar";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -11,6 +12,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       <div className="h-screen w-full ">
         <NavBar />
         {children}
+        <MenuBar className="sticky bottom-0 flex w-full justify-center gap-12 border-t bg-primary text-primary-foreground p-3 md:hidden" />
         <Toaster />
       </div>
     </>
