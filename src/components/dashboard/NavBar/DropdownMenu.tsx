@@ -40,7 +40,7 @@ export async function DropdownMenuMyAccount({sessionProp}: DropdownMenuMyAccount
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         
-        <Avatar className="text-black">
+        <Avatar className="text-black cursor-pointer">
               {user?.image ? (
                 <AvatarImage
                   src={user.image}
@@ -74,7 +74,7 @@ export async function DropdownMenuMyAccount({sessionProp}: DropdownMenuMyAccount
 
           <DropdownMenuItem asChild>
             
-            <Link href="/dashboard/profile" className="w-full">
+            <Link href="/dashboard/profile" className="w-full cursor-pointer">
             <User className="mr-2 w-4 h-4" />
             <span>Profile</span>
             </Link>
@@ -83,7 +83,7 @@ export async function DropdownMenuMyAccount({sessionProp}: DropdownMenuMyAccount
           
           <DropdownMenuItem asChild>
             
-            <Link href="/dashboard/settings" className="w-full">
+            <Link href="/dashboard/settings" className="w-full cursor-pointer">
             <Settings className="mr-2 w-4 h-4" />
             <span>Settings</span>
             </Link>

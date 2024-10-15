@@ -5,22 +5,23 @@ import prisma from "@/lib/prisma";
 
 import { revalidatePath } from "next/cache";
 
-export async function updateProfile(formData: { name: string; imageSrc: string }) {
+export async function updateProfile(formData: {
+  name: string;
+  imageSrc: string;
+}) {
   const session = await auth();
 
   // If the user is not logged in, throw an error
-  if (!session?.user?.id) {
-    return{
-      ok : false,
-      message: "",
-      error: "You must be logged in to update your profile",
-    }
-    
+  if (!session || !session?.user?.id) {
+    // return {
+    //   ok: false,
+    //   message: "",
+    //   error: "Unauthorized",
+    // }
+    throw new Error("Unauthorized");
   }
 
   try {
-    
-
     const response = await fetch(
       `http://localhost:3000/api/user/${session.user.id}`,
       {
@@ -35,11 +36,12 @@ export async function updateProfile(formData: { name: string; imageSrc: string }
     // If the response is not ok, throw an error
     if (!response.ok) {
       const errorData = await response.json();
-      return {
-        ok: false,
-        message: "",
-        error: errorData.error,
-      };
+      // return {
+      //   ok: false,
+      //   message: "",
+      //   error: errorData.error,
+      // };
+      throw new Error(errorData.error);
     }
 
     // If the response is ok, return the success message
@@ -60,14 +62,28 @@ export async function updateProfile(formData: { name: string; imageSrc: string }
 }
 
 export async function deleteImage({ id: id }: { id: string | undefined }) {
-  try {
+  const session = await auth();
 
+  // If the user is not logged in, throw an error
+  if (!session || !session?.user?.id) {
+    // return {
+    //   ok: false,
+    //   message: "",
+    //   error: "Unauthorized",
+    // };
+
+    throw new Error("Unauthorized");
+  }
+
+  try {
     if (!id) {
-      return{
-        ok: false,
-        message: "",
-        error: "User ID is undefined",
-      }
+      // return {
+      //   ok: false,
+      //   message: "",
+      //   error: "User ID is undefined",
+      // };
+
+       throw new Error("User ID is undefined");
     }
 
     const updateUser = await prisma.user.update({
@@ -89,26 +105,37 @@ export async function deleteImage({ id: id }: { id: string | undefined }) {
   }
 }
 
-export async function deleteAccount({ id:id }: { id: string | undefined }) {
+export async function deleteAccount({ id: id }: { id: string | undefined }) {
+  const session = await auth();
+
+  // If the user is not logged in, throw an error
+  if (!session || !session?.user?.id) {
+    // return {
+    //   ok: false,
+    //   message: "",
+    //   error: "Unauthorized",
+    // };
+
+    throw new Error("Unauthorized");
+  }
+
   try {
-    
     if (!id) {
-      return{
-        ok: false,
-        message: "",
-        error: "User ID is undefined",
-      }
+      // return {
+      //   ok: false,
+      //   message: "",
+      //   error: "User ID is undefined",
+      // };
+
+      throw new Error("User ID is undefined");
     }
 
-    
     await prisma.user.delete({
       where: { id: id },
     });
 
-    
     revalidatePath("/profile");
 
-    
     await signOut({ redirect: false });
 
     return {

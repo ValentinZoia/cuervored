@@ -53,8 +53,7 @@ export async function signup(
   });
 
   
-  console.log(newUser)
-  //---Validaciones----
+  
 
   return {
     message: "User created successfully",

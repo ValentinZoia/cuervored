@@ -24,10 +24,10 @@ export default function SignUpForm() {
     if (state?.message) {
       toast({
         title: state.message,
-        variant: "success", // Puedes cambiar el variant si tienes otros estilos
+        variant: "success", 
       });
 
-      formRef.current?.reset();
+      formRef.current?.reset(); //clean form
       router.push("/dashboard");
     }
   }, [state?.message]);
