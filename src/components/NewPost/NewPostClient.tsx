@@ -1,7 +1,6 @@
 "use client";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ImageIcon, User } from "lucide-react";
-
 import React,{useRef} from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,7 +10,9 @@ import Link from "next/link";
 import { Input } from "../ui/input";
 import PreviewImageDialogUploadImage from "../dashboard/profile/PreviewImageDialogUploadImage";
 import { submitPost } from "./action";
-import { text } from "stream/consumers";
+import { toast } from "../ui/use-toast";
+import { useRouter } from "next/navigation";
+
 
 interface NewPostProps {
   user: UserType | null;
@@ -24,17 +25,48 @@ export default function NewPost({ user }: NewPostProps) {
   const [file, setFile] = React.useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
   const fallback = user?.name?.[0] || <User className="h-4 w-4" />
-  
+  const router = useRouter();
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextareaValue(e.target.value)
   }
 
   const handleSumbit = async() =>{
-    await submitPost(textareaValue, file)
-    setTextareaValue("")
-    setFile(null)
-    setPreviewUrl(null)
+    try {
+      const res = await submitPost(textareaValue, file);
+      
+      if (res.ok || res.SuccessMessage !== "") {
+        
+        toast({
+          description: res.SuccessMessage,
+          title: "Post created successfully",
+          variant: "success",
+        });
+        
+        
+        
+        if(fileInputRef.current) fileInputRef.current.value = ''
+        if(textareaRef.current) textareaRef.current.value = ''
+        setTextareaValue("")
+        setFile(null);
+        setPreviewUrl(null);
+         router.refresh();
+      } else {
+        toast({
+          description: res.error,
+          title: "Post creation failed",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        description: error as string,
+        title: "Profile creation failed",
+        variant: "destructive",
+      })
+    }
+   
+    
   }
 
   const handleUploadPhotoButtonClick =()=>{
