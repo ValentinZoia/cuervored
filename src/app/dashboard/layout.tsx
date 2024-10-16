@@ -12,7 +12,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       <div className="h-screen w-full ">
         <NavBar />
         {children}
-        <MenuBar className="sticky bottom-0 flex w-full justify-center gap-12 border-t bg-primary text-primary-foreground p-3 md:hidden" />
+        <MenuBar className="sticky bottom-0 z-50 flex w-full justify-center gap-12 border-t bg-primary text-primary-foreground p-3 md:hidden" />
         <Toaster />
       </div>
     </>

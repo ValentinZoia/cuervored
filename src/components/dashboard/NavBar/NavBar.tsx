@@ -16,7 +16,7 @@ export default async function NavBar() {
     <>
       
 
-      <nav className="bg-primary text-primary-foreground p-4">
+      <nav className=" sticky top-0 z-50 bg-primary text-primary-foreground p-4">
         <div className="container mx-auto flex items-center justify-between">
           <Link href="/dashboard" className="text-xl font-bold">
             LOGO

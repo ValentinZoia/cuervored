@@ -46,13 +46,13 @@ export async function updateProfile(formData: {
 
     // If the response is ok, return the success message
     const SuccessData = await response.json();
-    revalidatePath("/profile");
+    revalidatePath("/dashboard/profile");
     return {
       ok: true,
       message: SuccessData.message,
       error: "",
     };
-  } catch (error) {
+  } catch (error : any) {
     return {
       ok: false,
       message: "",
@@ -90,7 +90,7 @@ export async function deleteImage({ id: id }: { id: string | undefined }) {
       where: { id: id },
       data: { image: null },
     });
-    revalidatePath("/profile");
+    revalidatePath("/dashboard/profile");
     return {
       ok: true,
       message: "Image deleted successfully",
@@ -134,7 +134,7 @@ export async function deleteAccount({ id: id }: { id: string | undefined }) {
       where: { id: id },
     });
 
-    revalidatePath("/profile");
+    revalidatePath("/dashboard/profile");
 
     await signOut({ redirect: false });
 

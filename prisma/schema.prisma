@@ -60,6 +60,7 @@ model Account {
 model Post {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
   content   String
+  image     String?
   userId    String  @db.ObjectId
   createdAt DateTime @default(now())
   likes     String[] @db.ObjectId

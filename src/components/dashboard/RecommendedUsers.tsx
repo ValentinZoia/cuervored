@@ -20,7 +20,7 @@ export function RecommendedUsers() {
           {recommendedUsers.map((user, index) => (
             <div key={index} className="flex items-center justify-between py-1">
               <div className="flex items-center space-x-2">
-                <Avatar className='h-8 w-8'>
+                <Avatar className='relative z-10 h-8 w-8'>
                   <AvatarImage src={user.avatar} alt={user.name} />
                   <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                 </Avatar>
