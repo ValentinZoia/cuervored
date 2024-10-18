@@ -26,12 +26,14 @@ interface DailogUploadImageProps {
   imageSrc: string;
   typeUpload: 'file' | 'url' | null;
   setImage: React.Dispatch<React.SetStateAction<ImageState>>;
+  setFile: React.Dispatch<React.SetStateAction<File | null>>;
 }
 
 export default function DailogUploadImage({
   imageSrc,
   typeUpload,
   setImage,
+  setFile,
 }: DailogUploadImageProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const urlInputRef = useRef<HTMLInputElement>(null);
@@ -52,7 +54,9 @@ export default function DailogUploadImage({
   const handleSubmit = ()=>{
     
     if (state.previewUrl && state.previewType) {
+      
       setImage({ src: state.previewUrl, typeUpload: state.previewType });
+      setFile(state.file);
     }
     dispatch({type:"TOGGLE_DIALOG", payload: false})
   }
@@ -63,7 +67,7 @@ export default function DailogUploadImage({
       //creating a reader to read the file and create an URL.
       const reader = new FileReader();
       reader.onload = () => {
-        dispatch({type:'SET_FILE', payload:{previewType:'file', previewUrl: reader.result as string}})
+        dispatch({type:'SET_FILE', payload:{previewType:'file', previewUrl: reader.result as string,file: file}})
         
       };
       reader.readAsDataURL(file);

@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { toast } from '@/components/ui/use-toast';
 import { updateProfile, deleteImage, deleteAccount } from '@/app/dashboard/profile/action';
+import { uploadToCloudinary } from '@/utils/uploadToCloudinary';
 
 interface ImageState {
   src: string;
@@ -18,8 +19,9 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
   const [name, setName] = useState(initialName);
   const [image, setImage] = useState<ImageState>({
     src: initialImage,
-    typeUpload: 'url',
+    typeUpload: 'file',
   });
+  const [file, setFile] = useState<File | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const router = useRouter();
@@ -27,39 +29,14 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
   const id = session?.user?.id;
 
   useEffect(() => {
-    if (name !== initialName || image.src !== initialImage) {
+    if (name !== initialName || image.src !== initialImage ) {
       setShowAlert(true);
     } else {
       setShowAlert(false);
     }
   }, [name, image, initialName, initialImage]);
 
-  const uploadToCloudinary = async (imageData: string) =>{
-    try {
-      const formData = new FormData();
-      formData.append('file', imageData);
-      formData.append('upload_preset', 'ml_default');
-
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-        {
-          method: 'POST',
-          body: formData,
-        }
-      );
-
-      if(!response.ok){
-        throw new Error('Failed to upload image');
-      }
-
-      const data = await response.json();
-      return data.secure_url
-
-    } catch (error) {
-      console.error('Error uploading image:', error);
-      throw error;
-    }
-  }
+  
 
 
   //update profile
@@ -69,7 +46,12 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
 
     if(image.typeUpload === 'file'){
       try {
-        imageSrc = await uploadToCloudinary(image.src);
+        const{data, error} = await uploadToCloudinary(file as File);
+        if(error){
+          throw new Error("Failed to upload image to Cloudinary");
+        }
+
+        imageSrc = data;
       } catch (error) {
         toast({
           description: "Failed to upload image to Cloudinary",
@@ -89,6 +71,7 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
           title: "Profile updated",
           variant: "success",
         });
+        setImage({src: imageSrc, typeUpload: image.typeUpload});
         setShowAlert(false);
         router.refresh();
       } else {
@@ -184,5 +167,6 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
     removeImage,
     removeAccount,
     session,
+    setFile,
   };
 }

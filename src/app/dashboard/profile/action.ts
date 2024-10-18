@@ -13,11 +13,7 @@ export async function updateProfile(formData: {
 
   // If the user is not logged in, throw an error
   if (!session || !session?.user?.id) {
-    // return {
-    //   ok: false,
-    //   message: "",
-    //   error: "Unauthorized",
-    // }
+    
     throw new Error("Unauthorized");
   }
 
@@ -36,11 +32,7 @@ export async function updateProfile(formData: {
     // If the response is not ok, throw an error
     if (!response.ok) {
       const errorData = await response.json();
-      // return {
-      //   ok: false,
-      //   message: "",
-      //   error: errorData.error,
-      // };
+      
       throw new Error(errorData.error);
     }
 
@@ -56,7 +48,7 @@ export async function updateProfile(formData: {
     return {
       ok: false,
       message: "",
-      error: error,
+      error: error.message,
     };
   }
 }
@@ -66,22 +58,14 @@ export async function deleteImage({ id: id }: { id: string | undefined }) {
 
   // If the user is not logged in, throw an error
   if (!session || !session?.user?.id) {
-    // return {
-    //   ok: false,
-    //   message: "",
-    //   error: "Unauthorized",
-    // };
+    
 
     throw new Error("Unauthorized");
   }
 
   try {
     if (!id) {
-      // return {
-      //   ok: false,
-      //   message: "",
-      //   error: "User ID is undefined",
-      // };
+      
 
        throw new Error("User ID is undefined");
     }
@@ -100,7 +84,7 @@ export async function deleteImage({ id: id }: { id: string | undefined }) {
     return {
       ok: false,
       message: "",
-      error: error,
+      error: error.message,
     };
   }
 }
@@ -110,22 +94,12 @@ export async function deleteAccount({ id: id }: { id: string | undefined }) {
 
   // If the user is not logged in, throw an error
   if (!session || !session?.user?.id) {
-    // return {
-    //   ok: false,
-    //   message: "",
-    //   error: "Unauthorized",
-    // };
-
     throw new Error("Unauthorized");
   }
 
   try {
-    if (!id) {
-      // return {
-      //   ok: false,
-      //   message: "",
-      //   error: "User ID is undefined",
-      // };
+    if (!id) {   
+    
 
       throw new Error("User ID is undefined");
     }

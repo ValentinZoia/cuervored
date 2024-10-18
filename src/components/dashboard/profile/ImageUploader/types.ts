@@ -1,6 +1,7 @@
 export interface ImageUploaderState {
   previewUrl: string | null;
   previewType: "url" | "file" | null;
+  file: File | null;
   initialImage: string;
   isOpen: boolean;
   isLoading: boolean;
@@ -11,6 +12,6 @@ export interface ImageUploaderState {
 export type ImageUploaderAction =
 | { type: 'SET_INITIAL_STATE'; payload: { imageSrc: string; typeUpload: 'file' | 'url' | null } }
 | { type: 'SET_URL'; payload: { previewUrl: string; typeUpload: 'url' } }
-| { type: 'SET_FILE'; payload: { previewType: 'file'; previewUrl: string } }
+| { type: 'SET_FILE'; payload: { previewType: 'file'; previewUrl: string; file: File } }
 | { type: 'TOGGLE_DIALOG'; payload: boolean }
 | { type: 'REMOVE_PREVIEW' };

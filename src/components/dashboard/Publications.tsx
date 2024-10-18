@@ -27,14 +27,7 @@ export default async function Publications() {
                 />
               ))}
 
-            <Post
-              username="Cristian205"
-              avatar="/avatar.png"
-              timeAgo={new Date()}
-              imageUrl="/image.png"
-              likes={['@azulgranapasion', '@boedodecorazon']}
-              content="Hijos de Puta! Mercenarios hijos de puta. Estamos peleando el descenso hermano, nnunca podes patear un penal asi. Me cagaron el fin de semana, pero bue no es novedad eso."
-            />
+            
           </div>
         </CardContent>
       </Card>

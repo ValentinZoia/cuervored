@@ -2,12 +2,15 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { createPostSchema } from "@/lib/zodSchema";
+import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import { revalidatePath } from "next/cache";
 
-
-
-export async function submitPost(textareaValue: string, file: File | null) {
+export async function submitPost(textareaValue: string, imageUrl: string | null) {
   try {
+    
+    
+
+    //check if the user is logged in
     const session = await auth();
     const user = session?.user;
 
@@ -21,12 +24,14 @@ export async function submitPost(textareaValue: string, file: File | null) {
       content: textareaValue,
     });
 
+    
+     
     //create the post
     const post = await prisma.post.create({
       data: {
         content,
         userId: user.id,
-        image: null,
+        image: imageUrl,
       },
     });
 
@@ -42,13 +47,11 @@ export async function submitPost(textareaValue: string, file: File | null) {
       SuccessMessage: "Post created successfully",
       error: "",
     };
-
-    
-  } catch (error) {
+  } catch (error: any) {
     return {
       ok: false,
       SuccessMessage: "",
-      error: "Something went wrong",
+      error: error.message,
     };
   }
 }

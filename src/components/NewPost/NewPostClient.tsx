@@ -12,6 +12,7 @@ import PreviewImageDialogUploadImage from "../dashboard/profile/PreviewImageDial
 import { submitPost } from "./action";
 import { toast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
+import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 
 
 interface NewPostProps {
@@ -33,7 +34,21 @@ export default function NewPost({ user }: NewPostProps) {
 
   const handleSumbit = async() =>{
     try {
-      const res = await submitPost(textareaValue, file);
+      let imageUrl = null;
+
+      //if exists a file upload it to cloudinary
+      if(file){
+        const {data, error} = await uploadToCloudinary(file);
+        if(error){
+          throw new Error("Failed to upload image");
+        }
+        
+        imageUrl = data;
+      }
+
+
+      
+      const res = await submitPost(textareaValue, imageUrl);
       
       if (res.ok || res.SuccessMessage !== "") {
         
@@ -52,15 +67,16 @@ export default function NewPost({ user }: NewPostProps) {
         setPreviewUrl(null);
          router.refresh();
       } else {
+        
         toast({
-          description: res.error,
+          description: res.error || "Failed to create post",
           title: "Post creation failed",
           variant: "destructive",
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       toast({
-        description: error as string,
+        description: error.message as string ||"Failed to create post",
         title: "Profile creation failed",
         variant: "destructive",
       })

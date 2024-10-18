@@ -43,7 +43,7 @@ export function Post({ username, avatar, timeAgo, imageUrl, likes, content }: Po
           alt="Imagen de la publicación"
           width={500}
           height={500}
-          className="rounded-md mb-4"
+          className="rounded-md mb-4 m-auto"
         />
         ):(
           <p className=" relative z-10 text-sm mb-4 mt-2 whitespace-pre-line break-words">{content}</p>

@@ -3,6 +3,7 @@ import { ImageUploaderState, ImageUploaderAction } from './types'
 export const initialState: ImageUploaderState = {
     previewUrl: null,
     previewType: null,
+    file: null,
     initialImage: "",
     isOpen: false,
     isLoading: false,
@@ -29,6 +30,7 @@ export function imageUploaderReducer(state: ImageUploaderState, action: ImageUpl
             ...state,
             previewType: action.payload.previewType,
             previewUrl: action.payload.previewUrl,
+            file: action.payload.file,
           };
         case 'TOGGLE_DIALOG':
           return {

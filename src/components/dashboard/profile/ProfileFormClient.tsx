@@ -37,6 +37,7 @@ export default function ProfileFormClient({
     removeImage,
     removeAccount,
     session,
+    setFile
   } = useProfileForm({ initialName, initialImage });
 
 
@@ -97,6 +98,7 @@ export default function ProfileFormClient({
                 imageSrc={image.src}
                 typeUpload={image.typeUpload}
                 setImage={setImage}
+                setFile={setFile}
               />
             </div>
             <div>
@@ -120,6 +122,7 @@ export default function ProfileFormClient({
             </Button>
             <DailogDeleteAccount removeAccount={removeAccount} />
           </div>
+          
         </div>
       </form>
     </>
