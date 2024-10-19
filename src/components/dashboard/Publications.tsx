@@ -20,6 +20,9 @@ export default function Publications() {
   } = useQuery({
     queryKey: ["posts"],
     queryFn: getPosts,
+    staleTime: 1000 * 60 * 5, // Mantiene los datos en caché durante 5 minutos
+    refetchOnWindowFocus: false, // Desactiva la refetch al cambiar de ventana
+    
   });
 
   function ShowPosts() {
