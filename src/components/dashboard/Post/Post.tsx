@@ -23,7 +23,7 @@ export function Post({ username, avatar, timeAgo, imageUrl, likes, content }: Po
   
   
   return (
-    <Card className='z-10'>
+    <Card className='max-w-[680px] z-10'>
       <CardHeader className="pb-2">
         <div className="flex items-center space-x-4">
           <Avatar className='relative z-10'>
@@ -41,8 +41,8 @@ export function Post({ username, avatar, timeAgo, imageUrl, likes, content }: Po
           <Image
           src={imageUrl}
           alt="Imagen de la publicación"
-          width={500}
-          height={500}
+          width={600}
+          height={600}
           className="rounded-md mb-4 m-auto"
         />
         ):(

@@ -1,23 +1,10 @@
-import prisma from "@/lib/prisma"
+
+import { Post } from "@/types/Post";
+import axios from "axios"
+
 
 
 export const getPosts = async () => {
-    try {
-        const posts = await prisma.post.findMany({
-            include:{
-                user:{
-                    select:{
-                        name: true,
-                        image: true
-                    }
-                }
-            },
-            
-            orderBy: {createdAt: "desc"}
-        })
-
-        return posts
-    } catch (error) {
-        return null
-    }
+    const {data} = await axios.get<Post[]>("api/posts");
+    return data
 }

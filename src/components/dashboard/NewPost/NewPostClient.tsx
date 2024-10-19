@@ -7,10 +7,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { User as UserType } from "@/types/User";
 import Link from "next/link";
-import { Input } from "../ui/input";
-import PreviewImageDialogUploadImage from "../dashboard/profile/PreviewImageDialogUploadImage";
+import { Input } from "../../ui/input";
+import PreviewImageDialogUploadImage from "../profile/PreviewImageDialogUploadImage";
 import { submitPost } from "./action";
-import { toast } from "../ui/use-toast";
+import { toast } from "../../ui/use-toast";
 import { useRouter } from "next/navigation";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 
@@ -110,7 +110,7 @@ export default function NewPost({ user }: NewPostProps) {
 
 
   return (
-    <Card className="mb-6 bg-card">
+    <Card className="max-w-[680px] mb-6 bg-card">
       <CardContent className="pt-6">
         <div className="flex items-start space-x-4">
           <Link href="/dashboard/profile">

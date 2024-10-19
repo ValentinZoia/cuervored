@@ -1,34 +1,70 @@
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import NewPost from "../NewPost/NewPost";
-import { Post } from "./Post";
-import { getPosts } from "@/data/posts";
+"use client";
 
-export default async function Publications() {
-  const posts = await getPosts();
-  
+import React from "react";
+import { Card, CardContent } from "../ui/card";
+import NewPost from "./NewPost/NewPost";
+import { Post } from "./Post/Post";
+import { getPosts } from "@/data/posts";
+import { useQuery } from "@tanstack/react-query";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { AlertCircle } from "lucide-react";
+
+import SkeletonPost from "./Post/SkeletonPost";
+import { Post as PostType } from "@/types/Post";
+
+export default function Publications() {
+  const {
+    data: posts,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["posts"],
+    queryFn: getPosts,
+  });
+
+  function ShowPosts() {
+    if (isLoading) {
+      return <SkeletonPost />;
+    }
+
+    if (error) {
+      return (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>
+            {error instanceof Error ? error.message : "Unexpected error"}
+          </AlertDescription>
+        </Alert>
+      );
+    }
+
+    if (posts) {
+      return (
+        <div className="space-y-6">
+          {posts &&
+            posts.map((post: PostType) => (
+              <Post
+                key={post.id}
+                username={post.user.name ?? "Unknown"}
+                avatar={post.user.image ?? ""}
+                timeAgo={new Date(post.createdAt)}
+                imageUrl={post.image ?? ""}
+                likes={post.likes}
+                content={post.content}
+              />
+            ))}
+        </div>
+      );
+    }
+  }
 
   return (
     <>
-      <Card className="max-w-[680px] bg-transparent border-none shadow-none lg:col-span-2 sm:mx-auto">
-        
+      <Card className="m-w-[680px] md:w-[680px] lg:w-[680px] bg-transparent border-none shadow-none lg:col-span-2 sm:mx-auto">
         <CardContent>
-          <NewPost />
-          <div className="space-y-6">
-              {posts && posts.map((post) => (
-                <Post
-                  key={post.id}
-                  username={post.user.name as string}
-                  avatar={post.user.image as string}
-                  timeAgo={post.createdAt}
-                  imageUrl={post.image ? post.image as string : ''}
-                  likes={post.likes}
-                  content={post.content}
-                />
-              ))}
-
-            
-          </div>
+           {/* <NewPost />  */}
+          <ShowPosts />
         </CardContent>
       </Card>
     </>
