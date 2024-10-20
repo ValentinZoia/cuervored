@@ -5,6 +5,13 @@ import axios from "axios"
 
 
 export const getPosts = async () => {
-    const {data} = await axios.get<Post[]>("api/posts");
-    return data
+    try {
+        const {data} = await axios.get<Post[]>("api/posts");
+        console.log("tengo la data, hice el fetch")
+        return data
+    } catch (error) {
+        throw new Error("Error fetching posts")
+    }
+
+    
 }

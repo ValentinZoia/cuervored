@@ -1,8 +1,8 @@
-"use client";
 
+"use client";
 import React from "react";
 import { Card, CardContent } from "../ui/card";
-import NewPost from "./NewPost/NewPost";
+
 import { Post } from "./Post/Post";
 import { getPosts } from "@/data/posts";
 import { useQuery } from "@tanstack/react-query";
@@ -12,16 +12,20 @@ import { AlertCircle } from "lucide-react";
 import SkeletonPost from "./Post/SkeletonPost";
 import { Post as PostType } from "@/types/Post";
 
-export default function Publications() {
+interface PublicationsProps {
+  newPost: React.ReactNode;
+}
+
+
+export default function Publications({ newPost }: PublicationsProps) {
   const {
     data: posts,
     isLoading,
     error,
-  } = useQuery({
-    queryKey: ["posts"],
-    queryFn: getPosts,
-    staleTime: 1000 * 60 * 5, // Mantiene los datos en caché durante 5 minutos
-    refetchOnWindowFocus: false, // Desactiva la refetch al cambiar de ventana
+  } = useQuery<PostType[]>({
+    queryKey: ["posts"], //<-- La key de la información
+    queryFn: getPosts, //<-- Cómo traer la información
+    
     
   });
 
@@ -45,7 +49,7 @@ export default function Publications() {
     if (posts) {
       return (
         <div className="space-y-6">
-          {posts &&
+          {
             posts.map((post: PostType) => (
               <Post
                 key={post.id}
@@ -56,7 +60,8 @@ export default function Publications() {
                 likes={post.likes}
                 content={post.content}
               />
-            ))}
+            ))
+          }
         </div>
       );
     }
@@ -66,7 +71,7 @@ export default function Publications() {
     <>
       <Card className="m-w-[680px] md:w-[680px] lg:w-[680px] bg-transparent border-none shadow-none lg:col-span-2 sm:mx-auto">
         <CardContent>
-           {/* <NewPost />  */}
+          {newPost}
           <ShowPosts />
         </CardContent>
       </Card>

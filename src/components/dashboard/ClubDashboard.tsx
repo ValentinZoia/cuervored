@@ -1,7 +1,8 @@
 import React from 'react'
 import UpcomingMatches from './UpcomingMatches'
 import { RecommendedUsers } from './RecommendedUsers'
-import Publications from './Publications'
+
+import PublicationsServer from './PublicationsServer'
 
 export default function ClubDashboard() {
   return (
@@ -15,7 +16,7 @@ export default function ClubDashboard() {
         </div>
         
       {/* Columna Central: Publicaciones */}
-        <Publications />
+        <PublicationsServer />
       
       </div>
     </main>
