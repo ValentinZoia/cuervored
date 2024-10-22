@@ -92,7 +92,8 @@ export default function NewPost({ user }: NewPostProps) {
     }
   };
 
-  const handleUploadPhotoButtonClick = () => {
+  const handleUploadPhotoButtonClick = () => { 
+    if(!fileInputRef.current) return;
     fileInputRef.current?.click();
   };
 

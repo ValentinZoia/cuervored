@@ -23,8 +23,10 @@ export default function Publications({ children }: PublicationsProps) {
     isLoading,
     error,
   } = useQuery<PostType[]>({
-    queryKey: ["posts"], //<-- La key de la información
-    queryFn: getPosts, //<-- Cómo traer la información
+    queryKey: ["posts"],  //<-- La key de la información
+    queryFn: getPosts,    //<-- Cómo traer la información
+    staleTime:Infinity,   //<-- Cuanto tiempo mostrara la info desde cache sin hacer un refetch en segundo plano
+    //cacheTime: 0,       //<-- Si no quieres que guarde la info en cache y hago un refetch cada vez que se renderiza
     
     
   });

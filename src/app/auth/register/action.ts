@@ -8,15 +8,16 @@ export async function signup(
   prevState: FormState,
   formData: FormData
 ): Promise<FormState> {
-  // 1. Validate form fields
 
+  try {
+     // 1. Validate form fields
   const validatedFields = SignUpFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
     confirmPassword: formData.get("confirmPassword"),
   });
 
-  //if any form fields are invalid, return
+  //if any form fields are invalid, return error
   if (!validatedFields.success) {
     return {
       message: "",
@@ -26,7 +27,7 @@ export async function signup(
 
   const { email, password } = validatedFields.data;
 
-  // 2. Create user
+  //Verify if the user already exists
   const userFound = await prisma.user.findUnique({
     where: {
       email,
@@ -41,6 +42,7 @@ export async function signup(
     };
   }
 
+  // 2. Create user
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const newUser = await prisma.user.create({
@@ -59,4 +61,14 @@ export async function signup(
     message: "User created successfully",
     errors: undefined,
   };
+  } catch (error) {
+    return{
+      message: "",
+      errors: {
+        general: [error as string || "An error occurred while creating the user"],
+      },
+    }
+  }
+
+ 
 }
