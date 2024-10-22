@@ -9,7 +9,7 @@ interface DashboardLayoutProps {
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
     <>
-      <div className="h-screen w-full ">
+      <div className="h-fit w-full ">
         <NavBar />
         {children}
         <MenuBar className="sticky bottom-0 z-50 flex w-full justify-center gap-12 border-t bg-primary text-primary-foreground p-3 md:hidden" />

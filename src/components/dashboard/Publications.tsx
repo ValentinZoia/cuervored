@@ -13,11 +13,11 @@ import SkeletonPost from "./Post/SkeletonPost";
 import { Post as PostType } from "@/types/Post";
 
 interface PublicationsProps {
-  newPost: React.ReactNode;
+  children: React.ReactNode;
 }
 
 
-export default function Publications({ newPost }: PublicationsProps) {
+export default function Publications({ children }: PublicationsProps) {
   const {
     data: posts,
     isLoading,
@@ -48,7 +48,7 @@ export default function Publications({ newPost }: PublicationsProps) {
 
     if (posts) {
       return (
-        <div className="space-y-6">
+        <div className="relative z-10 space-y-6">
           {
             posts.map((post: PostType) => (
               <Post
@@ -65,13 +65,14 @@ export default function Publications({ newPost }: PublicationsProps) {
         </div>
       );
     }
+    
   }
 
   return (
     <>
-      <Card className="m-w-[680px] md:w-[680px] lg:w-[680px] bg-transparent border-none shadow-none lg:col-span-2 sm:mx-auto">
+      <Card className="relative z-10 max-w-[680px] md:w-[680px] lg:w-[680px] bg-transparent border-none shadow-none lg:col-span-2 sm:mx-auto">
         <CardContent>
-          {newPost}
+          {children}
           <ShowPosts />
         </CardContent>
       </Card>

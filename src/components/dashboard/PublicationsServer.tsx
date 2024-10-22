@@ -10,8 +10,10 @@ export default async function PublicationsServer() {
 
   // Pasamos NewPost al componente Publications como prop
   return (
-    <>
-      <Publications newPost={<NewPostClient user={user}/>} />
-    </>
+    
+      <Publications> 
+        <NewPostClient user={user} />
+      </Publications>
+    
   );
 }

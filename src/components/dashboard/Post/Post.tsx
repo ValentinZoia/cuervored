@@ -23,27 +23,27 @@ export function Post({ username, avatar, timeAgo, imageUrl, likes, content }: Po
   
   
   return (
-    <Card className='max-w-[680px] z-10'>
-      <CardHeader className="pb-2">
-        <div className="flex items-center space-x-4">
+    <Card className='relative z-10 max-w-[680px] '>
+      <CardHeader className="relative z-10 pb-2">
+        <div className="relative z-10 flex items-center space-x-4">
           <Avatar className='relative z-10'>
             <AvatarImage src={avatar} alt={username} />
             <AvatarFallback>{username[0]}</AvatarFallback>
           </Avatar>
-          <div>
-            <p className="text-sm font-medium">{username}</p>
-            <p className="text-xs text-muted-foreground">{compareDate(timeAgo)}</p>
+          <div className='relative z-10'>
+            <p className="text-sm font-medium relative z-0">{username}</p>
+            <p className="text-xs text-muted-foreground relative z-10">{compareDate(timeAgo)}</p>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="pb-2">
+      <CardContent className="pb-2 relative z-10">
         {imageUrl ? (
           <Image
           src={imageUrl}
           alt="Imagen de la publicación"
           width={600}
           height={600}
-          className="rounded-md mb-4 m-auto"
+          className="z-0 rounded-md mb-4 m-auto"
         />
         ):(
           <p className=" relative z-10 text-sm mb-4 mt-2 whitespace-pre-line break-words">{content}</p>
