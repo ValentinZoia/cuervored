@@ -5,12 +5,12 @@ import { Card, CardContent } from "../ui/card";
 
 import { Post } from "./Post/Post";
 import { getPosts } from "@/data/posts";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Divide } from "lucide-react";
 
 import SkeletonPost from "./Post/SkeletonPost";
-import { Post as PostType } from "@/types/Post";
+import { PostsPage, Post as PostType } from "@/types/Post";
 import { useSession } from "next-auth/react";
 import NewPostClient from "./NewPost/NewPost";
 
@@ -22,20 +22,41 @@ export default function Publications() {
 
   
   
-  const {
-    data: posts,
+  // const {
+  //   data: posts,
+  //   isLoading,
+  //   error,
+  // } = useQuery<PostType[]>({
+  //   queryKey: ["posts"],  
+  //   queryFn: getPosts,    
+  //   staleTime:Infinity,   
+  //   //cacheTime: 0,       //<-- Si no quieres que guarde la info en cache y hago un refetch cada vez que se renderiza
+    
+    
+  // });
+
+   // Configuración de `useInfiniteQuery`
+   const {
+    data,
     isLoading,
     error,
-  } = useQuery<PostType[]>({
-    queryKey: ["posts"],  //<-- La key de la información
-    queryFn: getPosts,    //<-- Cómo traer la información
-    staleTime:Infinity,   //<-- Cuanto tiempo mostrara la info desde cache sin hacer un refetch en segundo plano
-    //cacheTime: 0,       //<-- Si no quieres que guarde la info en cache y hago un refetch cada vez que se renderiza
-    
-    
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage
+  } = useInfiniteQuery({
+    queryKey: ["posts"],//<-- La key de la información
+    queryFn: ({ pageParam = 1 }: {pageParam?: string | number | null | undefined}) => getPosts({pageParam} ), //<-- Cómo traer la información
+    initialPageParam:null as string | null,
+    getNextPageParam: (lastPage) => lastPage.nextCursor?? undefined, // Define el siguiente parámetro de paginación
+    staleTime: Infinity,//<-- Cuanto tiempo mostrara la info desde cache sin hacer un refetch en segundo plano
   });
 
   function ShowPosts() {
+
+    if(!session){
+      return 
+    }
+
     if (isLoading) {
       return <SkeletonPost />;
     }
@@ -52,24 +73,33 @@ export default function Publications() {
       );
     }
 
-    if (posts) {
-      return (
-        <div className="relative z-10 space-y-6">
-          {
-            posts.map((post: PostType) => (
-              <Post
-                key={post.id}
-                username={post.user.name ?? "Unknown"}
-                avatar={post.user.image ?? ""}
-                timeAgo={new Date(post.createdAt)}
-                imageUrl={post.image ?? ""}
-                likes={post.likes}
-                content={post.content}
-              />
-            ))
-          }
-        </div>
-      );
+    if (data) {
+      console.log(data);
+      // return (
+      //   <div className="relative z-10 space-y-6">
+      //     {data.pages.flatMap((page) =>
+      //       page.map((post: PostType) => (
+      //         <Post
+      //           key={post.id}
+      //           username={post.user.name ?? "Unknown"}
+      //           avatar={post.user.image ?? ""}
+      //           timeAgo={new Date(post.createdAt)}
+      //           imageUrl={post.image ?? ""}
+      //           likes={post.likes}
+      //           content={post.content}
+      //         />
+      //       ))
+      //     )}
+      //     {hasNextPage && (
+      //       <button
+      //         onClick={() => fetchNextPage()}
+      //         disabled={isFetchingNextPage}
+      //       >
+      //         {isFetchingNextPage ? "Cargando..." : "Cargar más"}
+      //       </button>
+      //     )}
+      //   </div>
+      // );
     }
     
   }

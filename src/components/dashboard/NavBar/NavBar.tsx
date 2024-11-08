@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 
 export default  function NavBar() {
   
-  // const session = await auth();
+
   const {data:session} = useSession();
   return (
     <>
@@ -20,13 +20,7 @@ export default  function NavBar() {
             LOGO
           </Link>
           <div className="flex items-center gap-4 list-none">
-            {/* <Input
-              type="search"
-              placeholder="Search..."
-              className="hidden md:block w-64 bg-card text-foreground"
-              style={{ WebkitBackgroundClip: "none" }}
-            />
-            <SearchIcon className="md:hidden lg:hidden h-6 w-6" /> */}
+            
 
               <SearchField />
 

@@ -12,3 +12,8 @@ export type Post = {
       image: string | null; // Puede ser null si el usuario no tiene imagen
     };
   };
+
+  export interface PostsPage {
+    posts: Post[];
+    nextCursor: string | null;
+  }
