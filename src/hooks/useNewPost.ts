@@ -1,31 +1,18 @@
-"use client";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { ImageIcon, User } from "lucide-react";
 import React, { useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { User as UserType } from "@/types/User";
-import Link from "next/link";
-import { Input } from "../../ui/input";
-import PreviewImageDialogUploadImage from "../profile/PreviewImageDialogUploadImage";
-import { submitPost } from "./action";
-import { toast } from "../../ui/use-toast";
+import { submitPost } from "@/components/dashboard/NewPost/action";
+import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-
-interface NewPostProps {
-  user: UserType | null;
-}
-
-export default function NewPost({ user }: NewPostProps) {
+import { useSession } from "next-auth/react";
+export const useNewPost = () => {
+  const user = useSession().data?.user;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [textareaValue, setTextareaValue] = React.useState<string>("");
   const [file, setFile] = React.useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
-  const fallback = user?.name?.[0] || <User className="h-4 w-4" />;
+
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -92,8 +79,8 @@ export default function NewPost({ user }: NewPostProps) {
     }
   };
 
-  const handleUploadPhotoButtonClick = () => { 
-    if(!fileInputRef.current) return;
+  const handleUploadPhotoButtonClick = () => {
+    if (!fileInputRef.current) return;
     fileInputRef.current?.click();
   };
 
@@ -116,65 +103,17 @@ export default function NewPost({ user }: NewPostProps) {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  return (
-    <Card className="max-w-[680px] mb-6 bg-card">
-      <CardContent className="pt-6">
-        <div className="flex items-start space-x-4">
-          <Link href="/dashboard/profile">
-            <Avatar>
-              {user?.image ? (
-                <AvatarImage
-                  src={user.image}
-                  alt={user.name || "User avatar"}
-                />
-              ) : null}
-              <AvatarFallback>{fallback}</AvatarFallback>
-            </Avatar>
-          </Link>
-          <div className="flex-1">
-            <Textarea
-              ref={textareaRef}
-              className="bg-background"
-              placeholder="¿Qué estás pensando sobre el club?"
-              onChange={handleTextareaChange}
-            />
-            <div className="w-fit">
-              {previewUrl && (
-                <PreviewImageDialogUploadImage
-                  previewUrlSrc={previewUrl}
-                  handleRemovePreview={handleRemovePreview}
-                />
-              )}
-            </div>
-
-            <div className="mt-2 flex justify-between items-center">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleUploadPhotoButtonClick}
-              >
-                <ImageIcon className="w-4 h-4 mr-2" />
-                Agregar Foto
-              </Button>
-              <Input
-                ref={fileInputRef}
-                type="file"
-                id="file"
-                onChange={handleFileChange}
-                className="hidden"
-              />
-              <Button
-                className="relative z-10"
-                size="sm"
-                onClick={handleSubmit}
-                disabled={(!textareaValue && !previewUrl) || mutation.isPending}
-              >
-                {mutation.isPending ? "Publicando..." : "Publicar"}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
+  return {
+    handleTextareaChange,
+    handleRemovePreview,
+    handleUploadPhotoButtonClick,
+    handleFileChange,
+    handleSubmit,
+    mutation,
+    textareaValue,
+    previewUrl,
+    fileInputRef,
+    textareaRef,
+    user,
+  };
+};

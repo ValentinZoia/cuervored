@@ -25,7 +25,7 @@ export default function SignUpForm() {
     if (state?.message) {
       toast({
         title: state.message,
-        variant: "success", // Puedes cambiar el variant si tienes otros estilos
+        variant: "success", 
       });
 
       formRef.current?.reset();

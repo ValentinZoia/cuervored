@@ -11,13 +11,17 @@ import { AlertCircle } from "lucide-react";
 
 import SkeletonPost from "./Post/SkeletonPost";
 import { Post as PostType } from "@/types/Post";
-
-interface PublicationsProps {
-  children: React.ReactNode;
-}
+import { useSession } from "next-auth/react";
+import NewPostClient from "./NewPost/NewPost";
 
 
-export default function Publications({ children }: PublicationsProps) {
+
+
+export default function Publications() {
+  const session = useSession();
+
+  
+  
   const {
     data: posts,
     isLoading,
@@ -74,7 +78,7 @@ export default function Publications({ children }: PublicationsProps) {
     <>
       <Card className="relative z-10 max-w-[680px] md:w-[680px] lg:w-[680px] bg-transparent border-none shadow-none lg:col-span-2 sm:mx-auto">
         <CardContent>
-          {children}
+          <NewPostClient/>
           <ShowPosts />
         </CardContent>
       </Card>

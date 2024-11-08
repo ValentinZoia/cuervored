@@ -2,7 +2,6 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { createPostSchema } from "@/lib/zodSchema";
-import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import { revalidatePath } from "next/cache";
 
 export async function submitPost(textareaValue: string, imageUrl: string | null) {

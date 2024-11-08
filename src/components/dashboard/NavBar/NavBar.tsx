@@ -1,17 +1,15 @@
+"use client"
 import Link from "next/link";
 import React from "react";
-
-
 import { DropdownMenuMyAccount } from "./DropdownMenu";
-import { auth } from "@/auth";
-import { Input } from "@/components/ui/input";
-import { Bell, Home, MessageSquare, Search, SearchIcon, User } from 'lucide-react'
 import SearchField from "./SearchField";
 import MenuBar from "./MenuBar";
+import { useSession } from "next-auth/react";
 
-export default async function NavBar() {
+export default  function NavBar() {
   
-  const session = await auth();
+  // const session = await auth();
+  const {data:session} = useSession();
   return (
     <>
       
