@@ -42,12 +42,12 @@ export async function updateProfile(formData: {
     return {
       ok: true,
       message: SuccessData.message,
-      error: "",
+      error: null,
     };
   } catch (error : any) {
     return {
       ok: false,
-      message: "",
+      message: null,
       error: error.message,
     };
   }
@@ -78,12 +78,12 @@ export async function deleteImage({ id: id }: { id: string | undefined }) {
     return {
       ok: true,
       message: "Image deleted successfully",
-      error: "",
+      error: null,
     };
   } catch (error: any) {
     return {
       ok: false,
-      message: "",
+      message: null,
       error: error.message,
     };
   }
@@ -115,12 +115,12 @@ export async function deleteAccount({ id: id }: { id: string | undefined }) {
     return {
       ok: true,
       message: "Account deleted successfully",
-      error: "",
+      error: null,
     };
   } catch (error: any) {
     return {
       ok: false,
-      message: "",
+      message: null,
       error: error.message || "An error occurred while deleting the account",
     };
   }

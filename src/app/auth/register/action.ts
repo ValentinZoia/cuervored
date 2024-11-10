@@ -20,7 +20,7 @@ export async function signup(
   //if any form fields are invalid, return error
   if (!validatedFields.success) {
     return {
-      message: "",
+      message: null,
       errors: validatedFields.error.flatten().fieldErrors,
     };
   }
@@ -35,7 +35,7 @@ export async function signup(
   });
   if (userFound) {
     return {
-      message: "",
+      message: null,
       errors: {
         general: ["An user with that email already exists"],
       },
@@ -59,11 +59,11 @@ export async function signup(
 
   return {
     message: "User created successfully",
-    errors: undefined,
+    errors: null,
   };
   } catch (error) {
     return{
-      message: "",
+      message: null,
       errors: {
         general: [error as string || "An error occurred while creating the user"],
       },

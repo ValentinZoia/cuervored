@@ -65,7 +65,7 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
     try{
       const res = await updateProfile({ name, imageSrc });
 
-      if (res.ok || res.message !== "") {
+      if (res.ok) {
         toast({
           description: res.message,
           title: "Profile updated",
@@ -97,7 +97,7 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
     try {
       const res = await deleteImage({ id });
 
-      if (res.ok || res.message !== "") {
+      if (res.ok ) {
         toast({
           description: res.message,
           title: "Profile updated",
@@ -127,7 +127,7 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
   const removeAccount = async () => {
     try {
       const res = await deleteAccount({ id });
-      if (res.ok || res.message !== "") {
+      if (res.ok) {
         toast({
           description: res.message,
           title: "Account deleted successfully",

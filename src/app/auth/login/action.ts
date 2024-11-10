@@ -21,7 +21,7 @@ export async function login(
     //if any form fields are invalid, return error
     if (!validatedFields.success) {
       return {
-        message: "",
+        message: null,
         errors: validatedFields.error.flatten().fieldErrors,
       };
     }
@@ -36,9 +36,9 @@ export async function login(
     
 
     if (res?.error) {
-      return { message: "", errors: { general: [res.error] } };
+      return { message: null, errors: { general: [res.error] } };
     } else {
-      return { message: "User created successfully", errors: undefined };
+      return { message: "User created successfully", errors: null };
     }
     
 
@@ -46,9 +46,9 @@ export async function login(
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { message: "", errors: { general: ["Email already in use with different provider!"] } };
+          return { message: null, errors: { general: ["Email already in use with different provider!"] } };
         default:
-          return { message: "", errors: { general: [`${error.cause?.err?.message}`] } };
+          return { message: null, errors: { general: [`${error.cause?.err?.message}`] } };
       }
     }
     throw error;

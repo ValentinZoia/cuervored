@@ -39,17 +39,19 @@ export async function submitPost(textareaValue: string, imageUrl: string | null)
       throw new Error("Post not created");
     }
 
+    if(post.userId !== session.user.id) throw new Error("Unauthorized");
+
     revalidatePath("/dashboard");
     //return a success message
     return {
       ok: true,
       SuccessMessage: "Post created successfully",
-      error: "",
+      error: null,
     };
   } catch (error: any) {
     return {
       ok: false,
-      SuccessMessage: "",
+      SuccessMessage: null,
       error: error.message,
     };
   }

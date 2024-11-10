@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     //get searchParmas
     const cursor = req.nextUrl.searchParams.get("cursor") || undefined;
     const pageSize = 5;
-    console.log("CURSOR",cursor)
+    
 
 
 

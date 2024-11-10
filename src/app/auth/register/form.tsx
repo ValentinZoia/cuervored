@@ -15,7 +15,7 @@ import { DEFAULT_LOGIN_REDIRECT } from "@/routes/routes";
 export default function SignUpForm() {
   const [state, action] = useFormState(signup, {
     message: "",
-    errors: undefined,
+    errors: null,
     
   });
   const formRef = useRef<HTMLFormElement>(null);

@@ -33,7 +33,12 @@ export const useNewPost = () => {
           title: "Post created successfully",
           variant: "success",
         });
-        queryClient.invalidateQueries({ queryKey: ["posts"] });
+        queryClient.invalidateQueries({
+          queryKey: ["posts"],
+          predicate(query) {
+            return !query.state.data;
+          },
+        });
         if (fileInputRef.current) fileInputRef.current.value = "";
         if (textareaRef.current) textareaRef.current.value = "";
         setTextareaValue("");
