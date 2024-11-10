@@ -28,7 +28,7 @@ export default function NewPost() {
     user,
   } = useNewPost();
 
-  if(!user) return <div>Unauthorized</div>
+  if(!user) return null
 
   const fallback = user?.name?.[0] || <User className="h-4 w-4" />;
 

@@ -2,12 +2,12 @@ import { Post, PostsPage } from "@/types/Post";
 import axios from "axios";
 
 export const getPosts = async ({
-  pageParam = 1,
+  pageParam = null,
 }: {
   pageParam?: string | number | null | undefined;
 }) => {
   try {
-    const response = await axios.get<PostsPage>(`/api/posts?cursor=${1}`);
+    const response = await axios.get<PostsPage>(`/api/posts${pageParam ? `?cursor=${pageParam}` : ''}`);
 
     if (!response || !response.data) throw new Error("Error fetching posts");
 
@@ -38,7 +38,7 @@ export const getPosts = async ({
 
 
     } else {
-        
+
       // Error que no está relacionado con Axios (por ejemplo, errores de JavaScript)
       console.error("General error:", error);
       throw new Error(

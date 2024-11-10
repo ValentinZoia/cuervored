@@ -6,9 +6,14 @@ import { Prisma } from "@prisma/client";
 
 export async function GET(req: NextRequest) {
   try {
+
+
     //get searchParmas
     const cursor = req.nextUrl.searchParams.get("cursor") || undefined;
-    const pageSize = 10;
+    const pageSize = 5;
+    console.log("CURSOR",cursor)
+
+
 
     // Check if the user is authenticated
     const session = await auth();
@@ -18,6 +23,9 @@ export async function GET(req: NextRequest) {
         { status: 401 }
       );
     }
+
+
+
     // get posts to db
     const posts: Post[] = await prisma.post.findMany({
       include: {
@@ -33,12 +41,16 @@ export async function GET(req: NextRequest) {
       cursor: cursor ? { id: cursor } : undefined, // a partir de que registro quiero traer los posts
     });
 
+
+    //Chek if there are no posts
     if (!posts || posts.length === 0) {
       return NextResponse.json({ error: "No posts found" }, { status: 404 });
     }
 
-    const nextCursor = posts.length > pageSize ? posts[pageSize - 1].id : null;
 
+    
+    const nextCursor = posts.length > pageSize ? posts[pageSize].id : null;
+    
     const data: PostsPage = {
       posts: posts.slice(0, pageSize),
       nextCursor,
@@ -46,6 +58,8 @@ export async function GET(req: NextRequest) {
 
     //send posts
     return NextResponse.json(data);
+
+
   } catch (error: any) {
     // Manejo detallado de errores
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
