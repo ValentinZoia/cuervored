@@ -69,12 +69,7 @@ export default function Publications() {
             page.posts.map((post: PostType) => (
               <Post
                 key={post.id}
-                username={post.user.name ?? "Unknown"}
-                avatar={post.user.image ?? ""}
-                timeAgo={new Date(post.createdAt)}
-                imageUrl={post.image ?? ""}
-                likes={post.likes}
-                content={post.content}
+                post={post}
               />
             ))
           )}

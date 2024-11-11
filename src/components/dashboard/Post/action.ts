@@ -17,15 +17,18 @@ export async function deletePost(id: string) {
 
     if (post.userId !== session.user.id) throw new Error("Unauthorized");
 
-    await prisma.post.delete({
+    const postDeleted = await prisma.post.delete({
       where: { id },
     });
+
+    const postDeletedId = postDeleted.id;
 
     //return a success message
     return {
         ok: true,
         SuccessMessage: "Post deleted successfully",
         error: null,
+        postDeletedId,
       };
 
 
