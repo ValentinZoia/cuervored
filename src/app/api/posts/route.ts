@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
 
     //get searchParmas
     const cursor = req.nextUrl.searchParams.get("cursor") || undefined;
-    const pageSize = 2;
+    const pageSize = 10;
     
 
 

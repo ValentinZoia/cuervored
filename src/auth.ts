@@ -63,6 +63,7 @@ export const authOptions = {
         if (!isPasswordCorrect) {
           throw new Error("Password did not match");
         }
+        console.log(user.image)
 
         return {
           id: user.id,
@@ -92,13 +93,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   
   callbacks: {
-    async session({ session, token }) {
+    async session({ session, token,user }) {
       if (token?.sub && session?.user) {
         session.user.id = token.sub;
       }
 
       if (token?.role && session?.user) {
         session.user.role = token.role;
+      }
+
+      if(session?.user){
+        const user = await prisma.user.findUnique({
+          where:{id: session.user.id},
+          select:{image: true, name: true}
+        });
+
+        session.user.image = user?.image
+        session.user.name = user?.name
+
+        
       }
 
       
@@ -114,7 +127,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (!existingUser) return token;
 
       token.role = existingUser.role;
-
+      
       
 
       return token;

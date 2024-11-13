@@ -126,14 +126,7 @@ export function useLikePostMutation({
         variant: "destructive",
       });
     },
-    onSettled: (data) => {
-      queryClient.invalidateQueries({
-        queryKey: ["posts"]
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["like-info", postId]
-      });
-    },
+    
   });
 
   return {

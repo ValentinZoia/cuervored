@@ -61,7 +61,7 @@ export default function Publications() {
       );
     }
 
-    if (data) {
+    if (data && session) {
       
       return (
         <InfiniteScrollContainer className="relative z-10 space-y-6" onBottomReached={()=> hasNextPage && !isLoading && fetchNextPage()}>

@@ -25,7 +25,7 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const id = session?.user?.id;
 
   useEffect(() => {
@@ -40,11 +40,24 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
 
 
   //update profile
+  
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    if(name === initialName && image.src === initialImage){
+      toast({
+        description: "You should do a change before update",
+        title: "Profile update failed",
+        variant: "default",
+      });
+      return;
+    }
+    
+    console.log(image, file, name)
+    
     let imageSrc: string = image.src;
 
-    if(image.typeUpload === 'file'){
+    if(image.typeUpload === 'file' && file){
       try {
         const{data, error} = await uploadToCloudinary(file as File);
         if(error){
@@ -65,7 +78,21 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
     try{
       const res = await updateProfile({ name, imageSrc });
 
+
+
       if (res.ok) {
+
+        update({
+          ...session,
+          user: {
+            ...session?.user,
+            name,
+            image: imageSrc,
+          },
+        })
+        
+
+
         toast({
           description: res.message,
           title: "Profile updated",
@@ -74,6 +101,8 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
         setImage({src: imageSrc, typeUpload: image.typeUpload});
         setShowAlert(false);
         router.refresh();
+        // useSession().update();
+
       } else {
         toast({
           description: res.error,

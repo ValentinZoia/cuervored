@@ -32,6 +32,7 @@ export default function NewPost() {
   if(!user) {
     return <SkeletonNewPost />
   }
+  
 
   const fallback = user?.name?.[0] || <User className="h-4 w-4" />;
 
