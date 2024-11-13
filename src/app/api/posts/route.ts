@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { Post, PostsPage } from "@/types/Post";
+import { getPostDataInclude, PostsPage } from "@/types/Post";
 import { auth } from "@/auth";
 import { Prisma } from "@prisma/client";
 
@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
 
     //get searchParmas
     const cursor = req.nextUrl.searchParams.get("cursor") || undefined;
-    const pageSize = 5;
+    const pageSize = 2;
     
 
 
@@ -24,35 +24,45 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    
+
 
 
     // get posts to db
-    const posts: Post[] = await prisma.post.findMany({
-      include: {
-        user: {
-          select: {
-            name: true,
-            image: true,
-          },
-        },
-      },
+    const posts = await prisma.post.findMany({
+      include:{
+        ...getPostDataInclude(session.user.id),
+        _count:{
+          select:{
+            likes:true,
+            comments:true,
+          }
+        }
+      } ,
       orderBy: { createdAt: "desc" },
       take: pageSize + 1, //cantidad de registros que quiero traer
       cursor: cursor ? { id: cursor } : undefined, // a partir de que registro quiero traer los posts
     });
 
-
+    
     //Chek if there are no posts
     if (!posts || posts.length === 0) {
       return NextResponse.json({ error: "No posts found" }, { status: 404 });
     }
 
-
+    
+    
     
     const nextCursor = posts.length > pageSize ? posts[pageSize].id : null;
     
     const data: PostsPage = {
-      posts: posts.slice(0, pageSize),
+      posts: posts.slice(0, pageSize).map(post => ({
+        ...post,
+        _count: {
+          likes: post._count.likes,
+          comments: post._count.comments,
+        },
+      })),
       nextCursor,
     };
 

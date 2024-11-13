@@ -8,8 +8,9 @@ import { Input } from "@/components/ui/input"
 import { Heart, MessageCircle, Send, Smile } from 'lucide-react'
 import { compareDate } from '@/utils/compareDate'
 import DropDownMenuPosts from './DropDownMenuPosts'
-import { Post as PostData } from '@/types/Post'
+import { PostData} from '@/types/Post'
 import { useSession } from 'next-auth/react'
+import LikeButton from './LikeButton'
 
 interface PostProps {
   post:PostData;
@@ -26,6 +27,8 @@ export function Post({ post }: PostProps) {
   const postUserId = post.userId;
 
   const session = useSession();
+
+  console.log(likes.length)
   
   
   
@@ -59,10 +62,10 @@ export function Post({ post }: PostProps) {
         )}
         
         <div className="flex items-center space-x-4 mb-2">
-          <Button variant="ghost" size="sm">
-            <Heart className="h-4 w-4 mr-2" />
-            Me gusta
-          </Button>
+          {<LikeButton postId={post.id} initialState={{
+            likes: likes.length,
+            isLikedByUser: post.likes.some(like => like.userId === session.data?.user.id)
+          }} />}
           <Button variant="ghost" size="sm">
             <MessageCircle className="h-4 w-4 mr-2" />
             Comentar
@@ -72,7 +75,7 @@ export function Post({ post }: PostProps) {
             Compartir
           </Button>
         </div>
-        <p className="relative z-10 text-sm font-medium mb-1 ">{likes.length} Me gusta</p>
+        
         {imageUrl !== '' && (<p className=" relative z-10 text-sm whitespace-pre-line break-words ">{content}</p>)}
         <div className="mt-2">
           <p className="text-sm text-muted-foreground">Ver los 45 comentarios</p>

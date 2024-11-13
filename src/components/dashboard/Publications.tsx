@@ -10,7 +10,7 @@ import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { AlertCircle, Divide, Loader } from "lucide-react";
 
 import SkeletonPost from "./Post/SkeletonPost";
-import { PostsPage, Post as PostType } from "@/types/Post";
+import { PostsPage, PostData as PostType } from "@/types/Post";
 import { useSession } from "next-auth/react";
 import NewPostClient from "./NewPost/NewPost";
 import InfiniteScrollContainer from "./InfiniteScrollContainer";
@@ -42,7 +42,7 @@ export default function Publications() {
   function ShowPosts() {
     
     if(!session){
-      return 
+      return <SkeletonPost />
     }
 
     if (isLoading) {

@@ -2,6 +2,7 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { createPostSchema } from "@/lib/zodSchema";
+import { getPostDataInclude } from "@/types/Post";
 import { revalidatePath } from "next/cache";
 
 export async function submitPost(textareaValue: string, imageUrl: string | null) {
@@ -32,6 +33,7 @@ export async function submitPost(textareaValue: string, imageUrl: string | null)
         userId: user.id,
         image: imageUrl,
       },
+      include: getPostDataInclude(user.id)
     });
 
     //if exists a problem with the post, throw an error

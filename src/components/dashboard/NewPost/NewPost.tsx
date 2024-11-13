@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Input } from "../../ui/input";
 import PreviewImageDialogUploadImage from "../profile/PreviewImageDialogUploadImage";
 import { useNewPost } from "@/hooks/useNewPost";
+import SkeletonNewPost from "./SkeletonNewPost";
 
 
 
@@ -28,11 +29,14 @@ export default function NewPost() {
     user,
   } = useNewPost();
 
-  if(!user) return null
+  if(!user) {
+    return <SkeletonNewPost />
+  }
 
   const fallback = user?.name?.[0] || <User className="h-4 w-4" />;
 
   return (
+    
     <Card className="max-w-[680px] mb-6 bg-card">
       <CardContent className="pt-6">
         <div className="flex items-start space-x-4">
@@ -92,5 +96,7 @@ export default function NewPost() {
         </div>
       </CardContent>
     </Card>
+    
+    
   );
 }

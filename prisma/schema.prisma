@@ -33,6 +33,10 @@ model User {
   updatedAt     DateTime @updatedAt
   post          Post[]
   comments      Comment[]
+  likes         Like[]
+
+
+  
 }
 
 model Account {
@@ -63,23 +67,39 @@ model Post {
   image     String?
   userId    String  @db.ObjectId
   createdAt DateTime @default(now())
-  likes     String[] @db.ObjectId
+  likes     Like[]
   comments  Comment[]
 
   //Relación Inversa con los comentarios
   user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
 
+  
+}
 
 model Comment {
   id        String @id @default(auto()) @map("_id") @db.ObjectId
   postId    String  @db.ObjectId
   userId    String  @db.ObjectId
-  comments  String
+  content  String
   createdAt DateTime  @default(now())
 
   //Relación inversa con el modelo Post
-  post      Post  @relation(fields: [postId], references: [id])
-  user      User  @relation(fields: [userId], references: [id])
+  post      Post  @relation(fields: [postId], references: [id], onDelete:Cascade)
+  user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  
+}
+
+model Like {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  postId String
+  post   Post  @relation(fields: [postId], references: [id], onDelete:Cascade)
+
+  @@unique([userId, postId])
+  
 }
 

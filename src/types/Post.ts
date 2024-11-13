@@ -1,19 +1,61 @@
 // src/types/Post.ts
 
-export type Post = {
-    id: string;
-    content: string;
-    createdAt: Date; // Prisma likely returns a Date object
-    image?: string | null; // Puede ser opcional o nulo
-    likes: string[]; // Un array de IDs de usuarios que le dieron "like"
-    userId: string; // ID del usuario que creó el post
-    user: {
-      name: string | null; // Puede ser null si el nombre no está disponible
-      image: string | null; // Puede ser null si el usuario no tiene imagen
-    };
-  };
+import { Prisma } from "@prisma/client";
+
+
+
+
+  export function getUserDataSelect(loggedInUserId: string) {
+    return{
+      id:true,
+      name: true,
+      image:true,
+      createdAt: true,
+      _count: {
+        select: {
+          post: true,
+          
+        },
+      },
+    } satisfies Prisma.UserSelect;
+  }
+
+  export type UserData = Prisma.UserGetPayload<{
+    select: ReturnType<typeof getUserDataSelect>;
+  }>;
+
+  export function getPostDataInclude(loggedInUserId: string) {
+    return {
+      user: {
+        select: getUserDataSelect(loggedInUserId),
+      },
+      likes: {
+        select: {
+          userId: true,
+          user: true,
+        }
+      },
+      _count: {
+        select: {
+          likes: true,
+          comments: true,
+        },
+      },
+    } satisfies Prisma.PostInclude;
+  }
+  
+  export type PostData = Prisma.PostGetPayload<{
+    include: ReturnType<typeof getPostDataInclude>;
+  }>;
+
+
 
   export interface PostsPage {
-    posts: Post[];
+    posts: PostData[];
     nextCursor: string | null;
+  }
+
+  export interface LikeInfo {
+    likes:number;
+    isLikedByUser: boolean;
   }

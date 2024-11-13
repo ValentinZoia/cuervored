@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Post } from "@/types/Post";
+import { PostData } from "@/types/Post";
 import { Dialog } from "@radix-ui/react-dialog";
 
 import { Edit2, MoreHorizontal, Trash2 } from "lucide-react";
@@ -14,7 +14,7 @@ import { Edit2, MoreHorizontal, Trash2 } from "lucide-react";
 import React, { useState } from "react";
 import DialogDeletePost from "./DialogDeletePost";
 interface DropDownMenuPostsProps {
-  post: Post;
+  post: PostData;
   className?: string;
 }
 export default function DropDownMenuPosts({

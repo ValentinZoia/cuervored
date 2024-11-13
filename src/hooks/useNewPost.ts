@@ -34,10 +34,7 @@ export const useNewPost = () => {
           variant: "success",
         });
         queryClient.invalidateQueries({
-          queryKey: ["posts"],
-          predicate(query) {
-            return !query.state.data;
-          },
+          queryKey: ["posts"]
         });
         if (fileInputRef.current) fileInputRef.current.value = "";
         if (textareaRef.current) textareaRef.current.value = "";
