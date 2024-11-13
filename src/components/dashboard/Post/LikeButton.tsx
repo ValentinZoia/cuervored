@@ -11,7 +11,7 @@ interface LikeButtonProps {
 
 export default function LikeButton({ postId, initialState }: LikeButtonProps) {
   const { data, mutate } = useLikePostMutation({ postId, initialState });
-  console.log("LIKENUTTON",data)
+
   return (
     <Button variant="ghost" size="sm" onClick={() => mutate()} >
       <Heart

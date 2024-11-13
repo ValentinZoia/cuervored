@@ -28,7 +28,6 @@ export function Post({ post }: PostProps) {
 
   const session = useSession();
 
-  console.log(likes.length)
   
   
   

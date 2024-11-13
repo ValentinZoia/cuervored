@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { transformImageToWebp } from "@/utils/transformImageToWebP";
 export const useNewPost = () => {
   const user = useSession().data?.user;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -64,7 +65,17 @@ export const useNewPost = () => {
       let imageUrl = null;
 
       if (file) {
-        const { data, error } = await uploadToCloudinary(file);
+        //Transform image to webp before uploading
+        const tranfromedFile = await transformImageToWebp(file);
+
+        //Verify if transformedFile exists
+        if(!tranfromedFile){
+          throw new Error("Failed to transform image to webp");
+        }
+        
+
+        //Upload to Cloudinary
+        const{data, error} = await uploadToCloudinary(tranfromedFile);
         if (error) {
           throw new Error("Failed to upload image");
         }

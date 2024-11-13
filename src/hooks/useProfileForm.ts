@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import { toast } from '@/components/ui/use-toast';
 import { updateProfile, deleteImage, deleteAccount } from '@/app/dashboard/profile/action';
 import { uploadToCloudinary } from '@/utils/uploadToCloudinary';
+import { transformImageToWebp } from '@/utils/transformImageToWebP';
 
 interface ImageState {
   src: string;
@@ -19,7 +20,7 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
   const [name, setName] = useState(initialName);
   const [image, setImage] = useState<ImageState>({
     src: initialImage,
-    typeUpload: 'file',
+    typeUpload: null,
   });
   const [file, setFile] = useState<File | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -53,18 +54,31 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
       return;
     }
     
-    console.log(image, file, name)
+    
     
     let imageSrc: string = image.src;
 
     if(image.typeUpload === 'file' && file){
       try {
-        const{data, error} = await uploadToCloudinary(file as File);
+
+        //Transform image to webp before uploading
+        const tranfromedFile = await transformImageToWebp(file);
+
+        //Verify if transformedFile exists
+        if(!tranfromedFile){
+          throw new Error("Failed to transform image to webp");
+        }
+        console.log(tranfromedFile)
+
+        //Upload to Cloudinary
+        const{data, error} = await uploadToCloudinary(tranfromedFile);
         if(error){
           throw new Error("Failed to upload image to Cloudinary");
         }
 
         imageSrc = data;
+
+        
       } catch (error) {
         toast({
           description: "Failed to upload image to Cloudinary",

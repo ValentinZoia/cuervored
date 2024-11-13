@@ -9,9 +9,7 @@ import {
 } from "@tanstack/react-query";
 import {
   deletePost,
-  getLikePost,
-  deleteLikePost,
-  postLikePost,
+  
 } from "./action";
 import axios from "axios";
 
