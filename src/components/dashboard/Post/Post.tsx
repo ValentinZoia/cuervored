@@ -52,9 +52,9 @@ export function Post({ post }: PostProps) {
           <Image
           src={imageUrl}
           alt="Imagen de la publicación"
-          width={600}
-          height={600}
-          className="z-0 rounded-md mb-4 m-auto"
+          width={500}
+          height={500}
+          className="z-0 mb-4 m-auto object-cover"
         />
         ):(
           <p className=" relative z-10 text-sm mb-4 mt-2 whitespace-pre-line break-words">{content}</p>

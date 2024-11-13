@@ -68,7 +68,7 @@ export function useProfileForm({ initialName, initialImage }: UseProfileFormProp
         if(!tranfromedFile){
           throw new Error("Failed to transform image to webp");
         }
-        console.log(tranfromedFile)
+        
 
         //Upload to Cloudinary
         const{data, error} = await uploadToCloudinary(tranfromedFile);

@@ -1,11 +1,10 @@
 "use server";
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
-import { createPostSchema } from "@/lib/zodSchema";
 import { getPostDataInclude } from "@/types/Post";
 import { revalidatePath } from "next/cache";
 
-export async function submitPost(textareaValue: string, imageUrl: string | null) {
+export async function submitPost(textareaValue: string | null, imageUrl: string | null) {
   try {
     
     
@@ -19,22 +18,22 @@ export async function submitPost(textareaValue: string, imageUrl: string | null)
       throw new Error("Unauthorized");
     }
 
-    //parse the data
-    const { content } = createPostSchema.parse({
-      content: textareaValue,
-    });
+    if ((!textareaValue && !imageUrl) || textareaValue === "" || imageUrl === "") {
+      throw new Error("Both fields dont be empty");
+    }
 
-    
      
     //create the post
     const post = await prisma.post.create({
       data: {
-        content,
+        content: textareaValue,
         userId: user.id,
         image: imageUrl,
       },
       include: getPostDataInclude(user.id)
     });
+
+    
 
     //if exists a problem with the post, throw an error
     if (!post) {

@@ -6,23 +6,26 @@ import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { transformImageToWebp } from "@/utils/transformImageToWebP";
+import { text } from "stream/consumers";
 export const useNewPost = () => {
   const user = useSession().data?.user;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [textareaValue, setTextareaValue] = React.useState<string>("");
+  const [textareaValue, setTextareaValue] = React.useState<string | null>(null);
   const [file, setFile] = React.useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
 
   const router = useRouter();
   const queryClient = useQueryClient();
+  
+  
 
   const mutation = useMutation({
     mutationFn: async ({
       content,
       imageUrl,
     }: {
-      content: string;
+      content: string | null;
       imageUrl: string | null;
     }) => {
       return submitPost(content, imageUrl);
@@ -57,6 +60,9 @@ export const useNewPost = () => {
   });
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if(e.target.value === ''){
+      setTextareaValue(null);
+    }
     setTextareaValue(e.target.value);
   };
 
@@ -72,7 +78,7 @@ export const useNewPost = () => {
         if(!tranfromedFile){
           throw new Error("Failed to transform image to webp");
         }
-        
+        console.log(tranfromedFile)
 
         //Upload to Cloudinary
         const{data, error} = await uploadToCloudinary(tranfromedFile);
@@ -81,8 +87,8 @@ export const useNewPost = () => {
         }
         imageUrl = data;
       }
-
-      mutation.mutate({ content: textareaValue, imageUrl });
+      console.log(!!textareaValue);
+      mutation.mutate({ content: (!!textareaValue ? textareaValue : null) , imageUrl });
     } catch (error: any) {
       toast({
         description: (error.message as string) || "Failed to create post",

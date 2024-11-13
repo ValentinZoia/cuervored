@@ -27,11 +27,7 @@ export const SignUpFormSchema =  z.object({
   });
   
 
-  // create Post
-  export const createPostSchema = z.object({
-    content: z.string().min(1, { message: 'Content field must not be empty.' }).trim(),
-  })
-
+  
 
 
   export type FormState =
