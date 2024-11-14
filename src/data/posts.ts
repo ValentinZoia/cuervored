@@ -1,4 +1,4 @@
-import { Post, PostsPage } from "@/types/Post";
+import {  PostsPage } from "@/types/Post";
 import axios from "axios";
 
 export const getPosts = async ({

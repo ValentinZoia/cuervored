@@ -15,13 +15,13 @@ const [loading, setLoading] = useState(false);
 const [error, setError] = useState<ErrorType>(null);
 
 useEffect(()=>{
-	const controller = new AbortController();
+	// const controller = new AbortController();
 	
 	setLoading(true)
 	
 	const fetchData = async () =>{
 	try{
-		const response = await fetch(url, controller);
+		const response = await fetch(url);
 		
 		if(!response.ok){
 			throw new Error("Error en la peticion");
@@ -42,7 +42,7 @@ useEffect(()=>{
 fetchData();
 
 return () => {
-	controller.abort()
+	// controller.abort()
 }
 },[url])
 	return {data, loading, error}
