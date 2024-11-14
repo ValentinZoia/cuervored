@@ -72,6 +72,11 @@ export const apiAuthPrefix =[
         path: "/api/posts/[postId]/likes",
         name: "ApiPostLikes",
         component: "ApiPostLikes",
+    },
+    {
+        path: "/api/sanlorenzo",
+        name: "ApiCASLA",
+        component: "ApiCASLA",
     }
 ]
 

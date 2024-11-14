@@ -34,7 +34,7 @@ export default auth((req) => {
 
   
   // Redirect to login if not authenticated and im not a public route
-  if(!isLoggedIn && !isPublic){
+  if(!isLoggedIn && !isPublic && !isApi){
     return NextResponse.redirect(new URL("/auth/login", req.url));
   }
 
