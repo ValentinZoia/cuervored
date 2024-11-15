@@ -41,3 +41,8 @@ export const SignUpFormSchema =  z.object({
       message?: string | undefined | null;
     }
   | undefined | null;
+
+
+  export const createCommentSchema = z.object({
+    content: z.string().min(1, { message: 'Comment field must not be empty.' }).trim(),
+  });

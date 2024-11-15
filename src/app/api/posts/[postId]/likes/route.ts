@@ -43,14 +43,14 @@ export async function GET(
       },
     });
 
-    const userLikePost = post?.likes.some(like => like.userId === session.user.id);
-    console.log(userLikePost)
-
+    
+    
 
     if (!post) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
     }
-    console.log("GET",post.likes)
+    
+    const userLikePost = post?.likes.some(like => like.userId === session.user.id);
 
     const data: LikeInfo = {
       likes: post.likes.length,

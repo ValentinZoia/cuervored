@@ -11,6 +11,7 @@ import DropDownMenuPosts from './DropDownMenuPosts'
 import { PostData} from '@/types/Post'
 import { useSession } from 'next-auth/react'
 import LikeButton from './LikeButton'
+import InputComment from './comments/InputComment'
 
 interface PostProps {
   post:PostData;
@@ -54,7 +55,7 @@ export function Post({ post }: PostProps) {
           alt="Imagen de la publicación"
           width={500}
           height={500}
-          className="z-0 mb-4 m-auto object-cover"
+          className="z-0 mb-4 mx-auto size-fit max-h-[30rem]"
         />
         ):(
           <p className=" relative z-10 text-sm mb-4 mt-2 whitespace-pre-line break-words">{content}</p>
@@ -79,11 +80,8 @@ export function Post({ post }: PostProps) {
         <div className="mt-2">
           <p className="text-sm text-muted-foreground">Ver los 45 comentarios</p>
         </div>
-        <div className="mt-2 flex items-center space-x-2">
-          <Input placeholder="Agregar un comentario..." className="flex-1" />
-          <Button size="sm" variant="ghost">
-            <Smile className="h-4 w-4" />
-          </Button>
+        <div className="mt-2 flex items-center ">
+          <InputComment post={post} />
         </div>
       </CardContent>
     </Card>

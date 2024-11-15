@@ -17,7 +17,7 @@ export const useNewPost = () => {
 
   const router = useRouter();
   const queryClient = useQueryClient();
-  
+  console.log(useSession())
   
 
   const mutation = useMutation({
