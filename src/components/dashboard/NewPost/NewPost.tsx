@@ -9,6 +9,7 @@ import { Input } from "../../ui/input";
 import PreviewImageDialogUploadImage from "../profile/PreviewImageDialogUploadImage";
 import { useNewPost } from "@/hooks/useNewPost";
 import SkeletonNewPost from "./SkeletonNewPost";
+import UserAvatar from "../Post/UserAvatar";
 
 
 
@@ -42,15 +43,7 @@ export default function NewPost() {
       <CardContent className="pt-6">
         <div className="flex items-start space-x-4">
           <Link href="/dashboard/profile">
-            <Avatar>
-              {user?.image ? (
-                <AvatarImage
-                  src={user.image}
-                  alt={user.name || "User avatar"}
-                />
-              ) : null}
-              <AvatarFallback>{fallback}</AvatarFallback>
-            </Avatar>
+           <UserAvatar username={user.name as string} avatarUrl={user.image as string} />
           </Link>
           <div className="flex-1">
             <Textarea

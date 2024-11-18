@@ -7,6 +7,7 @@ import prisma from "@/lib/prisma";
 export async function deletePost(id: string) {
   try {
     const session = await auth();
+    console.log(session)
 
     if (!session) throw new Error("Unauthorized");
 

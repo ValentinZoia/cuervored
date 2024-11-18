@@ -1,17 +1,19 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Heart, MessageCircle, Send, Smile } from 'lucide-react'
+import { Heart, MessageCircle, Send, Smile, User } from 'lucide-react'
 import { compareDate } from '@/utils/compareDate'
 import DropDownMenuPosts from './DropDownMenuPosts'
 import { PostData} from '@/types/Post'
 import { useSession } from 'next-auth/react'
 import LikeButton from './LikeButton'
 import InputComment from './comments/InputComment'
+import ShowCommentsDialog from './comments/ShowCommentsDialog'
+import UserHeaderPost from './UserHeaderPost'
 
 interface PostProps {
   post:PostData;
@@ -29,22 +31,16 @@ export function Post({ post }: PostProps) {
 
   const session = useSession();
 
+  const[openDialogComments, setOpenDialogComments] = useState(false);
+
   
   
   
   return (
+    <>
     <Card className='group relative z-10 max-w-[680px] '>
       <CardHeader className="flex flex-row justify-between relative z-10 pb-2">
-        <div className="relative z-10 flex items-center space-x-4">
-          <Avatar className='relative z-10'>
-            <AvatarImage src={avatar} alt={username} />
-            <AvatarFallback>{username[0] ?? 'Unknown'}</AvatarFallback>
-          </Avatar>
-          <div className='relative z-10'>
-            <p className="text-sm font-medium relative z-0">{username}</p>
-            <p className="text-xs text-muted-foreground relative z-10">{compareDate(timeAgo)}</p>
-          </div>
-        </div>
+        <UserHeaderPost avatarUrl={avatar} username={username} timeAgo={timeAgo} />
         {session.status === "authenticated" && session.data.user.id === postUserId && (<DropDownMenuPosts post={post} className='opacity-50 group-hover:opacity-100  border-none ' />)}
        
       </CardHeader>
@@ -66,7 +62,7 @@ export function Post({ post }: PostProps) {
             likes: likes.length,
             isLikedByUser: post.likes.some(like => like.userId === session.data?.user.id)
           }} />}
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="sm" onClick={() => setOpenDialogComments(true)}>
             <MessageCircle className="h-4 w-4 mr-2" />
             Comentar
           </Button>
@@ -77,13 +73,16 @@ export function Post({ post }: PostProps) {
         </div>
         
         {imageUrl !== '' && (<p className=" relative z-10 text-sm whitespace-pre-line break-words ">{content}</p>)}
-        <div className="mt-2">
-          <p className="text-sm text-muted-foreground">Ver los 45 comentarios</p>
+        <div className="mt-2 cursor-pointer text-sm text-muted-foreground  " onClick={()=>setOpenDialogComments(true)}>
+          {`Ver los ${post._count.comments} comentarios`}
         </div>
         <div className="mt-2 flex items-center ">
-          <InputComment post={post} />
+          <InputComment post={post}  />
         </div>
       </CardContent>
     </Card>
+    <ShowCommentsDialog post={post} open={openDialogComments} setOpen={setOpenDialogComments} />
+    </>
+    
   )
 }

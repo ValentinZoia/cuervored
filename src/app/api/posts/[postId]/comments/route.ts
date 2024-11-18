@@ -34,7 +34,7 @@ export async function GET(
         const pageSize = 5;
 
         const comments = await prisma.comment.findMany({
-            where:{id:postId},
+            where:{postId:postId},
             include: getCommentDataInclude(session.user.id),
             orderBy: {createdAt: "desc"},
             take: -pageSize - 1,
@@ -47,6 +47,8 @@ export async function GET(
         return NextResponse.json({ error: "Post not found" }, { status: 404 });
         }
 
+        
+
         const previousCursor = comments.length > pageSize ? comments[0].id : null;
 
         const data: CommentsPage = {
@@ -54,6 +56,7 @@ export async function GET(
             previousCursor,
         }
 
+        
         return NextResponse.json(data);
 
 
