@@ -31,13 +31,13 @@ export async function GET(
 
         const cursor = req.nextUrl.searchParams.get("cursor") || undefined;
 
-        const pageSize = 5;
+        const pageSize = 2;
 
         const comments = await prisma.comment.findMany({
             where:{postId:postId},
             include: getCommentDataInclude(session.user.id),
-            orderBy: {createdAt: "desc"},
-            take: -pageSize - 1,
+            orderBy: {createdAt: "asc"},
+            take: -pageSize - 1 ,
             cursor: cursor ? { id: cursor } : undefined,
         });
 

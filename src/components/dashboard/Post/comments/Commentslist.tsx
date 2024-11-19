@@ -8,6 +8,7 @@ import Comment from './Comment';
 
 export default function Commentslist({post}: {post: PostData}) {
   
+  //useInfiniteQuery pedira los comentarios de la db y los guardara en el cache para evitar re-fetch en cada render 
     const {
         data,
         isLoading,
@@ -35,7 +36,10 @@ export default function Commentslist({post}: {post: PostData}) {
         staleTime: Infinity, //<-- Cuanto tiempo mostrara la info desde cache sin hacer un refetch en segundo plano
       });
 
+
       if (isLoading) return "Cargando...";
+
+
       if(error){
         return <p>Ocurrio un error al cargar los comentarios</p>
       }

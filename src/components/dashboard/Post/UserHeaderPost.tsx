@@ -15,7 +15,7 @@ export default function UserHeaderPost({
   timeAgo,
 }: UserPostProps) {
   return (
-    <div className="relative z-10 flex items-center space-x-4">
+    <div className="relative z-10 flex items-center space-x-4 pb-2">
       <Link href={`/users/${username}`}>
         <UserAvatar avatarUrl={avatarUrl} username={username}  />
       </Link>

@@ -14,6 +14,7 @@ import LikeButton from './LikeButton'
 import InputComment from './comments/InputComment'
 import ShowCommentsDialog from './comments/ShowCommentsDialog'
 import UserHeaderPost from './UserHeaderPost'
+import ShowCommentsParagraph from './comments/ShowCommentsParagraph'
 
 interface PostProps {
   post:PostData;
@@ -74,7 +75,8 @@ export function Post({ post }: PostProps) {
         
         {imageUrl !== '' && (<p className=" relative z-10 text-sm whitespace-pre-line break-words ">{content}</p>)}
         <div className="mt-2 cursor-pointer text-sm text-muted-foreground  " onClick={()=>setOpenDialogComments(true)}>
-          {`Ver los ${post._count.comments} comentarios`}
+          {/* {`Ver los ${post._count.comments} comentarios`} */}
+          <ShowCommentsParagraph post={post} />
         </div>
         <div className="mt-2 flex items-center ">
           <InputComment post={post}  />

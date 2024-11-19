@@ -33,6 +33,8 @@ export async function GET(req: NextRequest) {
 
     if(!matches) return NextResponse.json({ error: "No se encontraron partidos", status: 500 });
     
+
+
     const matchesFiltered = matches.filter(match => match?.result as string === '-');
     
 
