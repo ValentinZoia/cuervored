@@ -50,7 +50,7 @@ export default function ShowCommentsDialog({
     <Dialog open={open} onOpenChange={setOpen}>
   <DialogTitle className="hidden">Comments</DialogTitle>
   <DialogContent
-    aria-describedby="modal-content"
+    aria-describedby={undefined}
     className="bg-black p-0 overflow-hidden w-[calc(100vw-8rem)] max-w-[1920px] mx-auto border-none"
   >
     <div className="flex flex-col h-auto sm:flex-row max-h-[calc(100%-0rem)] sm:h-auto sm:max-h-[calc(100%-0rem)] md:h-auto md:max-h-[calc(100%-0rem)] lg:h-auto lg:max-h-[calc(100%-0rem)]">

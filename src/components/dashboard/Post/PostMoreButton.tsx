@@ -17,7 +17,7 @@ interface DropDownMenuPostsProps {
   post: PostData;
   className?: string;
 }
-export default function DropDownMenuPosts({
+export default function PostMoreButton({
   post,
   className,
 }: DropDownMenuPostsProps) {

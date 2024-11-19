@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { PostData } from "@/types/Post";
 import { SendHorizonal, Smile } from "lucide-react";
 import React, { forwardRef, useRef, useState } from "react";
-import { useSubmitCommentMutation } from "./mutation";
+import { useSubmitCommentMutation } from "./mutations";
 
 interface InputCommentProps {
   post: PostData;

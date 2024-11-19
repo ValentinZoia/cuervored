@@ -1,14 +1,16 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, Divide, Loader } from "lucide-react";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import SkeletonPost from "./SkeletonPost";
 import { PostsPage, PostData as PostType } from "@/types/Post";
 import InfiniteScrollContainer from "../InfiniteScrollContainer";
 import { Post } from "./Post";
 import { getPosts } from "@/data/posts";
+import { useEffect } from "react";
 export default function PostList() {
   const session = useSession();
+
 
   // Configuración de `useInfiniteQuery`
   const {
@@ -28,7 +30,14 @@ export default function PostList() {
     initialPageParam: null as string | null,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined, // Define el siguiente parámetro de paginación
     staleTime: Infinity, //<-- Cuanto tiempo mostrara la info desde cache sin hacer un refetch en segundo plano
+    
+    
+
   });
+
+  
+
+
 
   if (!session.data) {
     return <SkeletonPost />;

@@ -18,7 +18,7 @@ export function useSubmitCommentMutation(postId: string) {
     onSuccess: async (data) => {
       //recuperamos la respuesta de la api
       const { newComment, message, ok, error } = data;
-      console.log(data) 
+       
 
       
 
@@ -54,6 +54,10 @@ export function useSubmitCommentMutation(postId: string) {
           }
         );
 
+         // Incrementa el contador global
+      queryClient.setQueryData<number>(["commentCount", postId], (oldCount) => (oldCount || 0) + 1);
+
+
         // Fuerza una actualización para consultas sin datos, asegurando que se sincronicen.
         queryClient.invalidateQueries({
           queryKey,
@@ -61,6 +65,8 @@ export function useSubmitCommentMutation(postId: string) {
             return !query.state.data; // Solo actualiza si la consulta no tiene datos.
           },
         });
+
+       
 
         //Toast success
         toast({
@@ -89,7 +95,7 @@ export function useDeleteCommentMutation() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: deleteComment,
+    mutationFn: async ({ id }: { id:string })=> deleteComment(id),
     onSuccess: async (data) => {
       //recuperamos la respuesta de la api
       const { deletedComment, ok, message } = data;
@@ -115,6 +121,11 @@ export function useDeleteCommentMutation() {
             })),
           };
         }
+      );
+
+       // Decrementa el contador global
+       queryClient.setQueryData<number>(["commentCount", deletedComment?.postId], (oldCount) =>
+        oldCount ? oldCount - 1 : 0
       );
 
       //Toast success
