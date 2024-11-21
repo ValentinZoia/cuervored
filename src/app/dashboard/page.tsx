@@ -1,4 +1,5 @@
-import ClubDashboard from "@/components/dashboard/ClubDashboard";
+
+import Publications from "@/components/dashboard/Publications";
 
 
 
@@ -9,7 +10,7 @@ export default  function DashboardPage() {
  
   return (
     <>
-    <ClubDashboard />
+    <Publications />
     </>
   );
 }

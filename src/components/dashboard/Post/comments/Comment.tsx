@@ -17,13 +17,13 @@ export default function Comment(comment: CommentProps) {
     return (
     <div className='group/comment flex gap-3 py-3'>
       <span className='hidden sm:inline'>
-        <Link href={`/users/${comment.comment.user.name}`}>
-          <UserAvatar avatarUrl={comment.comment.user.image} username={comment.comment.user.name as string} size={8} />
+        <Link href={`dashboard/users/${comment.comment.user.name}`}>
+          <UserAvatar avatarUrl={comment.comment.user.image} username={comment.comment.user.name as string} size='size-8'  />
         </Link>
       </span>
       <div>
         <div className='flex items-center gap-1 text-sm'>
-          <Link href={`/users/${comment.comment.user.name}`} className='font-medium hover:underline'>
+          <Link href={`dashboard/users/${comment.comment.user.name}`} className='font-medium hover:underline'>
             {comment.comment.user.name}
           </Link>
           <span className='text-muted-foreground'>

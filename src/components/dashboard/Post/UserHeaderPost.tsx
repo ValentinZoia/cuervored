@@ -16,12 +16,12 @@ export default function UserHeaderPost({
 }: UserPostProps) {
   return (
     <div className="relative z-10 flex items-center space-x-4 pb-2">
-      <Link href={`/users/${username}`}>
-        <UserAvatar avatarUrl={avatarUrl} username={username}  />
+      <Link href={`dashboard/users/${username}`}>
+        <UserAvatar avatarUrl={avatarUrl} username={username} size="size-10"  />
       </Link>
 
       <div className="relative z-10">
-        <Link href={`/users/${username}`}>
+        <Link href={`dashboard//users/${username}`}>
           <p className="text-sm font-medium relative z-0">{username}</p>
         </Link>
 

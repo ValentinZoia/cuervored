@@ -4,16 +4,16 @@ import React from 'react'
 
 interface UserAvatarProps {
     avatarUrl: string | null | undefined
-    username: string
-    size?: number
+    username: string |  null | undefined
+    size?: string
 }
 export default function UserAvatar({avatarUrl, username,size}: UserAvatarProps) {
-  const fallback = username[0] || <User className="h-4 w-4" />;
+  const fallback = username?.[0]  || <User className="h-4 w-4" />;
   
   return (
-    <Avatar className={`relative z-10 ${size ? "size-" + size : "size-10"} `} >
+    <Avatar className={size}  >
       {avatarUrl ?(
-        <AvatarImage src={avatarUrl} alt={username} />
+        <AvatarImage src={avatarUrl} alt={username as string}  />
       ):(null)}
             
             <AvatarFallback>{fallback}</AvatarFallback>
