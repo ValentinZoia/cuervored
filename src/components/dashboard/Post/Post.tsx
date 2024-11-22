@@ -39,7 +39,7 @@ export function Post({ post }: PostProps) {
   
   return (
     <>
-    <Card className='group relative z-10 max-w-[680px] '>
+    <Card className='group relative z-10 max-w-[680px] rounded-none'>
       <CardHeader className="flex flex-row justify-between relative z-10 pb-2">
         <UserHeaderPost avatarUrl={avatar} username={username} timeAgo={timeAgo} />
         {session.status === "authenticated" && session.data.user.id === postUserId && (<PostMoreButton post={post} className='opacity-50 group-hover:opacity-100  border-none ' />)}
@@ -48,11 +48,12 @@ export function Post({ post }: PostProps) {
       <CardContent className="pb-2 relative z-10">
         {imageUrl ? (
           <Image
+          onClick={() => setOpenDialogComments(true)}
           src={imageUrl}
           alt="Imagen de la publicación"
           width={500}
           height={500}
-          className="z-0 mb-4 mx-auto size-fit max-h-[30rem]"
+          className="cursor-pointer z-0 mb-4 mx-auto size-fit max-h-[30rem]"
         />
         ):(
           <p className=" relative z-10 text-sm mb-4 mt-2 whitespace-pre-line break-words">{content}</p>

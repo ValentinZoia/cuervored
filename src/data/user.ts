@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { getUserDataSelect, UserData } from "@/types/Post";
 import { User } from "@prisma/client";
+import { notFound } from "next/navigation";
 
 
 export const getUserById = async (id:string):Promise<User | null> =>{
@@ -44,7 +45,7 @@ export const getUserByUsername = async (username:string, loggedInUserId:string):
           });
         
           if (!user) {
-            throw new Error("User not found");
+            notFound();
           }
         
           return user ;

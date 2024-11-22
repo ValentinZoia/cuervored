@@ -21,7 +21,7 @@ export default function UserHeaderPost({
       </Link>
 
       <div className="relative z-10">
-        <Link href={`dashboard//users/${username}`}>
+        <Link href={`dashboard/users/${username}`}>
           <p className="text-sm font-medium relative z-0">{username}</p>
         </Link>
 

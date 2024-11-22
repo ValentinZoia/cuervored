@@ -63,7 +63,7 @@ export const authOptions = {
         if (!isPasswordCorrect) {
           throw new Error("Password did not match");
         }
-        console.log(user.image)
+        
 
         return {
           id: user.id,

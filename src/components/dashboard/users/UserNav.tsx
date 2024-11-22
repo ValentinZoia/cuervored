@@ -17,7 +17,7 @@ export default function UserNav({username}:UserNavProps) {
   };
   
     return (
-    <div className='w-full flex justify-start items-center gap-4 h-[53px] px-2'>
+    <div className='border-x-[1px] border-t-[1px] w-full flex justify-start items-center gap-4 h-[53px] px-2 bg-card'>
         <div>
             <Button variant='ghost' className='rounded-full' onClick={handleBack}>
                 <ArrowLeft className='size-5' />

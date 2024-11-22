@@ -16,9 +16,20 @@ export default async function UserProfilePage({params:{username}}:UserProfilePag
         )
     }
 
+    if(!username){
+        return(
+            <p>
+                Usuario no encontrado
+            </p>
+        )
+    }
+
     const user = await getUserByUsername(username, session.user.id);
     
     return(
-    <UserCard user={user} />
+        <div className="h-screen">
+           <UserCard user={user} loggedInUserid={session.user.id}/> 
+        </div>
+    
 )
 }

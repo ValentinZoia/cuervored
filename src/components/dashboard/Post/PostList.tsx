@@ -1,13 +1,13 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle, Divide, Loader } from "lucide-react";
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import { AlertCircle,  Loader } from "lucide-react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import SkeletonPost from "./SkeletonPost";
-import { PostsPage, PostData as PostType } from "@/types/Post";
+import { PostData as PostType } from "@/types/Post";
 import InfiniteScrollContainer from "../InfiniteScrollContainer";
 import { Post } from "./Post";
 import { getPosts } from "@/data/posts";
-import { useEffect } from "react";
+
 export default function PostList() {
   const session = useSession();
 
@@ -39,9 +39,6 @@ export default function PostList() {
 
 
 
-  if (!session.data) {
-    return <SkeletonPost />;
-  }
 
   if (isLoading) {
     return <SkeletonPost />;
@@ -59,7 +56,7 @@ export default function PostList() {
     );
   }
 
-  if (data && session.data ) {
+  if (data && data.pages.length > 0) {
     
     return (
       <InfiniteScrollContainer
@@ -72,5 +69,12 @@ export default function PostList() {
         {isFetchingNextPage && <Loader className="mx-auto animate-spin" />}
       </InfiniteScrollContainer>
     );
+  }
+
+  if(data && data.pages.length === 0) {
+    return (
+      <p>No hay publicaciones</p>
+    )
+
   }
 }

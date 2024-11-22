@@ -42,7 +42,7 @@ export default function NewPost() {
     <Card className="max-w-[680px] mb-6 bg-card">
       <CardContent className="pt-6">
         <div className="flex items-start space-x-4">
-          <Link href="/dashboard/profile">
+          <Link href={`/dashboard/users/${user.name}`}>
            <UserAvatar username={user.name as string} avatarUrl={user.image as string} />
           </Link>
           <div className="flex-1">

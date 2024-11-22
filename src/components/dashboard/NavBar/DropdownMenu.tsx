@@ -58,7 +58,7 @@ export function DropdownMenuMyAccount({
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
-            <Link href="/dashboard/profile" className="w-full cursor-pointer">
+            <Link href={`/dashboard/users/${user?.name}`} className="w-full cursor-pointer">
               <User className="mr-2 w-4 h-4" />
               <span>Profile</span>
             </Link>

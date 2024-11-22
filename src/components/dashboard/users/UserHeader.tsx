@@ -2,13 +2,16 @@ import React from 'react'
 import UserAvatar from '../Post/UserAvatar'
 import { UserData } from '@/types/Post'
 import { Button } from '@/components/ui/button'
+import EditProfileButton from './EditProfileButton'
+import FollowButton from './FollowButton'
 
 interface UserHeaderProps {
     user:UserData
+    loggedInUserid: string;
 }
-export default function UserHeader({user}:UserHeaderProps) {
+export default function UserHeader({user, loggedInUserid}:UserHeaderProps) {
   return (
-    <div className='w-full  h-auto flex flex-col items-stretch'>
+    <div className='w-full bg-card border-x-[1px]  h-auto flex flex-col items-stretch'>
         <div className='w-full h-1/2 bg-slate-700'>
 
         </div>
@@ -24,7 +27,12 @@ export default function UserHeader({user}:UserHeaderProps) {
                     </div>
                 </div>
                 <div className=''>
-                    <Button variant='default' className='text-sm'>Edit Profile</Button>
+                    {user.id === loggedInUserid ? (
+                        <EditProfileButton />
+                    ) : (
+                        <FollowButton />
+                    )}
+                    
                 </div>
             </div>
             <div className='w-full flex flex-col justify-start items-start mb-4'>
