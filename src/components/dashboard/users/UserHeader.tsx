@@ -28,7 +28,7 @@ export default function UserHeader({user, loggedInUserid}:UserHeaderProps) {
                 </div>
                 <div className=''>
                     {user.id === loggedInUserid ? (
-                        <EditProfileButton />
+                        <EditProfileButton user={user} />
                     ) : (
                         <FollowButton />
                     )}
@@ -36,7 +36,7 @@ export default function UserHeader({user, loggedInUserid}:UserHeaderProps) {
                 </div>
             </div>
             <div className='w-full flex flex-col justify-start items-start mb-4'>
-                <h1 className='text-2xl font-bold'>{user?.name}</h1>
+                <h1 className='text-2xl font-bold'>{user?.fullName ? user?.fullName : user?.name ? user?.name : "Unknown"}</h1>
                 <span className='text-muted-foreground'>@{user?.name}</span>
             </div>
             <div className='flex gap-4'>

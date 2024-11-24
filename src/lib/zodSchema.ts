@@ -2,6 +2,8 @@ import {z} from "zod";
 
 export const SignUpFormSchema =  z.object({
     email: z.string().min(1, { message: 'Email field must not be empty.' }).email({ message: 'Please enter a valid email.' }).trim(),
+    username: z.string().min(1, { message: 'Username field must not be empty.' }).trim(),
+    full_name: z.string().min(1, { message: 'Full name field must not be empty.' }).trim(),
     password: z
       .string()
       .min(1, { message: 'Password field must not be empty.' })
@@ -35,6 +37,8 @@ export const SignUpFormSchema =  z.object({
       errors?: {
         general?: string[] | undefined | null;
         email?: string[] | undefined | null;
+        username?: string[] | undefined | null;
+        full_name?: string[] | undefined | null;
         password?: string[] | undefined | null;
         confirmPassword?: string[] | undefined | null;
       } | undefined | null;

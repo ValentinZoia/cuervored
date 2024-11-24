@@ -19,7 +19,7 @@ export default function UserCard({user, loggedInUserid}:UserCardProps) {
     
     return(
         <Card className="relative z-10 max-w-[680px] md:w-[680px] lg:w-[680px] bg-transparent border-none shadow-none  lg:col-span-2 mx-auto w-[100%]">
-            <UserNav  username={user.name}/>
+            <UserNav  username={user.name} full_name={user.fullName}/>
             <UserHeader user={user} loggedInUserid={loggedInUserid}/>
             <UserPosts userId={user.id}/>
             

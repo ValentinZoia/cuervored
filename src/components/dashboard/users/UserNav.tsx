@@ -6,10 +6,11 @@ import React from 'react'
 
 interface UserNavProps {
     username: string | null
+    full_name: string | null
 }
 
 
-export default function UserNav({username}:UserNavProps) {
+export default function UserNav({username, full_name}:UserNavProps) {
   const router = useRouter();
 
   const handleBack = () => {
@@ -26,7 +27,7 @@ export default function UserNav({username}:UserNavProps) {
         </div>
         <div>
             <h1 className='text-2xl font-bold'>
-                {username ? username : "User"}
+                {full_name ? full_name : username ? username : "Unknown"}
             </h1>
 
         </div>

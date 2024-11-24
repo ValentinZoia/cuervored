@@ -14,6 +14,8 @@ export async function signup(
   const validatedFields = SignUpFormSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
+    username: formData.get("username"),
+    full_name: formData.get("full_name"),
     confirmPassword: formData.get("confirmPassword"),
   });
 
@@ -25,7 +27,7 @@ export async function signup(
     };
   }
 
-  const { email, password } = validatedFields.data;
+  const { email, password, username,full_name } = validatedFields.data;
 
   //Verify if the user already exists
   const userFound = await prisma.user.findUnique({
@@ -42,12 +44,28 @@ export async function signup(
     };
   }
 
+  //Verify if the username already exists
+  const usernameFound = await prisma.user.findUnique({
+    where: {
+      name: username,
+    },
+  });
+  if (usernameFound) {
+    return {
+      message: null,
+      errors: {
+        general: ["An user with that username already exists"],
+      },
+    };
+  }
+
   // 2. Create user
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const newUser = await prisma.user.create({
     data: {
-      name: email,
+      name: username,
+      fullName: full_name,
       email,
       password: hashedPassword,
 
