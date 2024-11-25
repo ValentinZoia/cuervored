@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 import { Input } from "../../ui/input";
-import PreviewImageDialogUploadImage from "../profile/PreviewImageDialogUploadImage";
+import PreviewImageToPost from "./PreviewImageToPost";
 import { useNewPost } from "@/hooks/useNewPost";
 import SkeletonNewPost from "./SkeletonNewPost";
 import UserAvatar from "../Post/UserAvatar";
@@ -54,7 +54,7 @@ export default function NewPost() {
             />
             <div className="w-fit">
               {previewUrl && (
-                <PreviewImageDialogUploadImage
+                <PreviewImageToPost
                   previewUrlSrc={previewUrl}
                   handleRemovePreview={handleRemovePreview}
                 />
