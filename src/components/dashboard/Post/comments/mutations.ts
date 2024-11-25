@@ -13,6 +13,8 @@ export function useSubmitCommentMutation(postId: string) {
 
   const queryClient = useQueryClient();
 
+  
+
   const mutation = useMutation({
     mutationFn: async ({ post, comment }: { post: PostData; comment: string })=> submitComment({post, comment}),
     onSuccess: async (data) => {

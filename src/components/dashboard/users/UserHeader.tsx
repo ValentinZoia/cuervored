@@ -2,7 +2,7 @@ import React from 'react'
 import UserAvatar from '../Post/UserAvatar'
 import { UserData } from '@/types/Post'
 import { Button } from '@/components/ui/button'
-import EditProfileButton from './EditProfileButton'
+import EditProfileButton from './EditProfile/EditProfileButton'
 import FollowButton from './FollowButton'
 
 interface UserHeaderProps {
@@ -38,6 +38,7 @@ export default function UserHeader({user, loggedInUserid}:UserHeaderProps) {
             <div className='w-full flex flex-col justify-start items-start mb-4'>
                 <h1 className='text-2xl font-bold'>{user?.fullName ? user?.fullName : user?.name ? user?.name : "Unknown"}</h1>
                 <span className='text-muted-foreground'>@{user?.name}</span>
+                <p className='text-sm whitespace-pre-line break-words'>{user?.bio}</p>
             </div>
             <div className='flex gap-4'>
                 <p className='text-sm'>0<span className='text-muted-foreground '> Following</span></p>

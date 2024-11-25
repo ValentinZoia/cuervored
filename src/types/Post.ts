@@ -10,6 +10,7 @@ import { Prisma } from "@prisma/client";
       id:true,
       name: true,
       fullName: true,
+      bio: true,
       image:true,
       createdAt: true,
       _count: {

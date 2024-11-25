@@ -60,7 +60,8 @@
 
 @layer base {
   :root {
-    
+    --redSanlorenzo:0 83% 47%;
+    --blueSanlorenzo:208.125 59.25925925925925% 21.176470588235297%;
     --background: 210 16% 96%; /* Gris muy claro */
     --foreground: 230 100% 22%; /* Azul oscuro */
     --card: 0 0% 100%; /* Blanco */
@@ -89,6 +90,8 @@
   }
 
   .dark {
+    --redSanlorenzo:0 83% 47%;
+    --blueSanlorenzo:208.125 59.25925925925925% 21.176470588235297%;
     --radius: 0.5rem; /* border-radius para tema oscuro */
     --background: 230 100% 22%; /* Azul muy oscuro */
     --foreground: 0 0% 100%; /* Blanco */

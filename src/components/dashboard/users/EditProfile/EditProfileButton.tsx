@@ -21,7 +21,7 @@ export default function EditProfileButton({ user }: EditProfileButtonProps) {
       Edit Profile
     </Button>
 
-    <EditProfileDialog user={user} isOpen={showDialog} onClose={() => setShowDialog(false)} />
+    <EditProfileDialog user={user} isOpen={showDialog} onClose={setShowDialog} />
     </>
     
   );
