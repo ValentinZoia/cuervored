@@ -145,7 +145,9 @@ export default function EditProfileForm({ user, onClose }: EditProfileFormProps)
             )}
           />
 
-          <Button type="submit">Save changes</Button>
+          <Button type="submit">
+          {mutation.isPending ? "Guardando..." : "Guardar Cambios"}
+          </Button>
         </form>
       </Form>
     </>

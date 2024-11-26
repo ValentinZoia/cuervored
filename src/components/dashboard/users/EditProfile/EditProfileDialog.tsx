@@ -26,7 +26,7 @@ export default function EditProfileDialog({user, isOpen, onClose}: EditProfileDi
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
+          <DialogTitle>Editar Perfil</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <EditProfileForm user={user} onClose={onClose}  />

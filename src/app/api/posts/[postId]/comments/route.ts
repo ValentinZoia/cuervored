@@ -31,7 +31,7 @@ export async function GET(
 
         const cursor = req.nextUrl.searchParams.get("cursor") || undefined;
 
-        const pageSize = 2;
+        const pageSize = 15;
 
         const comments = await prisma.comment.findMany({
             where:{postId:postId},

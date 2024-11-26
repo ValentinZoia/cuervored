@@ -1,5 +1,5 @@
 "use client";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+
 import { ImageIcon, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,6 +10,7 @@ import PreviewImageToPost from "./PreviewImageToPost";
 import { useNewPost } from "@/hooks/useNewPost";
 import SkeletonNewPost from "./SkeletonNewPost";
 import UserAvatar from "../Post/UserAvatar";
+import { CaslaButton } from "@/components/ui/CaslaButton";
 
 
 
@@ -77,14 +78,15 @@ export default function NewPost() {
                 onChange={handleFileChange}
                 className="hidden"
               />
-              <Button
+              <CaslaButton
+              variant="blueToRed"
                 className="relative z-10"
                 size="sm"
                 onClick={handleSubmit}
                 disabled={(!textareaValue && !previewUrl) || mutation.isPending}
               >
                 {mutation.isPending ? "Publicando..." : "Publicar"}
-              </Button>
+              </CaslaButton>
             </div>
           </div>
         </div>

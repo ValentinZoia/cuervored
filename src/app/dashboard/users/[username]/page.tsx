@@ -27,7 +27,7 @@ export default async function UserProfilePage({params:{username}}:UserProfilePag
     const user = await getUserByUsername(username, session.user.id);
     
     return(
-        <div className="h-screen">
+        <div className="h-fit">
            <UserCard user={user} loggedInUserid={session.user.id}/> 
         </div>
     

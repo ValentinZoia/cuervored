@@ -11,9 +11,9 @@ interface DashboardLayoutProps {
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
     <>
-      <div className="min-h-screen w-full ">
+      <div className="min-h-screen w-full bg-card ">
         <NavBar />
-        <main className="flex-1  container py-8 px-2">
+        <main className="flex-1  container py-8 px-2 ">
           <div className=" grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Columna izquierda: Proximos partidos y Usarios recomendados */}
             <div className="space-y-6">

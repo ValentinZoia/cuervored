@@ -3,25 +3,27 @@
 @tailwind utilities;
 
 .example2 {
+  --blueSanlorenzo: #003366; /* Azul San Lorenzo */
+  --redSanlorenzo: #d94a3d; /* Rojo San Lorenzo */
   --background: #e7ecef; /* Gris muy claro */
-  --foreground: #001f44; /* Azul oscuro */
+  --foreground: #00264d; /* Azul oscuro */
   --card: #ffffff; /* Blanco */
-  --card-foreground: #001f44; /* Azul oscuro */
+  --card-foreground: #00264d; /* Azul oscuro */
   --popover: #ffffff; /* Blanco */
   --popover-foreground: #1b1d1f; /* Gris oscuro */
-  --primary: #121214; /* Gris casi negro */
+  --primary: #00264d; /* Azul muy oscuro */
   --primary-foreground: #fafafa; /* Blanco */
   --secondary: #f5f7fa; /* Gris claro */
-  --secondary-foreground: #121214; /* Gris oscuro */
+  --secondary-foreground: #1b1d1f; /* Gris oscuro */
   --muted: #f5f7fa; /* Gris claro */
-  --muted-foreground: #777d8a; /* Gris oscuro */
+  --muted-foreground: #777d8a; /* Gris medio */
   --accent: #f5f7fa; /* Gris claro */
-  --accent-foreground: #121214; /* Gris oscuro */
+  --accent-foreground: #1b1d1f; /* Gris oscuro */
   --destructive: #d94a3d; /* Rojo intenso */
   --destructive-foreground: #fafafa; /* Blanco */
   --border: #e1e4e8; /* Gris claro */
   --input: #e1e4e8; /* Gris claro */
-  --ring: #121214; /* Gris oscuro */
+  --ring: #00264d; /* Azul oscuro */
   --radius: 0.5rem; /* Valor de border-radius */
   --chart-1: #d32f2f; /* Rojo */
   --chart-2: #67b38f; /* Verde */
@@ -31,31 +33,33 @@
 }
 
 .example {
+  --blueSanlorenzo: #003366; /* Azul San Lorenzo */
+  --redSanlorenzo: #d94a3d; /* Rojo San Lorenzo */
   --radius: 0.5rem; /* border-radius para tema oscuro */
-    --background: #001f44; /* Azul muy oscuro */
-    --foreground: #ffffff; /* Blanco */
-    --card: #1b3a5b; /* Azul ligeramente más claro */
-    --card-foreground: #ffffff; /* Blanco */
-    --popover: #1b3a5b; /* Azul oscuro */
-    --popover-foreground: #ffffff; /* Blanco */
-    --primary: #d94a3d; /* Rojo San Lorenzo */
-    --primary-foreground: #ffffff; /* Blanco */
-    --secondary: #003366; /* Azul San Lorenzo */
-    --secondary-foreground: #ffffff; /* Blanco */
-    --muted: #1b3a5b; /* Azul ligeramente más claro */
-    --muted-foreground: #cdd6db; /* Gris claro */
-    --accent: #d94a3d; /* Rojo San Lorenzo */
-    --accent-foreground: #ffffff; /* Blanco */
-    --destructive: #c44537; /* Rojo fuerte */
-    --destructive-foreground: #ffffff; /* Blanco */
-    --border: #3a516c; /* Gris azulado oscuro */
-    --input: #1b3a5b; /* Azul muy oscuro */
-    --ring: #d94a3d; /* Rojo San Lorenzo */
-    --chart-1: #d94a3d; /* Rojo */
-    --chart-2: #003366; /* Azul */
-    --chart-3: #ffa000; /* Amarillo */
-    --chart-4: #1aa991; /* Verde */
-    --chart-5: #4f6b8e; /* Azul */
+  --background: #001f44; /* Azul muy oscuro */
+  --foreground: #ffffff; /* Blanco */
+  --card: #1b3a5b; /* Azul ligeramente más claro */
+  --card-foreground: #ffffff; /* Blanco */
+  --popover: #1b3a5b; /* Azul oscuro */
+  --popover-foreground: #ffffff; /* Blanco */
+  --primary: #d94a3d; /* Rojo San Lorenzo */
+  --primary-foreground: #ffffff; /* Blanco */
+  --secondary: #003366; /* Azul San Lorenzo */
+  --secondary-foreground: #ffffff; /* Blanco */
+  --muted: #1b3a5b; /* Azul ligeramente más claro */
+  --muted-foreground: #cdd6db; /* Gris claro */
+  --accent: #d94a3d; /* Rojo San Lorenzo */
+  --accent-foreground: #ffffff; /* Blanco */
+  --destructive: #c44537; /* Rojo fuerte */
+  --destructive-foreground: #ffffff; /* Blanco */
+  --border: #3a516c; /* Gris azulado oscuro */
+  --input: #1b3a5b; /* Azul muy oscuro */
+  --ring: #d94a3d; /* Rojo San Lorenzo */
+  --chart-1: #d94a3d; /* Rojo */
+  --chart-2: #003366; /* Azul */
+  --chart-3: #ffa000; /* Amarillo */
+  --chart-4: #1aa991; /* Verde */
+  --chart-5: #4f6b8e; /* Azul */
 }
 
 @layer base {
@@ -134,4 +138,37 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.san-lorenzo-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.san-lorenzo-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right, 
+    #003366, 
+    #003366 45%, 
+    #003366 45%, 
+    #003366 55%, 
+    #003366 55%, 
+    #003366 100%
+  );
+  transition: left 0.3s ease-in-out;
+}
+
+.san-lorenzo-effect:hover::before {
+  left: 0;
+}
+
+.san-lorenzo-effect > * {
+  position: relative;
+  z-index: 1;
 }

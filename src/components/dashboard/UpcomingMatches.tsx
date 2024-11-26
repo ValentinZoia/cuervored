@@ -7,6 +7,7 @@ import { useFetch } from "@/hooks/useFetch";
 import { useQuery } from "@tanstack/react-query";
 import { getMatches } from "@/data/matches";
 import { MatchesData } from "@/types/Match";
+import { CaslaButton } from "../ui/CaslaButton";
 
 
 
@@ -62,12 +63,12 @@ function UpcomingMatchesData() {
             </p>
             {match.homeOrAway === "L" && (
               <div className="flex  mt-1 flex-wrap gap-2">
-                <Button size="sm" variant="outline">
+                <CaslaButton size="sm" variant="blueToRed">
                   Voy a la cancha
-                </Button>
-                <Button size="sm" variant="outline">
+                </CaslaButton>
+                <CaslaButton size="sm" variant="redToBlue">
                   Ver quienes van
-                </Button>
+                </CaslaButton>
               </div>
             )}
           </CardContent>

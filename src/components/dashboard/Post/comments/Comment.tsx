@@ -16,7 +16,7 @@ export default function Comment(comment: CommentProps) {
   
     return (
     <div className='group/comment flex gap-3 py-3'>
-      <span className='hidden sm:inline'>
+      <span className='inline'>
         <Link href={`dashboard/users/${comment.comment.user.name}`}>
           <UserAvatar avatarUrl={comment.comment.user.image} username={comment.comment.user.name as string} size='size-10'  />
         </Link>
