@@ -6,14 +6,14 @@ import { getUserById } from "@/data/user";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params: { userId } }: { params: { userId: string } }
 ) {
   try {
     
-    const {id} = params;
+    
 
-    if (!id) {
-        return NextResponse.json({ error: "ID is required" }, { status: 400 });
+    if (!userId) {
+        return NextResponse.json({ error: "User ID is required" }, { status: 400 });
     }
 
     const body = await req.json();
@@ -25,7 +25,7 @@ export async function PUT(
     
 
     const updatedUser = await prisma.user.update({
-      where: { id: id},
+      where: { id: userId},
       data: { name, image },
     });
     

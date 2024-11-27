@@ -6,7 +6,7 @@ import { getPostDataInclude, PostsPage } from "@/types/Post";
 import { auth } from "@/auth";
 import { Prisma } from "@prisma/client";
 
-export async function GET(req: NextRequest,{ params }: { params: { id: string }}) {
+export async function GET(req: NextRequest,{ params: { userId } }: { params: { userId: string } }) {
   try {
 
 
@@ -14,7 +14,7 @@ export async function GET(req: NextRequest,{ params }: { params: { id: string }}
     const cursor = req.nextUrl.searchParams.get("cursor") || undefined;
     const pageSize = 10;
     
-    if(!params.id){
+    if(!userId){
         return NextResponse.json({ error: "ID is required" }, { status: 400 });
     }
 
@@ -34,7 +34,7 @@ export async function GET(req: NextRequest,{ params }: { params: { id: string }}
 
     // get posts to db
     const posts = await prisma.post.findMany({
-        where:{userId: params.id},
+        where:{userId: userId},
       include:{
         ...getPostDataInclude(session.user.id),
         _count:{

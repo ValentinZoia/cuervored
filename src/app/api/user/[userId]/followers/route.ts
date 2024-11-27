@@ -1,12 +1,12 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
-import { getLikeDataInclude, LikeInfo } from "@/types/Post";
+import { FollowerInfo, getUserDataSelect, LikeInfo } from "@/types/Post";
 import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params: { postId } }: { params: { postId: string } }
+  { params: { userId } }: { params: { userId: string } }
 ) {
   try {
     // Check if the user is authenticated
@@ -18,26 +18,26 @@ export async function GET(
       );
     }
 
-    //Check if there is a postId
-    if (!postId) {
+    //Check if there is a userId
+    if (!userId) {
       return NextResponse.json(
         { error: "Post ID is required" },
         { status: 400 }
       );
     }
 
-    const post = await prisma.post.findUnique({
-      where: { id: postId },
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
       select: {
-        likes: {
-        
+        followers: {
+        where:{followerId:session.user.id},
           select: {
-            userId: true,
+            followerId: true,
           },
         },
         _count: {
           select: {
-            likes: true,
+            followers: true,
           },
         },
       },
@@ -46,15 +46,15 @@ export async function GET(
     
     
 
-    if (!post) {
+    if (!user) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
     }
     
-    const userLikePost = post?.likes.some(like => like.userId === session.user.id);
+    
 
-    const data: LikeInfo = {
-      likes: post.likes.length,
-      isLikedByUser: userLikePost as boolean,
+    const data:FollowerInfo = {
+        followers: user._count.followers,
+        isFollowedByUser: !!user.followers.length,
     };
 
     return NextResponse.json(data);
@@ -90,7 +90,7 @@ export async function GET(
 
 export async function POST(
   req: NextRequest,
-  { params: { postId } }: { params: { postId: string } }
+  { params: { userId } }: { params: { userId: string } }
 ) {
   try {
     // Check if the user is authenticated
@@ -102,35 +102,34 @@ export async function POST(
       );
     }
 
-    //Check if there is a postId
-    if (!postId) {
+    //Check if there is a userId
+    if (!userId) {
       return NextResponse.json(
-        { error: "Post ID is required" },
+        { error: "User ID is required" },
         { status: 400 }
       );
     }
 
-    const like = await prisma.like.create({
+    const follow = await prisma.follow.create({
       data: {
-        userId: session.user.id,
-        postId
+        followerId: session.user.id,
+        followingId:userId
       },
-      include: getLikeDataInclude(session.user.id),
+      
     });
 
-    const updatedPost = await prisma.post.findUnique({
-      where: { id: postId },
+    const updatedUser = await prisma.user.findUnique({
+      where: { id: userId },
       include: {
         _count: {
-          select: { likes: true }
+          select: { followers: true }
         }
       }
     });
 
-    console.log(like)
-    console.log(updatedPost?._count)
+    console.log(updatedUser?._count.followers)
     
-    return NextResponse.json({ likes: updatedPost?._count.likes });
+    return NextResponse.json({ followers: updatedUser?._count.followers });
 
 
     
@@ -166,7 +165,7 @@ export async function POST(
 
 export async function DELETE(
   req: NextRequest,
-  { params: { postId } }: { params: { postId: string } }
+  { params: { userId } }: { params: { userId: string } }
 ) {
   try {
     // Check if the user is authenticated
@@ -178,35 +177,34 @@ export async function DELETE(
       );
     }
 
-    //Check if there is a postId
-    if (!postId) {
+    //Check if there is a userId
+    if (!userId) {
       return NextResponse.json(
         { error: "Post ID is required" },
         { status: 400 }
       );
     }
 
-    const like = await prisma.like.deleteMany({
+    await prisma.follow.deleteMany({
       where: {
-        userId: session.user.id,
-        postId,
+        followerId: session.user.id,
+        followingId:userId,
       },
-      
     });
 
-    
+   
 
-    const updatedPost = await prisma.post.findUnique({
-      where: { id: postId },
+    const updatedUser = await prisma.user.findUnique({
+      where: { id: userId },
       include: {
         _count: {
-          select: { likes: true }
+          select: { followers: true }
         }
       }
     });
 
-    console.log("DELETE", updatedPost?._count.likes)
-    return NextResponse.json({ likes: updatedPost?._count.likes });
+    console.log("DELETE", updatedUser?._count.followers)
+    return NextResponse.json({ followers: updatedUser?._count.followers });
 
 
   } catch (error: any) {

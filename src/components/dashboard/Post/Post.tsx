@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Heart, MessageCircle, Send, Smile, User } from 'lucide-react'
 import { compareDate } from '@/utils/compareDate'
 import PostMoreButton from './PostMoreButton'
-import { PostData} from '@/types/Post'
+import { LikeInfo, PostData} from '@/types/Post'
 import { useSession } from 'next-auth/react'
 import LikeButton from './LikeButton'
 import InputComment from './comments/InputComment'
@@ -33,6 +33,11 @@ export function Post({ post }: PostProps) {
   const session = useSession();
 
   const[openDialogComments, setOpenDialogComments] = useState(false);
+
+  const LikeInfo: LikeInfo ={
+    likes: post._count.likes,
+    isLikedByUser: post.likes.some(like => like.userId === session.data?.user.id)
+  }
 
   
   
@@ -60,10 +65,7 @@ export function Post({ post }: PostProps) {
         )}
         
         <div className="flex items-center space-x-2 sm:space-x-4 mb-2">
-          {<LikeButton postId={post.id} initialState={{
-            likes: likes.length,
-            isLikedByUser: post.likes.some(like => like.userId === session.data?.user.id)
-          }} />}
+          {<LikeButton postId={post.id} initialState={LikeInfo} />}
           <Button variant="ghost" size="sm" onClick={() => setOpenDialogComments(true)}>
             <MessageCircle className="h-4 w-4 mr-2" />
             <span className='hidden sm:inline'>Comentar</span>

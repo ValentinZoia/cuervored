@@ -1,15 +1,28 @@
 import React from "react";
 import UserAvatar from "../Post/UserAvatar";
-import { UserData } from "@/types/Post";
+import { FollowerInfo, UserData } from "@/types/Post";
 import { Button } from "@/components/ui/button";
 import EditProfileButton from "./EditProfile/EditProfileButton";
 import FollowButton from "./FollowButton";
+import FollowerCount from "./FollowerCount";
 
 interface UserHeaderProps {
   user: UserData;
-  loggedInUserid: string;
+  loggedInUserId: string;
 }
-export default function UserHeader({ user, loggedInUserid }: UserHeaderProps) {
+export default function UserHeader({ user, loggedInUserId }: UserHeaderProps) {
+  
+  const followerInfo: FollowerInfo = {
+    followers: user._count.followers,
+    isFollowedByUser: user.followers.some(
+      ({ followerId }) => followerId === loggedInUserId,
+    ),
+  };
+
+  console.log(user.followers)
+  
+  
+  
   return (
     <div className="w-full bg-card border-x-[1px]  h-auto flex flex-col items-stretch">
       <div className="w-full h-1/2 bg-slate-700"></div>
@@ -26,10 +39,10 @@ export default function UserHeader({ user, loggedInUserid }: UserHeaderProps) {
             </div>
           </div>
           <div className="">
-            {user.id === loggedInUserid ? (
+            {user.id === loggedInUserId ? (
               <EditProfileButton user={user} />
             ) : (
-              <FollowButton />
+              <FollowButton userId={user.id} initialState={followerInfo} />
             )}
           </div>
         </div>
@@ -54,7 +67,7 @@ export default function UserHeader({ user, loggedInUserid }: UserHeaderProps) {
             0<span className="text-muted-foreground "> Following</span>
           </p>
           <p className="text-sm">
-            0<span className="text-muted-foreground"> Followers</span>
+            <FollowerCount userId={user.id} initialState={followerInfo} />
           </p>
         </div>
       </div>

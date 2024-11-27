@@ -72,10 +72,12 @@ export default function ShowCommentsDialog({
         } h-full sm:max-h-[calc(100vh-4rem)]`}
       >
         {/* Header */}
-        <div className="border-b w-[calc(100%-30px)] flex flex-col justify-start pb-2" >
+        <div className="border-b  w-[calc(100%-30px)] flex flex-col justify-start pb-2" >
           <UserHeaderPost avatarUrl={avatar} username={username} timeAgo={timeAgo} />
-
-          <p className="text-sm">{content}</p>
+          <div className="max-h-40 overflow-y-auto">
+            <p className="text-sm  whitespace-pre-line break-words">{content}</p>
+          </div>
+          
         </div>
 
         {/* Comments Section */}

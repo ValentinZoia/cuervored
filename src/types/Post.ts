@@ -13,9 +13,18 @@ import { Prisma } from "@prisma/client";
       bio: true,
       image:true,
       createdAt: true,
+      followers:{
+        where:{
+          followerId:loggedInUserId
+        },
+        select:{
+          followerId:true
+        },
+      },
       _count: {
         select: {
           post: true,
+          followers: true,
           
         },
       },
@@ -57,10 +66,7 @@ import { Prisma } from "@prisma/client";
     nextCursor: string | null;
   }
 
-  export interface LikeInfo {
-    likes:number;
-    isLikedByUser: boolean;
-  }
+  
 
   export function getCommentDataInclude(loggedInUserId: string) {
     return {
@@ -77,4 +83,33 @@ import { Prisma } from "@prisma/client";
   export interface CommentsPage {
     comments: CommentData[];
     previousCursor: string | null;
+  }
+  
+
+
+
+  export function getLikeDataInclude(loggedInUserId: string) {
+    return {
+      user: {
+        select: getUserDataSelect(loggedInUserId),
+      },
+    } satisfies Prisma.LikeInclude;
+  }
+  
+  export type LikeData = Prisma.LikeGetPayload<{
+    include: ReturnType<typeof getLikeDataInclude>;
+  }>;
+
+
+  export interface FollowerInfo {
+    followers: number;
+    isFollowedByUser: boolean;
+  }
+
+
+
+
+  export interface LikeInfo {
+    likes:number;
+    isLikedByUser: boolean;
   }

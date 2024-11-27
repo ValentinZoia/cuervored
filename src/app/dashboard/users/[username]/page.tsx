@@ -28,7 +28,7 @@ export default async function UserProfilePage({params:{username}}:UserProfilePag
     
     return(
         <div className="h-fit">
-           <UserCard user={user} loggedInUserid={session.user.id}/> 
+           <UserCard user={user} loggedInUserId={session.user.id}/> 
         </div>
     
 )

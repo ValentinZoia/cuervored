@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+
 import {
   Form,
   FormControl,
@@ -20,6 +20,7 @@ import { useUpdateProfileMutation } from "./mutation";
 import { transformImageToWebp } from "@/utils/transformImageToWebP";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import { toast } from "@/components/ui/use-toast";
+import { CaslaButton } from "@/components/ui/CaslaButton";
 
 interface EditProfileFormProps {
   user: UserData;
@@ -145,9 +146,9 @@ export default function EditProfileForm({ user, onClose }: EditProfileFormProps)
             )}
           />
 
-          <Button type="submit">
+          <CaslaButton type="submit" variant="blueToRed">
           {mutation.isPending ? "Guardando..." : "Guardar Cambios"}
-          </Button>
+          </CaslaButton>
         </form>
       </Form>
     </>
