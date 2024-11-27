@@ -11,18 +11,14 @@ interface UserHeaderProps {
   loggedInUserId: string;
 }
 export default function UserHeader({ user, loggedInUserId }: UserHeaderProps) {
-  
   const followerInfo: FollowerInfo = {
-    followers: user._count.followers,
+    followers: user.followers.length,
     isFollowedByUser: user.followers.some(
-      ({ followerId }) => followerId === loggedInUserId,
+      ({ followerId }) => followerId === loggedInUserId
     ),
   };
+  
 
-  console.log(user.followers)
-  
-  
-  
   return (
     <div className="w-full bg-card border-x-[1px]  h-auto flex flex-col items-stretch">
       <div className="w-full h-1/2 bg-slate-700"></div>
@@ -64,10 +60,13 @@ export default function UserHeader({ user, loggedInUserId }: UserHeaderProps) {
 
         <div className="flex gap-4">
           <p className="text-sm">
-            0<span className="text-muted-foreground "> Following</span>
+            <FollowerCount userId={user.id} initialState={followerInfo} />
           </p>
           <p className="text-sm">
-            <FollowerCount userId={user.id} initialState={followerInfo} />
+            <span className="text-muted-foreground ">
+              {" "}
+              {user.following.length} Following
+            </span>
           </p>
         </div>
       </div>

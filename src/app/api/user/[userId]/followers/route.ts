@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
-import { FollowerInfo, getUserDataSelect, LikeInfo } from "@/types/Post";
+import { FollowerInfo, getFollowerDataInclude, getUserDataSelect, LikeInfo } from "@/types/Post";
 import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -21,7 +21,7 @@ export async function GET(
     //Check if there is a userId
     if (!userId) {
       return NextResponse.json(
-        { error: "Post ID is required" },
+        { error: "User ID is required" },
         { status: 400 }
       );
     }
@@ -43,18 +43,19 @@ export async function GET(
       },
     });
 
+   
     
     
 
     if (!user) {
-      return NextResponse.json({ error: "Post not found" }, { status: 404 });
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
     
     
 
     const data:FollowerInfo = {
         followers: user._count.followers,
-        isFollowedByUser: !!user.followers.length,
+        isFollowedByUser: user.followers.length > 0,
     };
 
     return NextResponse.json(data);
@@ -115,19 +116,47 @@ export async function POST(
         followerId: session.user.id,
         followingId:userId
       },
+      include: getFollowerDataInclude(userId),
       
     });
 
+    const followersCount = await prisma.follow.count({
+      where: { followingId: userId },
+    });
+    
+    const followingCount = await prisma.follow.count({
+      where: { followerId: userId },
+    });
+
+    
+    
+    
     const updatedUser = await prisma.user.findUnique({
       where: { id: userId },
       include: {
         _count: {
-          select: { followers: true }
-        }
-      }
+          select: { following: true, followers: true }
+        },
+        followers: true,
+        following: true,
+      },
     });
+    
+    
 
-    console.log(updatedUser?._count.followers)
+    if(!updatedUser){
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+
+    updatedUser._count = {
+      followers: followersCount,
+      following: followingCount,
+    };
+    
+    
+    
+   
     
     return NextResponse.json({ followers: updatedUser?._count.followers });
 
@@ -203,7 +232,7 @@ export async function DELETE(
       }
     });
 
-    console.log("DELETE", updatedUser?._count.followers)
+    
     return NextResponse.json({ followers: updatedUser?._count.followers });
 
 

@@ -127,8 +127,7 @@ export async function POST(
       }
     });
 
-    console.log(like)
-    console.log(updatedPost?._count)
+    
     
     return NextResponse.json({ likes: updatedPost?._count.likes });
 
@@ -205,7 +204,7 @@ export async function DELETE(
       }
     });
 
-    console.log("DELETE", updatedPost?._count.likes)
+    
     return NextResponse.json({ likes: updatedPost?._count.likes });
 
 

@@ -14,17 +14,23 @@ import { Prisma } from "@prisma/client";
       image:true,
       createdAt: true,
       followers:{
-        where:{
-          followerId:loggedInUserId
-        },
+        
         select:{
-          followerId:true
+          followerId:true,
+          
+        },
+      },
+      following: {
+        select: {
+          followingId: true,
         },
       },
       _count: {
         select: {
           post: true,
           followers: true,
+          following:true,
+
           
         },
       },
@@ -98,6 +104,19 @@ import { Prisma } from "@prisma/client";
   
   export type LikeData = Prisma.LikeGetPayload<{
     include: ReturnType<typeof getLikeDataInclude>;
+  }>;
+
+
+  export function getFollowerDataInclude(loggedInUserId: string) {
+    return {
+      follower: {
+        select: getUserDataSelect(loggedInUserId),
+      },
+    } satisfies Prisma.FollowInclude;
+  }
+  
+  export type FollowData = Prisma.FollowGetPayload<{
+    include: ReturnType<typeof getFollowerDataInclude>;
   }>;
 
 

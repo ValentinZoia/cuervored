@@ -15,6 +15,8 @@ export default function FollowButton({
 }: FollowButtonProps) {
   const { data, mutate } = useFollowerUserMutation({ userId, initialState });
 
+  console.log(data);
+  console.log(initialState)
   return (
     <Button variant="default" className="text-sm" onClick={() => mutate()}>
       {data.isFollowedByUser ? "Siguiendo" : "Seguir"}
