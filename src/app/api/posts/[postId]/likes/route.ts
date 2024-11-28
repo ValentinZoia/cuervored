@@ -53,7 +53,7 @@ export async function GET(
     const userLikePost = post?.likes.some(like => like.userId === session.user.id);
 
     const data: LikeInfo = {
-      likes: post.likes.length,
+      likes: post._count.likes,
       isLikedByUser: userLikePost as boolean,
     };
 

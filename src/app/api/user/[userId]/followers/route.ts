@@ -116,7 +116,7 @@ export async function POST(
         followerId: session.user.id,
         followingId:userId
       },
-      include: getFollowerDataInclude(userId),
+      
       
     });
 

@@ -41,6 +41,7 @@ export async function GET(
             cursor: cursor ? { id: cursor } : undefined,
         });
 
+        const commentsCount = await prisma.comment.count({where:{postId:postId}});
         
         
         if (!comments) {

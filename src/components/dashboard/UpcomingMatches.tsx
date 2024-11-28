@@ -16,7 +16,7 @@ import { CaslaButton } from "../ui/CaslaButton";
 function UpcomingMatchesData() {
 
      const {data, isLoading, error} = useQuery<MatchesData>({
-      queryKey: ["mayches"],
+      queryKey: ["matches"],
       queryFn: getMatches,
       staleTime:1000 * 60 * 60 * 24, 
      }) 

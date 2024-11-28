@@ -4,11 +4,10 @@ import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
 import { transformImageToWebp } from "@/utils/transformImageToWebP";
 
 export const useNewPost = () => {
-  const user = useSession().data?.user;
+  
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [textareaValue, setTextareaValue] = React.useState<string | null>(null);
@@ -133,6 +132,6 @@ export const useNewPost = () => {
     previewUrl,
     fileInputRef,
     textareaRef,
-    user,
+    
   };
 };

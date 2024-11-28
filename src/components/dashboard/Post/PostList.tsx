@@ -1,3 +1,4 @@
+"use client"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle,  Loader } from "lucide-react";
 import { useInfiniteQuery } from "@tanstack/react-query";

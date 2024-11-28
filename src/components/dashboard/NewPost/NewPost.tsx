@@ -11,11 +11,14 @@ import { useNewPost } from "@/hooks/useNewPost";
 import SkeletonNewPost from "./SkeletonNewPost";
 import UserAvatar from "../Post/UserAvatar";
 import { CaslaButton } from "@/components/ui/CaslaButton";
+import { DefaultSession, Session } from "next-auth";
 
+interface NewPostProps {
+  session:Session | DefaultSession | null
+}
 
-
-export default function NewPost() {
-  
+export default function NewPost({session}:NewPostProps) {
+  const user = session?.user;
 
   const{
     handleTextareaChange,
@@ -28,7 +31,7 @@ export default function NewPost() {
     previewUrl,
     fileInputRef,
     textareaRef,
-    user,
+    
   } = useNewPost();
 
   if(!user) {

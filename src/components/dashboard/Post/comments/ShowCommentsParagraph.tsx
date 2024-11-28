@@ -1,7 +1,8 @@
 import { CommentsPage, PostData } from '@/types/Post';
-import { InfiniteQueryPageParamsOptions, InitialPageParam, useQueryClient } from '@tanstack/react-query';
+import { InfiniteQueryPageParamsOptions, InitialPageParam, useQuery, useQueryClient } from '@tanstack/react-query';
 import { comment } from 'postcss';
 import React from 'react'
+import { getCommentCount } from './actions';
 
 interface Props {
     post: PostData
@@ -12,7 +13,16 @@ interface Props {
 
 export default function ShowCommentsParagraph({post}: Props) {
 
+    const {data} = useQuery({
+      queryKey:["commentCount", post.id],
+      queryFn: async () =>  await getCommentCount(post.id),
+      initialData: post._count?.comments
+    })
+
+
+
+
     return (
-    <p>{`Ver ${post?._count?.comments} comentarios`}</p>
+    <p>{`Ver ${data} comentarios`}</p>
   )
 }

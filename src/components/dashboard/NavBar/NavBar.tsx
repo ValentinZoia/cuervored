@@ -1,15 +1,16 @@
-"use client"
+
 import Link from "next/link";
 import React from "react";
 import { DropdownMenuMyAccount } from "./DropdownMenu";
 import SearchField from "./SearchField";
 import MenuBar from "./MenuBar";
-import { useSession } from "next-auth/react";
+import { auth } from "@/auth";
 
-export default  function NavBar() {
-  
 
-  const {data:session} = useSession();
+export default async  function NavBar() {
+  const session = await auth();
+
+ 
   return (
     <>
       

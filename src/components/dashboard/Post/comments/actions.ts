@@ -96,3 +96,15 @@ export async function deleteComment(id:string){
         }
     }
 }
+
+export async function getCommentCount(postId:string){
+    try {
+        const commentCount = await prisma.comment.count({where:{postId}});
+        return commentCount;
+    } catch (error:any) {
+        return{
+            ok: false,
+            error: error.message
+        }
+    }
+}

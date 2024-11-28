@@ -58,7 +58,7 @@ export const getComments = async ({
     );
 
     if (!response || !response.data) throw new Error("Error fetching comments");
-
+    
     return response.data;
   } catch (error: any) {
     if (axios.isAxiosError(error)) {
