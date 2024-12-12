@@ -1,33 +1,69 @@
 "use client";
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { SearchIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { SearchIcon } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState } from "react";
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { getAllUsersByUsername } from "@/data/user";
+import { set } from "zod";
+import UserHeaderPost from "../Post/UserHeaderPost";
+import Link from "next/link";
+import { CaslaButton } from "@/components/ui/CaslaButton";
+import { pages } from "next/dist/build/templates/app-page";
+import { UserData } from "@/types/Post";
 
 export default function SearchField() {
+  const searchParams = useSearchParams();
   const router = useRouter();
-  const [query, setQuery] = useState(""); // Para manejar el texto del input
-  const [results, setResults] = useState<string[]>([]); // Resultados de la búsqueda
-  const [showCard, setShowCard] = useState(false); // Para manejar la visibilidad de la card
   const queryClient = useQueryClient();
 
-  // Simula una solicitud de búsqueda (puedes reemplazar esto con una API real)
-  const fetchResults = (searchQuery: string) => {
-    const mockResults = ["Resultado 1", "Resultado 2", "Resultado 3"].filter((item) =>
-      item.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setResults(mockResults);
-  };
+  const initialQuery = searchParams.get("q") || "";
+  const [query, setQuery] = useState(initialQuery); // Para manejar el texto del input
+  const [results, setResults] = useState<UserData[]>([]); // Resultados de la búsqueda
+  const [showCard, setShowCard] = useState(false); // Para manejar la visibilidad de la card
+
+  // Fetch de datos con React Query
+  const { data } = useInfiniteQuery({
+    queryKey: ["search", query], //<-- La key de la información
+    queryFn: ({
+      pageParam,
+    }: {
+      pageParam?: string | number | null | undefined;
+      username?: string | null | undefined;
+    }) => getAllUsersByUsername({ pageParam, username: query }), //<-- Cómo traer la información
+    enabled: !!query.trim(),
+    initialPageParam: null as string | null,
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined, // Define el siguiente parámetro de paginación
+  });
+
+  React.useEffect(() => {
+    if (data) {
+      setResults(data.pages.flatMap((page) => page.users) || []);
+    }
+  }, [data]);
+
+  React.useEffect(() => {
+    if (!query) {
+      setResults( []);
+      setShowCard(false);
+    }
+
+    if(query.trim().length > 0) setShowCard(true);
+  }, [query]);
+
+
+  
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
-     
-    fetchResults(value); // Actualiza los resultados
   };
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -49,10 +85,8 @@ export default function SearchField() {
             name="q"
             placeholder="Search..."
             value={query}
-            autoComplete='off'
-            onFocus={() => setShowCard(true)}
-            onBlur={() => setShowCard(false)}
-            
+            autoComplete="off"           
+            onBlur={() => setShowCard(false)} // si dejo de hacer focus, ocultar la card
             onChange={handleInputChange}
             className="pe-10 w-48 md:w-80 bg-card text-muted-foreground focus:border-redSanlorenzo focus:border-2"
             style={{ WebkitBackgroundClip: "none" }}
@@ -62,29 +96,46 @@ export default function SearchField() {
             type="submit"
             className="bg-transparent shadow-none absolute right-0 top-1/2 -translate-y-1/2 sm:size-6 md:size-4 hover:bg-transparent hover:shadow-none"
           >
-            <SearchIcon className={`absolute right-3 top-1/2 -translate-y-1/2  size-4 transform  cursor-pointer ${showCard ? "text-redSanlorenzo" : "text-muted-foreground"}`} />
+            <SearchIcon
+              className={`absolute right-3 top-1/2 -translate-y-1/2  size-4 transform  cursor-pointer ${
+                showCard ? "text-redSanlorenzo" : "text-muted-foreground"
+              }`}
+            />
           </Button>
         </div>
       </form>
 
       {/* Card de resultados */}
       {showCard && (
-        <Card className="absolute top-full mt-2 w-full bg-white z-10 shadow-lg">
+        <Card className="absolute top-full mt-2 w-full bg-white z-10 shadow-lg p-0">
           <CardHeader>
             <CardTitle>Resultados</CardTitle>
           </CardHeader>
-          <CardContent>
-            {results.length > 0 ? (
-              <ul>
-                {results.map((result, index) => (
-                  <li key={index} className="py-1">
-                    {result}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-sm text-gray-500">Sin resultados.</p>
+          <CardContent className="px-0">
+            {results.slice(0, 5).map((user) => (
+                <Link href={`users/${user.name}`}>
+                  <div
+                    key={user.id}
+                    className="w-full h-1/2 p-4 hover:bg-secondary "
+                  >
+                    <UserHeaderPost
+                      username={user.name}
+                      avatarUrl={user.image}
+                      linkTo={`users/${user.name}`}
+                    />
+                  </div>
+                </Link>
+              )
+            
+            )
+            
+            }
+            
+            {data?.pages.length === 0 && <p>No se encontraron resultados</p>}
+            {results.length > 5 && (
+              <CaslaButton variant="redToBlue" className="w-full">Ver Todos</CaslaButton>
             )}
+            
           </CardContent>
         </Card>
       )}

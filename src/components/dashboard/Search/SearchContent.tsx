@@ -5,6 +5,8 @@ import { useSearchParams } from 'next/navigation';
 import React from 'react'
 import UserHeaderPost from '../Post/UserHeaderPost';
 import Link from 'next/link';
+import InfiniteScrollContainer from '../InfiniteScrollContainer';
+import { Loader } from 'lucide-react';
 
 export default function SearchContent() {
     const searchParams = useSearchParams();
@@ -32,6 +34,7 @@ export default function SearchContent() {
         pageParam?: string | number | null | undefined;
         username?: string | null | undefined;
       }) => getAllUsersByUsername({ pageParam,username:query }), //<-- Cómo traer la información
+      enabled: !!query.trim(),
       initialPageParam: null as string | null,
       getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined, // Define el siguiente parámetro de paginación
       
@@ -58,6 +61,10 @@ export default function SearchContent() {
     }
   
     return (
+      <InfiniteScrollContainer
+        className='relative z-10 space-1-2'
+        onBottomReached={() => hasNextPage && !isLoading && fetchNextPage()}
+      >
     <div className="w-full bg-card border-[1px]   h-auto flex flex-col items-stretch">
       {data.pages.map((page) => (
         <div key={page.nextCursor}>
@@ -71,5 +78,7 @@ export default function SearchContent() {
         </div>
       ))}
     </div>
+    {isFetchingNextPage && <Loader className="mx-auto animate-spin" />}
+      </InfiniteScrollContainer>
   )
 }
