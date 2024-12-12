@@ -32,7 +32,7 @@ export default function SearchField() {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!query.trim()) return;
-    router.push(`/search?q=${encodeURIComponent(query.trim())}`);
+    router.push(`/dashboard/search?q=${encodeURIComponent(query.trim())}`);
   }
 
   return (

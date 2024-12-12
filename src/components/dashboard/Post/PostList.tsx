@@ -2,7 +2,6 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle,  Loader } from "lucide-react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
 import SkeletonPost from "./SkeletonPost";
 import { PostData as PostType } from "@/types/Post";
 import InfiniteScrollContainer from "../InfiniteScrollContainer";
@@ -10,7 +9,7 @@ import { Post } from "./Post";
 import { getPosts } from "@/data/posts";
 
 export default function PostList() {
-  const session = useSession();
+ 
 
 
   // Configuración de `useInfiniteQuery`

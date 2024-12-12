@@ -132,3 +132,8 @@ import { Prisma } from "@prisma/client";
     likes:number;
     isLikedByUser: boolean;
   }
+
+  export interface SearchPage {
+    users: UserData[];
+    nextCursor: string | null;
+  }
