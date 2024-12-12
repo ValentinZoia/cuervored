@@ -7,6 +7,9 @@ export default function SearchPage() {
   
 
   return (
-    <SearchCard />
+    <main className='h-screen w-full'>
+        <SearchCard />
+    </main>
+    
   );
 }

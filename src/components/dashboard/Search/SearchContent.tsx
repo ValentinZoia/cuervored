@@ -65,12 +65,12 @@ export default function SearchContent() {
         className='relative z-10 space-1-2'
         onBottomReached={() => hasNextPage && !isLoading && fetchNextPage()}
       >
-    <div className="w-full bg-card border-[1px]   h-auto flex flex-col items-stretch">
+    <div className="w-full bg-card border-x-[1px] border-b-[1px]   h-auto flex flex-col items-stretch">
       {data.pages.map((page) => (
         <div key={page.nextCursor}>
           {page.users.map((user) => (
              <Link href={`users/${user.name}`}>
-            <div key={user.id} className="w-full h-1/2 p-4 hover:bg-secondary ">
+            <div key={user.id} className="w-full h-1/2 p-4 hover:bg-secondary border-t-[1px] ">
               <UserHeaderPost username={user.name} avatarUrl={user.image} linkTo={`users/${user.name}`} />
             </div>
              </Link>

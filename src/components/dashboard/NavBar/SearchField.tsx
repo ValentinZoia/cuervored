@@ -28,7 +28,7 @@ export default function SearchField() {
   const [query, setQuery] = useState(initialQuery); // Para manejar el texto del input
   const [results, setResults] = useState<UserData[]>([]); // Resultados de la búsqueda
   const [showCard, setShowCard] = useState(false); // Para manejar la visibilidad de la card
-
+ 
   // Fetch de datos con React Query
   const { data } = useInfiniteQuery({
     queryKey: ["search", query], //<-- La key de la información
@@ -43,6 +43,8 @@ export default function SearchField() {
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined, // Define el siguiente parámetro de paginación
   });
 
+  
+
   React.useEffect(() => {
     if (data) {
       setResults(data.pages.flatMap((page) => page.users) || []);
@@ -55,7 +57,7 @@ export default function SearchField() {
       setShowCard(false);
     }
 
-    if(query.trim().length > 0) setShowCard(true);
+    
   }, [query]);
 
 
@@ -64,6 +66,7 @@ export default function SearchField() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setQuery(value);
+    setShowCard(true);
   };
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -85,7 +88,8 @@ export default function SearchField() {
             name="q"
             placeholder="Search..."
             value={query}
-            autoComplete="off"           
+            autoComplete="off"  
+            onFocus={() => setShowCard(true)}         
             onBlur={() => setShowCard(false)} // si dejo de hacer focus, ocultar la card
             onChange={handleInputChange}
             className="pe-10 w-48 md:w-80 bg-card text-muted-foreground focus:border-redSanlorenzo focus:border-2"
@@ -108,7 +112,7 @@ export default function SearchField() {
       {/* Card de resultados */}
       {showCard && (
         <Card className="absolute top-full mt-2 w-full bg-white z-10 shadow-lg p-0">
-          <CardHeader>
+          <CardHeader className="border-b-[1px]">
             <CardTitle>Resultados</CardTitle>
           </CardHeader>
           <CardContent className="px-0">
@@ -116,7 +120,7 @@ export default function SearchField() {
                 <Link href={`users/${user.name}`}>
                   <div
                     key={user.id}
-                    className="w-full h-1/2 p-4 hover:bg-secondary "
+                    className="w-full h-1/2 p-4 hover:bg-secondary border-b-[1px] "
                   >
                     <UserHeaderPost
                       username={user.name}
@@ -131,7 +135,7 @@ export default function SearchField() {
             
             }
             
-            {data?.pages.length === 0 && <p>No se encontraron resultados</p>}
+            {results.length === 0 && <p className="text-center py-4">No se encontraron resultados</p>}
             {results.length > 5 && (
               <CaslaButton variant="redToBlue" className="w-full">Ver Todos</CaslaButton>
             )}

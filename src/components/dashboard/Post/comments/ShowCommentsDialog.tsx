@@ -51,11 +51,11 @@ export default function ShowCommentsDialog({
   <DialogTitle className="hidden">Comments</DialogTitle>
   <DialogContent
     aria-describedby={undefined}
-    className="bg-black p-0 overflow-hidden w-[calc(100vw-8rem)] max-w-[1920px] mx-auto border-none"
+    className="bg-black p-0 overflow-hidden  md:w-[calc(100vw-8rem)] md:max-w-[1920px] md:mx-auto sm:border-none"
   >
-    <div className="flex flex-col h-auto sm:flex-row max-h-[calc(100%-0rem)] sm:h-auto sm:max-h-[calc(100%-0rem)] md:h-auto md:max-h-[calc(100%-0rem)] lg:h-auto lg:max-h-[calc(100%-0rem)]">
+    <div className="flex flex-col h-auto  sm:flex-row max-h-[calc(100%-0rem)] sm:h-auto sm:max-h-[calc(100%-0rem)] md:h-auto md:max-h-[calc(100%-0rem)] lg:h-auto lg:max-h-[calc(100%-0rem)]">
       {imageUrl && (
-        <div className="relative w-full sm:w-1/2 md:w-1/2 lg:w-7/12 h-full sm:h-full md:h-full lg:h-full">
+        <div className="relative w-full sm:hidden md:block md:w-1/2 lg:w-7/12 h-full sm:h-full md:h-full lg:h-full">
           <Image
             src={imageUrl}
             alt="Imagen de la publicación"
@@ -68,11 +68,11 @@ export default function ShowCommentsDialog({
 
       <div
         className={`bg-card px-4 py-2 flex flex-col w-full justify-between ${
-          imageUrl ? "sm:w-1/2 md:w-1/2 lg:w-5/12" : "md:w-full"
+          imageUrl ? "w-full md:w-1/2 lg:w-5/12" : "md:w-full"
         } h-full sm:max-h-[calc(100vh-4rem)]`}
       >
         {/* Header */}
-        <div className="border-b  w-[calc(100%-30px)] flex flex-col justify-start pb-2" >
+        <div className="border-b  w-[calc(100%-50px)] flex flex-col justify-start pb-2" >
           <UserHeaderPost avatarUrl={avatar} username={username} timeAgo={timeAgo} />
           <div className="max-h-40 overflow-y-auto">
             <p className="text-sm  whitespace-pre-line break-words">{content}</p>
@@ -81,7 +81,7 @@ export default function ShowCommentsDialog({
         </div>
 
         {/* Comments Section */}
-        <div className="px-4 overflow-y-auto h-full max-h-[300px] md:h-[400px] md:max-h-[400px] lg:h-[700px] lg:max-h-[700px]">
+        <div className="px-0 sm:px-4 overflow-y-auto h-full max-h-[300px] md:h-[400px] md:max-h-[400px] lg:h-[700px] lg:max-h-[700px]">
           <Commentslist post={post} />
         </div>
 
