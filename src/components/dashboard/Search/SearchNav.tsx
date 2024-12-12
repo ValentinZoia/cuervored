@@ -10,7 +10,7 @@ export default function SearchNav() {
             
         </div>
         <div>
-            <SearchField />
+            <h1>Resultados de Busqueda</h1>
 
         </div>
     </div>

@@ -1,11 +1,10 @@
 "use client"
-import { getAllUsersByUsername, getUserByUsername } from '@/data/user'
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
-import { useSession } from 'next-auth/react';
+import { getAllUsersByUsername} from '@/data/user'
+import { useInfiniteQuery} from '@tanstack/react-query'
 import { useSearchParams } from 'next/navigation';
 import React from 'react'
-import UserNav from '../users/UserNav';
-import UserAvatar from '../Post/UserAvatar';
+import UserHeaderPost from '../Post/UserHeaderPost';
+import Link from 'next/link';
 
 export default function SearchContent() {
     const searchParams = useSearchParams();
@@ -25,7 +24,7 @@ export default function SearchContent() {
       hasNextPage,
       isFetchingNextPage,
     } = useInfiniteQuery({
-      queryKey: ["search"], //<-- La key de la información
+      queryKey: ["search",query], //<-- La key de la información
       queryFn: ({
         pageParam,
         
@@ -42,7 +41,7 @@ export default function SearchContent() {
     });
   
     
-  console.log(data);
+  
   
   
   
@@ -59,18 +58,15 @@ export default function SearchContent() {
     }
   
     return (
-    <div className="w-full bg-card border-x-[1px]  h-auto flex flex-col items-stretch">
+    <div className="w-full bg-card border-[1px]   h-auto flex flex-col items-stretch">
       {data.pages.map((page) => (
         <div key={page.nextCursor}>
           {page.users.map((user) => (
-            <div key={user.id} className="w-full h-1/2 bg-slate-700">
-              <UserAvatar
-                avatarUrl={user.image}
-                username={user.name}
-                size="size-[100px]"
-              />
-              <h1 className='text-slate-300'>{user.name}</h1>
+             <Link href={`users/${user.name}`}>
+            <div key={user.id} className="w-full h-1/2 p-4 hover:bg-secondary ">
+              <UserHeaderPost username={user.name} avatarUrl={user.image} linkTo={`users/${user.name}`} />
             </div>
+             </Link>
           ))}
         </div>
       ))}

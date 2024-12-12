@@ -6,13 +6,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { SearchIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function SearchField() {
   const router = useRouter();
   const [query, setQuery] = useState(""); // Para manejar el texto del input
   const [results, setResults] = useState<string[]>([]); // Resultados de la búsqueda
   const [showCard, setShowCard] = useState(false); // Para manejar la visibilidad de la card
-  
+  const queryClient = useQueryClient();
 
   // Simula una solicitud de búsqueda (puedes reemplazar esto con una API real)
   const fetchResults = (searchQuery: string) => {
@@ -32,6 +33,10 @@ export default function SearchField() {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!query.trim()) return;
+
+    // invalidar manualmente la consulta para actualizar los datos
+    queryClient.invalidateQueries({ queryKey: ["search", query] });
+
     router.push(`/dashboard/search?q=${encodeURIComponent(query.trim())}`);
   }
 
