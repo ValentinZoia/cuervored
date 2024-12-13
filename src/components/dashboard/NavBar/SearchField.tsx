@@ -135,7 +135,8 @@ export default function SearchField() {
             
             }
             
-            {results.length === 0 && <p className="text-center py-4">No se encontraron resultados</p>}
+            {(results.length === 0 && query.length === 0 ) && <p className="text-center py-4">Escribe algo...</p>}
+            {(results.length === 0 && query.length > 0 ) && <p className="text-center py-4">No se encontraron resultados</p>}
             {results.length > 5 && (
               <CaslaButton variant="redToBlue" className="w-full">Ver Todos</CaslaButton>
             )}
