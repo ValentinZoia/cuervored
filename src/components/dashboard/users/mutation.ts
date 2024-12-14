@@ -20,7 +20,7 @@ export function useFollowerUserMutation({
   
     const queryKey: QueryKey = ["follower-info", userId];
   
-    const { data } = useQuery({
+    const { data, isLoading } = useQuery({
       queryKey,
       queryFn: async () => {
         const response = await axios.get<FollowerInfo>(`/api/user/${userId}/followers`);
@@ -30,7 +30,7 @@ export function useFollowerUserMutation({
       staleTime: Infinity,
     });
   
-    const { mutate } = useMutation({
+    const { mutate, isPending } = useMutation({
       mutationFn: async () =>
         data.isFollowedByUser
           ? await axios.delete<FollowerInfo>(`/api/user/${userId}/followers`)
@@ -70,6 +70,8 @@ export function useFollowerUserMutation({
   
     return {
       data,
+      isLoading,
+      isPending,
       mutate,
     };
   }

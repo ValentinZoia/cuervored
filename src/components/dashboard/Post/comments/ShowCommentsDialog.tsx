@@ -101,8 +101,9 @@ export default function ShowCommentsDialog({
               variant="ghost"
               size="sm"
               onClick={handleCommentButtonClick}
+              className="className='flex items-center justify-center gap-2 hover:fill-blueSanlorenzo hover:text-blueSanlorenzo hover:bg-[#00336634]"
             >
-              <MessageCircle className="size-4 md:size-5 mr-1" />
+              <MessageCircle className="size-4 md:size-5 " />
             </Button>
             
           </div>
