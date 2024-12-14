@@ -110,13 +110,51 @@ export async function POST(
       );
     }
 
-    const like = await prisma.like.create({
-      data: {
-        userId: session.user.id,
-        postId
+    /*
+    Verificar si el like existe, para evitar bugs si se clickea el boton seguido y muhas veces
+    */
+    const existingLike = await prisma.like.findUnique({
+      where: {
+        userId_postId: {
+          userId: session.user.id,
+          postId,
+        },
       },
-      include: getLikeDataInclude(session.user.id),
     });
+
+    if (existingLike) {
+      return NextResponse.json(
+        { error: "You have already liked this post" },
+        { status: 400 }
+      );
+    }
+
+    let like;
+
+    try {
+      // Intentar crear el "like"
+      like = await prisma.like.create({
+        data: {
+          userId: session.user.id,
+          postId
+        },
+        include: getLikeDataInclude(session.user.id),
+      });
+    } catch (error: any) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === "P2002"
+      ) {
+        // Error de unicidad, el "like" ya existe
+        return NextResponse.json(
+          { error: "You have already liked this post" },
+          { status: 400 }
+        );
+      }
+      throw error; // Re-lanzar otros errores
+    }
+
+    
 
     const updatedPost = await prisma.post.findUnique({
       where: { id: postId },
@@ -185,6 +223,7 @@ export async function DELETE(
       );
     }
 
+    //elimina el like
     const like = await prisma.like.deleteMany({
       where: {
         userId: session.user.id,

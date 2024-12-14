@@ -79,7 +79,7 @@ export function useLikePostMutation({
 
   const queryKey: QueryKey = ["like-info", postId];
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey,
     queryFn: async () => {
       const response = await axios.get<LikeInfo>(`/api/posts/${postId}/likes`);
@@ -89,7 +89,7 @@ export function useLikePostMutation({
     staleTime: Infinity,
   });
 
-  const { mutate } = useMutation({
+  const { mutate,isPending } = useMutation({
     mutationFn: async () =>
       data.isLikedByUser
         ? await axios.delete<LikeInfo>(`/api/posts/${postId}/likes`)
@@ -129,6 +129,8 @@ export function useLikePostMutation({
 
   return {
     data,
+    isLoading,
+    isPending,
     mutate,
   };
 }
