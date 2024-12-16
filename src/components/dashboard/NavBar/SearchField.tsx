@@ -8,15 +8,15 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import {
   useInfiniteQuery,
-  useQuery,
+  
   useQueryClient,
 } from "@tanstack/react-query";
 import { getAllUsersByUsername } from "@/data/user";
-import { set } from "zod";
+
 import UserHeaderPost from "../Post/UserHeaderPost";
 import Link from "next/link";
 import { CaslaButton } from "@/components/ui/CaslaButton";
-import { pages } from "next/dist/build/templates/app-page";
+
 import { UserData } from "@/types/Post";
 
 export default function SearchField() {
@@ -138,7 +138,7 @@ export default function SearchField() {
             {(results.length === 0 && query.length === 0 ) && <p className="text-center py-4">Escribe algo...</p>}
             {(results.length === 0 && query.length > 0 ) && <p className="text-center py-4">No se encontraron resultados</p>}
             {results.length > 5 && (
-              <CaslaButton variant="redToBlue" className="w-full">Ver Todos</CaslaButton>
+              <CaslaButton variant="redToBlue" className="w-full" onClick={()=>{handleSubmit}}>Ver Todos</CaslaButton>
             )}
             
           </CardContent>

@@ -15,10 +15,8 @@ export default function MenuBar({ className }: MenuBarProps) {
         <Link href="/dashboard">
           <Home className="h-6 w-6" />
         </Link>
-        <Link href="/dashboard/messages">
-          <MessageSquare className="h-6 w-6" />
-        </Link>
-        <Link href="/dashboard/notifications">
+        
+        <Link href="/dashboard/matches">
           
           
           <Cancha color="white" width="24" height="24" />

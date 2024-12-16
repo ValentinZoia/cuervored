@@ -1,7 +1,7 @@
 import MenuBar from "@/components/dashboard/NavBar/MenuBar";
 import NavBar from "@/components/dashboard/NavBar/NavBar";
 import { RecommendedUsers } from "@/components/dashboard/RecommendedUsers";
-import UpcomingMatches from "@/components/dashboard/UpcomingMatches";
+import UpcomingMatches from "@/components/dashboard/UpcomingMatches/UpcomingMatches";
 import { Toaster } from "@/components/ui/toaster";
 
 interface DashboardLayoutProps {

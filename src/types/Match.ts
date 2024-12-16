@@ -1,11 +1,28 @@
+
+
 export interface MatchesData {
-    matchesFiltered: [
-      {
-        date: string;
-        round: string;
-        homeOrAway: string;
-        opponent: string;
-        result: string;
-      }
-    ];
+  matchesFiltered:{
+    LastMatches: [{
+      date: string | undefined;
+      round: string | undefined;
+      homeOrAway: string | undefined;
+      opponent: string | undefined;
+      result: string | undefined;
+    }];
+    UpcomingMatches:[ {
+      date: string | undefined;
+      round: string | undefined;
+      homeOrAway: string | undefined;
+      opponent: string | undefined;
+      result: string | undefined;
+    }];
   }
+}
+
+export interface AllMatchesData {
+      date: string | undefined;
+      round: string | undefined;
+      homeOrAway: string | undefined;
+      opponent: string | undefined;
+      result: string | undefined;
+}
