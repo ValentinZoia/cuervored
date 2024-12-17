@@ -12,30 +12,30 @@ export default function AllMatchesTable({matches}: AllMatchesTableProps) {
   if(!matches) return <p>No hay partidos</p>;
   
   return (
-    <><div className="container mx-auto ">
+    <><div className="w-full  sm:container sm:mx-auto ">
     <Table className='text-xs sm:text-sm'>
-      <TableHeader className='bg-blueSanlorenzo text-white '>
-        <TableRow className='text-xs sm:text-sm text-center'>
-          <TableHead className="w-[50px] text-white  rounded-tl-xl text-xs sm:text-sm text-center ">
+      <TableHeader className='bg-blueSanlorenzo  text-white '>
+        <TableRow className=' text-xs sm:text-sm text-center hover:bg-blueSanlorenzo'>
+          <TableHead className="px-0 sm:px-4 w-[50px] text-white  rounded-tl-xl text-xs sm:text-sm text-center ">
             
               Dia
               
             
           </TableHead>
-          <TableHead className='text-white text-xs sm:text-sm  text-center'>
+          <TableHead className='px-0 sm:px-4 text-white text-xs sm:text-sm  text-center'>
             
               Fecha
               
             
           </TableHead>
-          <TableHead className='text-white text-xs sm:text-sm text-center'>L / V</TableHead>
-          <TableHead className='text-white text-xs sm:text-sm text-center' >
+          <TableHead className='px-0 sm:px-4 text-white text-xs sm:text-sm text-center'>L / V</TableHead>
+          <TableHead className=' px-0 sm:px-4 text-white text-xs sm:text-sm text-center' >
             
               Oponente
               
            
           </TableHead>
-          <TableHead className='text-white rounded-tr-xl text-xs sm:text-sm text-center'>
+          <TableHead className='px-0 sm:px-4 text-white rounded-tr-xl text-xs sm:text-sm text-center'>
             
               Resultado
              
@@ -46,8 +46,8 @@ export default function AllMatchesTable({matches}: AllMatchesTableProps) {
       <TableBody className='border-x-2 border-b-2 text-center  '>
         {matches && matches.map((match, index) => (
           <TableRow key={index}>
-            <TableCell className="font-medium ">{match.date}</TableCell>
-            <TableCell >
+            <TableCell className="font-medium p-2 sm:p-4 ">{match.date}</TableCell>
+            <TableCell className='p-2 sm:p-4'>
               {match.round && match.round.startsWith('emoji_events') ? (
                 <div className='flex justify-center align-center'>
                   <Trophy className="h-4 w-4 text-yellow-500 align-middle text-center " />
@@ -57,7 +57,7 @@ export default function AllMatchesTable({matches}: AllMatchesTableProps) {
                 match.round
               )}
             </TableCell>
-            <TableCell >
+            <TableCell className='p-2 sm:p-4'>
               {match.homeOrAway === 'L' ? (
                 <div className='flex justify-center align-center'>
                   <Home className="h-4 w-4 text-blue-500 flex justify-center align-center" />
@@ -70,7 +70,7 @@ export default function AllMatchesTable({matches}: AllMatchesTableProps) {
                 
               )}
             </TableCell>
-            <TableCell >
+            <TableCell className='p-2 sm:p-4' >
               
                 {match.opponent}
               
