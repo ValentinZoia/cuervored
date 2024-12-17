@@ -59,7 +59,9 @@ export async function getAllMatches(){
 
     if(!response || !response.data) throw new Error("Error fetching matches");
 
-    return response.data;
+    
+
+    return response.data.AllMatches;
 
 } catch (error: any) {
 

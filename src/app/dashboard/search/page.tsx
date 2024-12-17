@@ -15,7 +15,7 @@ export default async function SearchPage() {
       }
 
   return (
-    <main className='h-screen w-full'>
+    <main className='min-h-screen h-fit w-full '>
         <SearchCard />
     </main>
     

@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { AllMatchesData } from "@/types/Match";
+import { BasicMatchData } from "@/types/Match";
 import { CaslaButton } from "@/components/ui/CaslaButton";
 import { CalendarDays } from "lucide-react";
 
@@ -9,7 +9,7 @@ export default function MatchesCard({
     isPastMatches,
   }: {
     title: string;
-    matches: AllMatchesData[];
+    matches: BasicMatchData[];
     isPastMatches?: boolean;
   }) {
     return (
