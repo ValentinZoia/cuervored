@@ -1,12 +1,9 @@
 "use client"
 import React, { useState } from 'react'
 import Image from 'next/image'
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Heart, MessageCircle, Send, Smile, User } from 'lucide-react'
-import { compareDate } from '@/utils/compareDate'
+import {MessageCircle} from 'lucide-react'
 import PostMoreButton from './PostMoreButton'
 import { LikeInfo, PostData} from '@/types/Post'
 import { useSession } from 'next-auth/react'

@@ -32,14 +32,14 @@ export default function CommentMoreButton({
           <DropdownMenuGroup>
             <DropdownMenuItem className="cursor-pointer">
               <Edit2 className="mr-2 h-4 w-4" />
-              <p>Edit</p>
+              <p>Editar</p>
             </DropdownMenuItem>
             <DropdownMenuItem
               className="cursor-pointer"
               onClick={() => setShowDeleteDialog(true)}
             >
               <Trash2 className="mr-2 h-4 w-4 text-red-500" />
-              <p className="text-red-500">Delete</p>
+              <p className="text-red-500">Eliminar</p>
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
