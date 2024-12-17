@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getUpcomingMatches } from "@/data/matches";
 import { MatchesData } from "@/types/Match";
 import MatchesCard from "./MatchesCard";
+import SkeletonMatchesCard from "./SkeletonMatchesCard";
 
 
 
@@ -14,7 +15,20 @@ export default function UpcomingMatchesData() {
     });
   
     if (isLoading) {
-      return <p>Cargando...</p>;
+      return (
+        <>
+        <SkeletonMatchesCard
+          title="Últimos partidos"
+          matches={[]}
+          isPastMatches={true}
+        />
+        <SkeletonMatchesCard
+          title="Próximos partidos"
+          matches={[]}
+          isPastMatches={false}
+        />
+        </>
+      );
     }
   
     if (error) {
@@ -29,6 +43,7 @@ export default function UpcomingMatchesData() {
   
     return (
       <div>
+        
         <MatchesCard
           title="Últimos partidos"
           matches={lastMatches || []}
