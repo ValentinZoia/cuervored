@@ -3,6 +3,7 @@ import { getAllMatches } from '@/data/matches';
 import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import AllMatchesTable from './AllMatchesTable';
+import SkeletonAllMatchesTable from './SkeletonAllMatchesTable';
 
 export default function AllMatches() {
   
@@ -13,7 +14,7 @@ export default function AllMatches() {
   })
   
   if (isLoading) {
-    return <p>Cargando...</p>;
+    return <SkeletonAllMatchesTable/>;
   }
 
   if (error) {
@@ -26,6 +27,7 @@ export default function AllMatches() {
 
     return (
     <>
+    
     <AllMatchesTable matches={data || []}/>
     </>
   )

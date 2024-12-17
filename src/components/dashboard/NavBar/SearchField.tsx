@@ -86,7 +86,7 @@ export default function SearchField() {
           {/* Input de búsqueda */}
           <Input
             name="q"
-            placeholder="Search..."
+            placeholder="Buscar..."
             value={query}
             autoComplete="off"  
             onFocus={() => setShowCard(true)}         
