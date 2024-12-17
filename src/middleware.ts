@@ -20,7 +20,7 @@ export default auth((req) => {
   const isApi = apiAuthPrefix.some(prefix => pathname.startsWith(prefix.path));
 
   if (isApi) {
-    console.log(pathname, isApi)
+    
     return NextResponse.next();
   }
 
