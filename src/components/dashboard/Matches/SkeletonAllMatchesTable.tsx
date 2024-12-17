@@ -40,18 +40,21 @@ export default function SkeletonAllMatchesTable() {
               <TableRow key={index} className="">
                 
                 <TableCell className="font-medium p-2 sm:p-4 flex justify-center align-center ">
-                  <Skeleton className="h-5 w-10" />
+                  
+                  <Skeleton className="h-3 w-16" />
                 </TableCell>
                 
                 <TableCell className="p-2 sm:p-4 ">
                     <div className="flex justify-center align-center">
-                        <Skeleton className="h-5 w-4" />
+                        
+                        <Skeleton className="h-3 w-16" />
                     </div>
                   
                 </TableCell>
                 
                 <TableCell className="p-2 sm:p-4 flex justify-center align-center">
-                  <Skeleton className="h-5 w-5" />
+                  
+                  <Skeleton className="h-3 w-16" />
                 </TableCell>
                 
                 <TableCell className="p-2 sm:p-4 ">
@@ -62,7 +65,8 @@ export default function SkeletonAllMatchesTable() {
                 
                 <TableCell>
                 <div className="flex justify-center align-center">
-                        <Skeleton className="h-4 w-10" />
+                        
+                        <Skeleton className="h-3 w-16" />
                     </div>
                 </TableCell>
               </TableRow>
