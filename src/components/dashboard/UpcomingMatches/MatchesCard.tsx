@@ -37,8 +37,24 @@ export default function MatchesCard({
                       {match.homeOrAway === "L" ? "Local" : "Visitante"}
                     </span>
                   </div>
-                  <p className="text-lg font-bold mb-1">
-                    San Lorenzo vs {match.opponent}
+                  <p className="text-lg font-bold mb-1 flex gap-1 flex-wrap">
+                    <span className="flex items-center gap-2">
+                    <img
+                          src={"https://www.promiedos.com.ar/images/18/19.png"}
+                          alt={"Escudo Sanlorenzo"}
+                          className="w-[18px] h-[20px] "
+                        />
+                    San Lorenzo vs
+                    </span>
+                    
+                    <span className="flex items-center gap-2">
+                    <img
+                          src={match.opponentImage}
+                          alt={"Escudo " + match.opponent}
+                          className="w-[18px] h-[20px] "
+                        />
+                      {" " + match.opponent}
+                    </span>   
                   </p>
                   {match.homeOrAway === "L" && (
                     <div className="flex mt-1 flex-wrap gap-2">

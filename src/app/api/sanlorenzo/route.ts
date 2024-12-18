@@ -1,6 +1,6 @@
 // -----------WEB SCRAPPING-------------
 
-import { MatchesData } from "@/types/Match";
+
 import { NextRequest, NextResponse } from "next/server";
 import { chromium } from "playwright";
 
@@ -24,29 +24,35 @@ export async function GET(req: NextRequest) {
           round: cells[1]?.textContent?.trim(),
           homeOrAway: cells[2]?.textContent?.trim(),
           opponent: cells[3]?.textContent?.trim(),
+          opponentImage: `https://www.promiedos.com.ar/${cells[3]?.querySelector("img")?.getAttribute("src")?.trim()}`,
           result: cells[4]?.textContent?.trim(),
         };
       })
     );
 
+    //verificamos que haya partidos
     if (!AllMatches)
       return NextResponse.json({
         error: "No se encontraron partidos",
         status: 500,
       });
 
+    // buscamos el indice del proximo partido a jugar.
     const FindIndexLastMatch = AllMatches.findIndex(
       (match) => match?.result === "-"
     );
 
+    //si no hay proximo partido a jugar, tomamos el ultimo partido
     const lastMatchIndex =
       FindIndexLastMatch === -1 ? AllMatches.length - 1 : FindIndexLastMatch;
 
+    //tomamos solo los ultimos dos partidos que se jugaron
     const LastMatches = AllMatches.slice(
       Math.max(0, lastMatchIndex - 1),
       lastMatchIndex + 1
     );
 
+    //tomamos solo los proximos partidos que no se jugaron aun.
     const UpcomingMatches = AllMatches.filter((match) => match?.result === "-");
 
    

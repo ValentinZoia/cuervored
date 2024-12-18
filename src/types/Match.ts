@@ -6,6 +6,7 @@ export interface MatchesData {
         round: string | undefined;
         homeOrAway: string | undefined;
         opponent: string | undefined;
+        opponentImage: string | undefined;
         result: string | undefined;
       }
     ];
@@ -15,6 +16,7 @@ export interface MatchesData {
         round: string | undefined;
         homeOrAway: string | undefined;
         opponent: string | undefined;
+        opponentImage: string | undefined;
         result: string | undefined;
       }
     ];
@@ -28,6 +30,7 @@ export interface AllMatchesData {
       round: string | undefined;
       homeOrAway: string | undefined;
       opponent: string | undefined;
+      opponentImage: string | undefined;
       result: string | undefined;
     }
   ];
@@ -38,5 +41,6 @@ export interface BasicMatchData{
       round: string | undefined;
       homeOrAway: string | undefined;
       opponent: string | undefined;
+      opponentImage: string | undefined;
       result: string | undefined;
 }
