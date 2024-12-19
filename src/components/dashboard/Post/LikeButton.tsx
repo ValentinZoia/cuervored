@@ -1,7 +1,6 @@
 import { LikeInfo } from "@/types/Post";
 import { cn } from "@/lib/utils";
 import { useLikePostMutation } from "./mutations";
-import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
 import { useRef } from "react";
 

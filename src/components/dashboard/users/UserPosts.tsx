@@ -68,7 +68,7 @@ export default function UserPosts({userId}:UserPostsProps) {
     
     return (
       <InfiniteScrollContainer
-        className="relative z-10 "
+        className="relative z-10 bg-card"
         onBottomReached={() => hasNextPage && !isLoading && fetchNextPage()}
       >
         {data.pages.flatMap((page) =>

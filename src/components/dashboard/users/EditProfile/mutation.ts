@@ -42,7 +42,7 @@ export function useUpdateProfileMutation() {
         return;
       }
 
-      // Actualizamos los datos en el cache de React Query
+      // Actualizamos los datos de los posts en el cache de React Query
       const queryFilter: QueryFilters = {
         queryKey: ["posts"],
       };

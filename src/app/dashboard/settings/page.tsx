@@ -9,7 +9,7 @@ import {
 
 export default function SettingsPage() {
   return (
-    <div>
+    <main className="min-h-screen h-fit w-full">
       <Dialog>
         <DialogTrigger>Open</DialogTrigger>
         <DialogContent>
@@ -22,6 +22,6 @@ export default function SettingsPage() {
           </DialogHeader>
         </DialogContent>
       </Dialog>
-    </div>
+    </main>
   );
 }

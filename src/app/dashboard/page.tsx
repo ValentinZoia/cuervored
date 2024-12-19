@@ -19,8 +19,8 @@ export default async function DashboardPage() {
   }
  
   return (
-    <>
+    <main className="min-h-screen h-fit w-full">
     <Publications />
-    </>
+    </main>
   );
 }
