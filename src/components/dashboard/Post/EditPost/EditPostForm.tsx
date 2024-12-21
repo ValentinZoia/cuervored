@@ -42,9 +42,10 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
   
   const handleSubmit = async () => {
     try {
+      console.log(textareaValue, previewUrl);
       
-      //check if there are no changes
-      if (textareaValue === post.content) {
+      //verificamos que existan cambios a subir
+      if (textareaValue === post.content && post.image === previewUrl) {
         toast({
           variant: "default",
           description: "No changes have been made",
@@ -55,20 +56,21 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
 
       let imageUrl = null;
       if (file) {
-        //Transform image to webp before uploading
+        //Transformamos la imagen a webp antes de subirla a cloudinary
         const tranfromedFile = await transformImageToWebp(file);
 
-        //Verify if transformedFile exists
+        //Verificamos si esa transformacion salio con exito
         if (!tranfromedFile) {
           throw new Error("Failed to transform image to webp");
         }
 
-        //Upload to Cloudinary
+        //Subimos a Cloudinary
         const { data, error } = await uploadToCloudinary(tranfromedFile);
         if (error) {
           throw new Error("Failed to upload image");
         }
 
+        //guardamos el link de la imagen en una variable
         imageUrl = data;
       }
 
@@ -94,6 +96,9 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
       });
     }
   };
+
+  //desabilitar el boton de publicar si se vuelve true esta condicion.
+  const disabled = ((!textareaValue && !previewUrl) || mutation.isPending || textareaValue === post.content && post.image === previewUrl);
 
   return (
     <form action="">
@@ -135,7 +140,7 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
               type="button"
               size="sm"
                onClick={handleSubmit}
-               disabled={(!textareaValue && !previewUrl) || mutation.isPending}
+               disabled={disabled}
             >
               {mutation.isPending ? "Publicando..." : "Publicar"}
               
