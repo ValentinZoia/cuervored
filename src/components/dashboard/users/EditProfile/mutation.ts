@@ -89,7 +89,7 @@ export function useUpdateProfileMutation() {
       console.error(error);
       toast({
         variant: "destructive",
-        description: "Failed to update profile. Please try again.",
+        description: "Failed to update profile. Please try again." + error.message as string,
       });
     },
   });

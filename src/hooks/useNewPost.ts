@@ -147,5 +147,6 @@ export const useNewPost = ({
     fileInputRef,
     textareaRef,
     setFile,
+    file,
   };
 };
