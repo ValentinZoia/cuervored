@@ -74,7 +74,7 @@ export function Post({ post }: PostProps) {
         
         {imageUrl !== '' && (<p className=" relative z-10 text-sm whitespace-pre-line break-words ">{content}</p>)}
         <div className="mt-2 cursor-pointer text-sm text-muted-foreground  " onClick={()=>setOpenDialogComments(true)}>
-          {/* {`Ver los ${post._count.comments} comentarios`} */}
+        
           <ShowCommentsParagraph post={post} />
         </div>
         <div className="mt-2 flex items-center ">

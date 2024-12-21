@@ -52,7 +52,7 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
               
               <ButtonAddPhoto handleFileChange={handleFileChange} fileInputRef={fileInputRef} handleUploadPhotoButtonClick={handleUploadPhotoButtonClick} />
              <div className="w-full flex gap-2 justify-end">
-             <Button variant={"outline"} size={"sm"} onClick={() => onClose(false)}>Cancelar</Button>
+             <Button type="button" variant={"outline"} size={"sm"} onClick={() => onClose(false)}>Cancelar</Button>
 
              <CaslaButton
               variant="blueToRed"

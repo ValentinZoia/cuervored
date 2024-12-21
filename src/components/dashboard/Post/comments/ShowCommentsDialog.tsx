@@ -104,6 +104,7 @@ export default function ShowCommentsDialog({
               className="className='flex items-center justify-center gap-2 hover:fill-blueSanlorenzo hover:text-blueSanlorenzo hover:bg-[#00336634]"
             >
               <MessageCircle className="size-4 md:size-5 " />
+              <span className='hidden sm:inline'>Comentar</span>
             </Button>
             
           </div>
