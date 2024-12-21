@@ -12,6 +12,7 @@ import SkeletonNewPost from "./SkeletonNewPost";
 import UserAvatar from "../Post/UserAvatar";
 import { CaslaButton } from "@/components/ui/CaslaButton";
 import { DefaultSession, Session } from "next-auth";
+import ButtonAddPhoto from "./ButtonAddPhoto";
 
 interface NewPostProps {
   session:Session | DefaultSession | null
@@ -19,6 +20,7 @@ interface NewPostProps {
 
 export default function NewPost({session}:NewPostProps) {
   const user = session?.user;
+  
 
   const{
     handleTextareaChange,
@@ -32,7 +34,7 @@ export default function NewPost({session}:NewPostProps) {
     fileInputRef,
     textareaRef,
     
-  } = useNewPost();
+  } = useNewPost({initialPreviewUrl: null, initialTextareaValue: null});
 
   if(!user) {
     return <SkeletonNewPost />
@@ -66,21 +68,7 @@ export default function NewPost({session}:NewPostProps) {
             </div>
 
             <div className="mt-2 flex justify-between items-center">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleUploadPhotoButtonClick}
-              >
-                <ImageIcon className="w-4 h-4 mr-2" />
-                Agregar Foto
-              </Button>
-              <Input
-                ref={fileInputRef}
-                type="file"
-                id="file"
-                onChange={handleFileChange}
-                className="hidden"
-              />
+              <ButtonAddPhoto handleFileChange={handleFileChange} fileInputRef={fileInputRef} handleUploadPhotoButtonClick={handleUploadPhotoButtonClick} />
               <CaslaButton
               variant="blueToRed"
                 className="relative z-10"

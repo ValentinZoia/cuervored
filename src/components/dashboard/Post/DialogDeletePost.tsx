@@ -25,10 +25,10 @@ export default function DialogDeletePost({
   open,
   onClose,
 }: DialogDeletePostProps) {
-  const session = useSession();
+
   const mutation = useDeletePostMutation();
 
-  if (!session) return null;
+
 
   const handleOpenChange = (open: boolean) => {
     if (!open || !mutation.isPending) {

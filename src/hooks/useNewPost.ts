@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { submitPost } from "@/components/dashboard/NewPost/action";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
@@ -6,18 +6,28 @@ import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { transformImageToWebp } from "@/utils/transformImageToWebP";
 
-export const useNewPost = () => {
-  
+interface useNewPostProps {
+  initialPreviewUrl: string | null;
+
+  initialTextareaValue: string | null;
+}
+
+export const useNewPost = ({
+  initialPreviewUrl,
+  initialTextareaValue,
+}: useNewPostProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [textareaValue, setTextareaValue] = React.useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(
+    initialPreviewUrl
+  );
+  const [textareaValue, setTextareaValue] = useState<string | null>(
+    initialTextareaValue
+  );
   const [file, setFile] = React.useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
 
   const router = useRouter();
   const queryClient = useQueryClient();
-  
-  
 
   const mutation = useMutation({
     mutationFn: async ({
@@ -37,7 +47,7 @@ export const useNewPost = () => {
           variant: "success",
         });
         queryClient.invalidateQueries({
-          queryKey: ["posts"]
+          queryKey: ["posts"],
         });
         if (fileInputRef.current) fileInputRef.current.value = "";
         if (textareaRef.current) textareaRef.current.value = "";
@@ -59,7 +69,7 @@ export const useNewPost = () => {
   });
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if(e.target.value === ''){
+    if (e.target.value === "") {
       setTextareaValue(null);
     }
     setTextareaValue(e.target.value);
@@ -74,20 +84,22 @@ export const useNewPost = () => {
         const tranfromedFile = await transformImageToWebp(file);
 
         //Verify if transformedFile exists
-        if(!tranfromedFile){
+        if (!tranfromedFile) {
           throw new Error("Failed to transform image to webp");
         }
-        
 
         //Upload to Cloudinary
-        const{data, error} = await uploadToCloudinary(tranfromedFile);
+        const { data, error } = await uploadToCloudinary(tranfromedFile);
         if (error) {
           throw new Error("Failed to upload image");
         }
         imageUrl = data;
       }
       console.log(!!textareaValue);
-      mutation.mutate({ content: (!!textareaValue ? textareaValue : null) , imageUrl });
+      mutation.mutate({
+        content: !!textareaValue ? textareaValue : null,
+        imageUrl,
+      });
     } catch (error: any) {
       toast({
         description: (error.message as string) || "Failed to create post",
@@ -102,19 +114,21 @@ export const useNewPost = () => {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target) {
-          setPreviewUrl(event.target.result as string);
-          setFile(file);
+  const handleFileChange = useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (file) {
+          const reader = new FileReader()
+          reader.onloadend = () => {
+            setPreviewUrl(reader.result as string)
+            // onChange(reader.result as string)
+            setFile(file)
+          }
+          reader.readAsDataURL(file)
         }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+      },
+      []
+    )
 
   const handleRemovePreview = () => {
     setPreviewUrl(null);
@@ -132,6 +146,6 @@ export const useNewPost = () => {
     previewUrl,
     fileInputRef,
     textareaRef,
-    
+    setFile,
   };
 };

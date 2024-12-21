@@ -12,6 +12,7 @@ import { Edit2, MoreHorizontal, Trash2 } from "lucide-react";
 
 import React, { useState } from "react";
 import DialogDeletePost from "./DialogDeletePost";
+import DialogEditPost from "./EditPost/DialogEditPost";
 interface DropDownMenuPostsProps {
   post: PostData;
   className?: string;
@@ -21,6 +22,7 @@ export default function PostMoreButton({
   className,
 }: DropDownMenuPostsProps) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
 
   return (
     <>
@@ -32,7 +34,7 @@ export default function PostMoreButton({
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuGroup>
-            <DropdownMenuItem className="cursor-pointer">
+            <DropdownMenuItem className="cursor-pointer" onClick={() => setShowEditDialog(true)}>
               <Edit2 className="mr-2 h-4 w-4" />
               <p>Editar</p>
             </DropdownMenuItem>
@@ -51,6 +53,14 @@ export default function PostMoreButton({
         open={showDeleteDialog}
         onClose={() => setShowDeleteDialog(false)}
       />
+
+      <DialogEditPost
+      post={post}
+      isOpen={showEditDialog}
+      onClose={setShowEditDialog}
+      />
+
+      
     </>
   );
 }
