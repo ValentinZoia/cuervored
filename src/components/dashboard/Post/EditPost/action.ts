@@ -1,4 +1,4 @@
-"use server";
+"use server"; //nunca olvidar de colocar "use server", sino no funciona
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { getPostDataInclude, getUserDataSelect } from "@/types/Post";
@@ -12,7 +12,7 @@ export async function updatePost(
     //check if the user is logged in
     const session = await auth();
     const user = session?.user;
-    console.log(content, imageUrl, postId)
+    
 
     //verify user
     if (!session || !user?.id) {

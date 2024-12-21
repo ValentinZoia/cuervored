@@ -1,4 +1,4 @@
-"use server";
+"use server"//nunca olvidar de colocar "use server", sino no funciona
 
 import { LogInFormSchema, FormState } from "@/lib/zodSchema";
 import { signIn } from "@/auth";

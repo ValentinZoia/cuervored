@@ -1,4 +1,4 @@
-"use server";
+"use server"; //nunca olvidar de colocar "use server", sino no funciona
 
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
@@ -7,7 +7,7 @@ import prisma from "@/lib/prisma";
 export async function deletePost(id: string) {
   try {
     const session = await auth();
-    console.log(session)
+    
 
     if (!session) throw new Error("Unauthorized");
 
@@ -45,4 +45,4 @@ export async function deletePost(id: string) {
 
 
 
-export async function commentPost(id: string, comment: string) {}
+

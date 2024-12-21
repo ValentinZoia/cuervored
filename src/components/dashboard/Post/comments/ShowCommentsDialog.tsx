@@ -1,19 +1,18 @@
 import {
   Dialog,
-  DialogTrigger,
+ 
   DialogContent,
-  DialogClose,
+  
   DialogTitle,
 } from "@/components/ui/dialog";
 import { PostData } from "@/types/Post";
-import React, { useRef } from "react";
+import imageDontLoaded from '../../../../../public/imageDontLoaded.webp'
+import React, { useRef, useState } from "react";
 import LikeButton from "../LikeButton";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Send } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import InputComment from "./InputComment";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { compareDate } from "@/utils/compareDate";
 import Image from "next/image";
 import Commentslist from "./Commentslist";
 import UserHeaderPost from "../UserHeaderPost";
@@ -37,6 +36,7 @@ export default function ShowCommentsDialog({
   const likes = post.likes;
   const content = post.content;
 
+  const [currentSrc, setCurrentSrc] = useState(imageUrl);
   
   const inputRef = useRef<HTMLInputElement>(null);
   const handleCommentButtonClick = () => {
@@ -57,7 +57,10 @@ export default function ShowCommentsDialog({
       {imageUrl && (
         <div className="relative w-full sm:hidden md:block md:w-1/2 lg:w-7/12 h-full sm:h-full md:h-full lg:h-full">
           <Image
-            src={imageUrl}
+            unoptimized={true}
+            priority={true}
+            onError={()=>setCurrentSrc(imageDontLoaded.src)}// Cambia a imagen de respaldo en caso de error
+            src={currentSrc}
             alt="Imagen de la publicación"
             layout="fill"
             objectFit="contain"

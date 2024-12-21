@@ -1,5 +1,5 @@
 
-"use server"
+"use server"//nunca olvidar de colocar "use server", sino no funciona
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { createCommentSchema } from "@/lib/zodSchema";

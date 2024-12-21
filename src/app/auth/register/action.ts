@@ -1,4 +1,4 @@
-"use server";
+"use server"//nunca olvidar de colocar "use server", sino no funciona
 
 import { SignUpFormSchema, FormState } from "@/lib/zodSchema";
 import prisma from "@/lib/prisma";
