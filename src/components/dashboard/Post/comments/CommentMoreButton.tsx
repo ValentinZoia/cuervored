@@ -9,16 +9,20 @@ import {
 import { Edit2, MoreHorizontal, Trash2 } from "lucide-react";
 import React, { useState } from "react";
 import DeleteCommentDialog from "./DeleteCommentDialog";
+import EditCommentDialog from "./EditComment/EditCommentDialog";
 
 interface DropDownMenuPostsProps {
   commentId: string;
+  commentContent: string;
   className?: string;
 }
 export default function CommentMoreButton({
  commentId,
+ commentContent,
   className,
 }: DropDownMenuPostsProps) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
 
   return (
     <>
@@ -30,7 +34,7 @@ export default function CommentMoreButton({
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuGroup>
-            <DropdownMenuItem className="cursor-pointer">
+            <DropdownMenuItem className="cursor-pointer" onClick={() => setShowEditDialog(true)}>
               <Edit2 className="mr-2 h-4 w-4" />
               <p>Editar</p>
             </DropdownMenuItem>
@@ -45,6 +49,7 @@ export default function CommentMoreButton({
         </DropdownMenuContent>
       </DropdownMenu>
       <DeleteCommentDialog commentId={commentId} open={showDeleteDialog} onClose={() => setShowDeleteDialog(false)} />
+        <EditCommentDialog  commentId={commentId} commentContent={commentContent} isOpen={showEditDialog} onClose={setShowEditDialog} />
     </>
   );
 }

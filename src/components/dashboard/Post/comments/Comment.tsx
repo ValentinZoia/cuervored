@@ -35,7 +35,7 @@ export default function Comment(comment: CommentProps) {
 
       </div>
       {comment.comment.userId === session.data?.user.id && (
-        <CommentMoreButton commentId={comment.comment.id} />
+        <CommentMoreButton commentId={comment.comment.id} commentContent={comment.comment.content} />
       )}
     </div>
   )

@@ -41,7 +41,7 @@ export default function SkeletonMatchesCard({
                   </div>
                   <div className="text-lg font-bold mb-1">
                     {/* Oponente */}
-                    <Skeleton className="h-4 w-52" />
+                    <Skeleton className="h-4 w-40 md:w-44 lg:w-52" />
                   </div>
                   
                     <div className="flex mt-4 flex-wrap gap-2">

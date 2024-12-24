@@ -97,7 +97,12 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
     }
   };
 
-  //desabilitar el boton de publicar si se vuelve true esta condicion.
+   
+
+   // Deshabilitar el botón si:
+   // - El contenido está vacío
+   // - No hubo cambios en el contenido
+   // - La mutación está en progreso o el formulario está enviando
   const disabled = ((!textareaValue && !previewUrl) || mutation.isPending || textareaValue === post.content && post.image === previewUrl);
 
   return (
@@ -142,7 +147,7 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
                onClick={handleSubmit}
                disabled={disabled}
             >
-              {mutation.isPending ? "Publicando..." : "Publicar"}
+              {mutation.isPending ? "Guardando..." : "Guardar Cambios"}
               
             </CaslaButton>
           </div>
