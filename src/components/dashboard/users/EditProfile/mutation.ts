@@ -37,7 +37,7 @@ export function useUpdateProfileMutation() {
       if (!ok) {
         toast({
           variant: "destructive",
-          description: error || "Failed to update profile. Please try again.",
+          description: error || "Error al actualizar el perfil, por favor intenta de nuevo.",
         });
         return;
       }
@@ -80,8 +80,8 @@ export function useUpdateProfileMutation() {
 
       // Mostramos una notificación de éxito
       toast({
-        title: "Profile updated",
-        description: message || "Profile updated successfully.",
+        title: "Perfil actualizado",
+        description: message || "Perfil actualizado exitosamente.",
         variant: "success",
       });
     },
@@ -89,7 +89,7 @@ export function useUpdateProfileMutation() {
       console.error(error);
       toast({
         variant: "destructive",
-        description: "Failed to update profile. Please try again." + error.message as string,
+        description: "Error al actualizar el perfil, porfavor intentalo de nuevo." + error.message as string,
       });
     },
   });

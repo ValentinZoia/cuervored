@@ -43,7 +43,7 @@ export const useNewPost = ({
       if (data.ok || data.SuccessMessage !== "") {
         toast({
           description: data.SuccessMessage,
-          title: "Post created successfully",
+          title: "Post creado exitosamente",
           variant: "success",
         });
         queryClient.invalidateQueries({
@@ -61,8 +61,8 @@ export const useNewPost = ({
     },
     onError: (error: Error) => {
       toast({
-        description: error.message || "Failed to create post",
-        title: "Post creation failed",
+        description: error.message || "Error al crear el post",
+        title: "Post creacion fallida",
         variant: "destructive",
       });
     },
@@ -102,8 +102,8 @@ export const useNewPost = ({
       });
     } catch (error: any) {
       toast({
-        description: (error.message as string) || "Failed to create post",
-        title: "Post creation failed",
+        description: (error.message as string) || "Error al crear el post",
+        title: "Post creacion fallida",
         variant: "destructive",
       });
     }

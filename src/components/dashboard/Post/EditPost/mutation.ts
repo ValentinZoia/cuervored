@@ -31,7 +31,7 @@ export function useUpdatePostMutation() {
       if (!ok) {
         toast({
           variant: "destructive",
-          description: error || "Failed to update profile. Please try again.",
+          description: error || "Ocurrio un error al actualizar el post. Por favor intenta de nuevo.",
         });
         return;
       }
@@ -68,15 +68,15 @@ export function useUpdatePostMutation() {
       );
       // Mostramos una notificación de éxito
       toast({
-        title: "Post updated",
-        description: SuccessMessage || "Post updated successfully.",
+        title: "Post Actualizado",
+        description: SuccessMessage || "Post actualizado exitosamente.",
         variant: "success",
       });
     },
     onError: async (error) => {
       toast({
         variant: "destructive",
-        description: ("Failed to update profile. Please try again." +
+        description: ("Ocurrio un error al actualizar el post. Por favor intenta de nuevo." +
           error.message) as string,
       });
     },

@@ -39,7 +39,7 @@ export async function signup(
     return {
       message: null,
       errors: {
-        general: ["An user with that email already exists"],
+        general: ["Un usuario con ese correo ya existe"],
       },
     };
   }
@@ -54,7 +54,7 @@ export async function signup(
     return {
       message: null,
       errors: {
-        general: ["An user with that username already exists"],
+        general: ["Un usuario con ese nombre de usuario ya existe"],
       },
     };
   }
@@ -76,14 +76,14 @@ export async function signup(
   
 
   return {
-    message: "User created successfully",
+    message: "Usuario creado exitosamente",
     errors: null,
   };
   } catch (error) {
     return{
       message: null,
       errors: {
-        general: [error as string || "An error occurred while creating the user"],
+        general: [error as string || "Ocurrio un error inesperado al crear el usuario" ],
       },
     }
   }

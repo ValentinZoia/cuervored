@@ -48,8 +48,8 @@ export default function EditProfileForm({ user, onClose }: EditProfileFormProps)
     if(FormData.username === user.name && FormData.full_name === user.fullName && FormData.bio === user.bio){
       toast({
         variant:"default",
-        description:"No changes have been made",
-        title:"Profile update failed"
+        description:"No se han realizado cambios",
+        title:"Actualización fallida"
       })
       return
     }

@@ -46,16 +46,16 @@ export function useDeletePostMutation() {
       );
 
       toast({
-        description: "Post deleted successfully",
-        title: "Post deleted",
+        description: "Post eliminado exitosamente",
+        title: "Post eliminado",
         variant: "default",
       });
     },
     onError: (error) => {
       console.error(error);
       toast({
-        description: "Something went wrong. Please try again.",
-        title: "Post deletion failed",
+        description: "Algo salio mal. Por favor intenta de nuevo.",
+        title: "Post eliminado fallido",
         variant: "destructive",
       });
     },
@@ -119,8 +119,8 @@ export function useLikePostMutation({
        queryClient.setQueryData(queryKey, context?.previousState);
       console.error(error);
       toast({
-        description: "Something went wrong. Please try again.",
-        title: "Post liked failed",
+        description: "Algo salio mal, Por favor, intentalo de nuevo.",
+        title: "Post liked fallido",
         variant: "destructive",
       });
     },

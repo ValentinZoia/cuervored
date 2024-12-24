@@ -48,8 +48,8 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
       if (textareaValue === post.content && post.image === previewUrl) {
         toast({
           variant: "default",
-          description: "No changes have been made",
-          title: "Post update failed",
+          description: "No se han realizado cambios",
+          title: "Post actualización fallida",
         });
         return;
       }
@@ -90,8 +90,8 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
     } catch (error:any) {
       console.log(error.message as string);
       toast({
-        description: (error.message as string) || "Failed to update post",
-        title: "Post update failed",
+        description: (error.message as string) || "Error al actualizar el post",
+        title: "Post actualización fallida",
         variant: "destructive",
       });
     }

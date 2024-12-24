@@ -34,7 +34,7 @@ export function useUpdateCommentMutation() {
       if (!ok) {
         toast({
           variant: "destructive",
-          description: error || "Failed to update profile. Please try again.",
+          description: error || "Ocurrio un error al actualizar el comentario. Por favor, intenta de nuevo.",
         });
         return;
       }
@@ -68,14 +68,14 @@ export function useUpdateCommentMutation() {
       // Mostramos una notificación de éxito
       toast({
         title: "Comment updated",
-        description: SuccessMessage || "Comment updated successfully.",
+        description: SuccessMessage || "Comentario actualizado exitosamente.",
         variant: "success",
       });
     },
     onError: async (error) => {
       toast({
         variant: "destructive",
-        description: ("Failed to update comment. Please try again." +
+        description: ("Ocurrio un error al actualizar el comentario. Por favor, intenta de nuevo. " +
           error.message) as string,
       });
     },

@@ -60,8 +60,8 @@ export function useFollowerUserMutation({
          queryClient.setQueryData(queryKey, context?.previousState);
         console.error(error);
         toast({
-          description: "Something went wrong. Please try again.",
-          title: "User follow failed",
+          description: "Algo salió mal, por favor intenta de nuevo",
+          title: "Error al seguir usuario",
           variant: "destructive",
         });
       },

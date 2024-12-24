@@ -38,7 +38,7 @@ export async function login(
     if (res?.error) {
       return { message: null, errors: { general: [res.error] } };
     } else {
-      return { message: "User created successfully", errors: null };
+      return { message: "Usuario creado exitosamente", errors: null };
     }
     
 
@@ -46,7 +46,7 @@ export async function login(
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { message: null, errors: { general: ["Email already in use with different provider!"] } };
+          return { message: null, errors: { general: ["Email ya en uso con diferente proveedor (google o github)!"] } };
         default:
           return { message: null, errors: { general: [`${error.cause?.err?.message}`] } };
       }

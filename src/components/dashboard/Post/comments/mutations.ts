@@ -21,7 +21,9 @@ export function useSubmitCommentMutation(postId: string) {
       //recuperamos la respuesta de la api
       const { newComment, message, ok, error } = data;
        
-
+        if(!ok){
+          throw new Error(error || "Ocurrió un error al crear el comentario. Por favor intenta de nuevo.");
+        }
       
 
         const queryKey: QueryKey = ["comments", postId];
@@ -73,7 +75,7 @@ export function useSubmitCommentMutation(postId: string) {
         //Toast success
         toast({
           description: message,
-          title: "Comment created successfully",
+          title: "Comentario creado exitosamente",
           variant: "success",
         });
       
@@ -81,9 +83,9 @@ export function useSubmitCommentMutation(postId: string) {
     onError(error: Error) {
       toast({
         variant: "destructive",
-        title: "Comment created failed",
+        title: "Error al crear el comentario",
         description:
-          error.message || "Failed to delete comment. Please try again.",
+          error.message || "Ocurrió un error al crear el comentario. Por favor intenta de nuevo.",
       });
     },
   });
@@ -133,16 +135,16 @@ export function useDeleteCommentMutation() {
       //Toast success
       toast({
         description: message,
-        title: "Comment deleted successfully",
-        variant: "default",
+        title: "Comentario eliminado exitosamente",
+        variant: "success",
       });
     },
     onError(error: Error) {
       toast({
         variant: "destructive",
-        title: "Comment deleted failed",
+        title: "Error al eliminar el comentario",
         description:
-          error.message || "Failed to delete comment. Please try again.",
+          error.message || "Ocurrio un error al eliminar el comentario. Por favor intenta de nuevo.",
       });
     },
   });
