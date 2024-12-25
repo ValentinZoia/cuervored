@@ -11,6 +11,7 @@ import { Loader } from 'lucide-react';
 export default function SearchContent() {
     const searchParams = useSearchParams();
     const query = searchParams.get("q");
+    const baseUrl = process.env.NEXT_PUBLIC_URL;
 
     if(!query){
         return <p>No se encontraron resultados</p>
@@ -71,7 +72,7 @@ export default function SearchContent() {
           {page.users.map((user) => (
              <Link href={`users/${user.name}`}>
             <div key={user.id} className="w-full h-1/2 p-4 hover:bg-secondary border-t-[1px] ">
-              <UserHeaderPost username={user.name} avatarUrl={user.image} linkTo={`users/${user.name}`} />
+              <UserHeaderPost username={user.name} avatarUrl={user.image} linkTo={`${baseUrl}/dashboard/users/${user.name}`} />
             </div>
              </Link>
           ))}

@@ -23,6 +23,7 @@ export default function SearchField() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const queryClient = useQueryClient();
+  const baseUrl = process.env.NEXT_PUBLIC_URL;
 
   const initialQuery = searchParams.get("q") || "";
   const [query, setQuery] = useState(initialQuery); // Para manejar el texto del input
@@ -76,7 +77,7 @@ export default function SearchField() {
     // invalidar manualmente la consulta para actualizar los datos
     queryClient.invalidateQueries({ queryKey: ["search", query] });
 
-    router.push(`/dashboard/search?q=${encodeURIComponent(query.trim())}`);
+    router.push(`${baseUrl}/dashboard/search?q=${encodeURIComponent(query.trim())}`);
   }
 
   return (
@@ -125,7 +126,7 @@ export default function SearchField() {
                     <UserHeaderPost
                       username={user.name}
                       avatarUrl={user.image}
-                      linkTo={`users/${user.name}`}
+                      linkTo={`${baseUrl}/dashboard/users/${user.name}`}
                     />
                   </div>
                 </Link>
