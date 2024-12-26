@@ -24,6 +24,7 @@ export default async function UserProfilePage({params:{username}}:UserProfilePag
         )
     }
 
+    //usuario al cual corresponde el perfil que se esta viendo, NO EL LOGEADO
     const user = await getUserByUsername(username, session.user.id);
     
     return(

@@ -8,6 +8,7 @@ import { useRef } from "react";
 interface FollowButtonProps {
   userId: string;
   initialState: FollowerInfo;
+  size?: "sm" | "lg" | "default" | "icon" | null | undefined;
 }
 /*
   Función de debounce, que retrasara la funcion para evitar clics repetitivos y
@@ -21,33 +22,72 @@ function debounce(func: (...args: any[]) => void, delay: number) {
   };
 }
 
+//componente
 export default function FollowButton({
   userId,
   initialState,
+  size,
 }: FollowButtonProps) {
   const { data, mutate, isLoading, isPending } = useFollowerUserMutation({
     userId,
     initialState,
   });
 
+  const [isHovering, setIsHovering] = React.useState(false);
+  const spanRef = React.useRef<HTMLSpanElement>(null);
+  const [width, setWidth] = React.useState<number | null>(null);
+
+  React.useEffect(() => {
+    if (spanRef.current) {
+      setWidth(spanRef.current.offsetWidth);
+    }
+  }, [data.isFollowedByUser, isHovering]);
+
   // Crear una función `debouncedMutate`
   const debouncedMutate = useRef(
     debounce(() => mutate(), 300) // Configura el debounce con un retraso de 300ms
   );
 
+  /*
+  Desablitar boton cuando:
+  - isPending: Cuando la solicitud de seguimiento (follow) está en proceso
+  - isLoading: Cuando la data esta cargando
+  */ 
   const isDisabled = isPending || isLoading;
+  
   return (
     <Button
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
       disabled={isDisabled}
       variant="default"
-      className="text-sm"
+      size={size ? size : "default"}
+      className={` ${size === "sm" ? "text-xs" : "text-sm"} ${
+        data.isFollowedByUser &&
+        "hover:text-redSanlorenzo hover:bg-[#fd170257] hover:border-redSanlorenzo border-[1px] "
+      } `}
       onClick={() => {
         if (!isDisabled) {
           debouncedMutate.current();
         }
       }}
     >
-      {data.isFollowedByUser ? "Siguiendo" : "Seguir"}
+      {data.isFollowedByUser && (
+        <span className="opacity-0 pointer-events-none absolute" ref={spanRef}>
+          Dejar de Seguir
+        </span>
+      )}
+
+      <span
+        className={`visible`}
+        style={{ width: data.isFollowedByUser ?   width ? `${width}px` : undefined : undefined }}
+      >
+        {data.isFollowedByUser
+          ? isHovering
+            ? "Dejar de seguir"
+            : "Siguiendo"
+          : "Seguir"}
+      </span>
     </Button>
   );
 }

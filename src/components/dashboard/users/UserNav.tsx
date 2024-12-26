@@ -3,6 +3,7 @@
 import React from 'react'
 import ArrowBack from '../ArrowBack'
 
+//usuario al cual corresponde el perfil que se esta viendo, NO EL LOGEADO
 interface UserNavProps {
     username: string | null
     full_name: string | null

@@ -9,7 +9,7 @@ import UserPosts from "./UserPosts";
 
 
 interface UserCardProps {
-    user:UserData;
+    user:UserData; //usuario al cual corresponde el perfil que se esta viendo, NO EL LOGEADO
     loggedInUserId:string;
   }
 

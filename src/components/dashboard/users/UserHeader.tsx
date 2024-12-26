@@ -1,13 +1,12 @@
 import React from "react";
 import UserAvatar from "../Post/UserAvatar";
 import { FollowerInfo, UserData } from "@/types/Post";
-import { Button } from "@/components/ui/button";
 import EditProfileButton from "./EditProfile/EditProfileButton";
 import FollowButton from "./FollowButton";
 import FollowerCount from "./FollowerCount";
 
 interface UserHeaderProps {
-  user: UserData;
+  user: UserData; //usuario al cual corresponde el perfil que se esta viendo, NO EL LOGEADO
   loggedInUserId: string;
 }
 export default function UserHeader({ user, loggedInUserId }: UserHeaderProps) {
