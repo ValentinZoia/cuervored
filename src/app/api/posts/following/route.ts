@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { getPostDataInclude, PostsPage } from "@/types/Post";
 import { auth } from "@/auth";
 import { Prisma } from "@prisma/client";
+import { getUserByUsername } from "@/data/user";
 
 export async function GET(req: NextRequest) {
   try {
@@ -25,12 +26,21 @@ export async function GET(req: NextRequest) {
     }
 
     
+    //devuelve info del usuario logeado, nos sirve sus followings.
+      const loggedInUser = await getUserByUsername(
+        session.user.name as string,
+        session.user.id
+      );
 
 
-
-    // get posts to db
-    const posts = await prisma.post.findMany({
-      include:{
+    // get posts following to db
+    const postsFollowing = await prisma.post.findMany({
+        where:{
+          userId:{
+            in: loggedInUser?.following.map((follow) => follow.followingId),
+          }
+        },
+        include:{
         ...getPostDataInclude(session.user.id),
         _count:{
           select:{
@@ -45,18 +55,15 @@ export async function GET(req: NextRequest) {
     });
 
     
-    //Chek if there are no posts
-    if (!posts || posts.length === 0) {
-      return NextResponse.json({ error: "No posts found" }, { status: 404 });
-    }
+    
 
     
     
     
-    const nextCursor = posts.length > pageSize ? posts[pageSize].id : null;
+    const nextCursor = postsFollowing.length > pageSize ? postsFollowing[pageSize].id : null;
     
     const data: PostsPage = {
-      posts: posts.slice(0, pageSize).map(post => ({
+      posts: postsFollowing.slice(0, pageSize).map(post => ({
         ...post,
         _count: {
           likes: post._count.likes,

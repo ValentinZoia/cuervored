@@ -38,7 +38,7 @@ export function useUpdatePostMutation() {
 
       // Actualizamos los datos de los posts en el cache de React Query
       const queryFilter: QueryFilters = {
-        queryKey: ["posts"],
+        queryKey: ["post-feed"],
       };
 
       await queryClient.cancelQueries(queryFilter);

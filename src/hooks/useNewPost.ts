@@ -3,8 +3,9 @@ import { submitPost } from "@/components/dashboard/NewPost/action";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
-import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { useQueryClient, useMutation, QueryFilters, InfiniteData } from "@tanstack/react-query";
 import { transformImageToWebp } from "@/utils/transformImageToWebP";
+import { PostData, PostsPage } from "@/types/Post";
 
 interface useNewPostProps {
   initialPreviewUrl: string | null;
@@ -39,16 +40,67 @@ export const useNewPost = ({
     }) => {
       return submitPost(content, imageUrl);
     },
-    onSuccess: (data) => {
-      if (data.ok || data.SuccessMessage !== "") {
+    onSuccess:async (data) => {
+      if (data.ok) {
+        const queryFilter = {
+          queryKey: ["post-feed"],
+          predicate(query) {
+            return (
+              query.queryKey.includes("for-you") ||
+              (query.queryKey.includes("user-posts"))
+            );
+          },
+        } satisfies QueryFilters;
+  
+        await queryClient.cancelQueries(queryFilter);
+  
+        queryClient.setQueriesData<InfiniteData<PostsPage, string | null>>(
+          queryFilter,
+          (oldData) => {
+            if (!oldData) return undefined;
+        
+            const firstPage = oldData.pages[0];
+        
+            if (firstPage) {
+              const newPosts = data.newPost
+                ? [data.newPost, ...firstPage.posts] // Agrega `data.newPost` si existe
+                : firstPage.posts; // De lo contrario, usa solo los posts existentes
+        
+              return {
+                ...oldData,
+                pages: [
+                  {
+                    ...firstPage,
+                    posts: newPosts, // Aseguramos que este arreglo es válido
+                  },
+                  ...oldData.pages.slice(1),
+                ],
+              };
+            }
+        
+            return oldData; // Si no hay `firstPage`, devolvemos los datos anteriores.
+          }
+        );
+  
+        queryClient.invalidateQueries({
+          queryKey: queryFilter.queryKey,
+          predicate(query) {
+            return queryFilter.predicate(query) && !query.state.data;
+          },
+        });
+        
+        
+        
+        
+        
+        
+        
         toast({
           description: data.SuccessMessage,
           title: "Post creado exitosamente",
           variant: "success",
         });
-        queryClient.invalidateQueries({
-          queryKey: ["posts"],
-        });
+        
         if (fileInputRef.current) fileInputRef.current.value = "";
         if (textareaRef.current) textareaRef.current.value = "";
         setTextareaValue("");

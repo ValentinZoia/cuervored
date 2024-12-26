@@ -46,6 +46,7 @@ export async function submitPost(textareaValue: string | null, imageUrl: string 
     //return a success message
     return {
       ok: true,
+      newPost:post,
       SuccessMessage: "Post created successfully",
       error: null,
     };

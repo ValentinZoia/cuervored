@@ -43,9 +43,15 @@ export function useUpdateProfileMutation() {
       }
 
       // Actualizamos los datos de los posts en el cache de React Query
-      const queryFilter: QueryFilters = {
-        queryKey: ["posts"],
-      };
+      const queryFilter = {
+        queryKey: ["post-feed"],
+        predicate(query) {
+          return (
+            query.queryKey.includes("for-you") ||
+            (query.queryKey.includes("user-posts"))
+          );
+        },
+      } satisfies QueryFilters;
 
       await queryClient.cancelQueries(queryFilter);
 

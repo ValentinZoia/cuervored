@@ -1,22 +1,15 @@
 "use client"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle,  Loader } from "lucide-react";
-import { useInfiniteQuery, } from "@tanstack/react-query";
-
-import SkeletonPost from "../Post/SkeletonPost";
-import {PostData as PostType } from "@/types/Post";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import SkeletonPost from "./SkeletonPost";
+import { PostData as PostType } from "@/types/Post";
 import InfiniteScrollContainer from "../InfiniteScrollContainer";
-import { Post } from "../Post/Post";
-import { getUserPosts } from "@/data/posts";
+import { Post } from "./Post";
+import { getPostsForYou } from "@/data/posts";
 
-
-
-interface UserPostsProps {
-  userId: string
-}
-
-export default function UserPosts({userId}:UserPostsProps) {
-  
+export default function PostForYou() {
+ 
 
 
   // Configuración de `useInfiniteQuery`
@@ -27,13 +20,14 @@ export default function UserPosts({userId}:UserPostsProps) {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    status,
   } = useInfiniteQuery({
-    queryKey: ["post-feed","user-posts", userId], //<-- La key de la información
+    queryKey: ["post-feed","for-you"], //<-- La key de la información
     queryFn: ({
       pageParam,
     }: {
       pageParam?: string | number | null | undefined;
-    }) => getUserPosts({ pageParam, userId }), //<-- Cómo traer la información
+    }) => getPostsForYou({ pageParam }), //<-- Cómo traer la información
     initialPageParam: null as string | null,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined, // Define el siguiente parámetro de paginación
     staleTime: Infinity, //<-- Cuanto tiempo mostrara la info desde cache sin hacer un refetch en segundo plano
@@ -43,10 +37,9 @@ export default function UserPosts({userId}:UserPostsProps) {
   });
 
   
+  const posts = data?.pages.flatMap((page) => page.posts) || [];
 
 
-
-  
 
   if (isLoading) {
     return <SkeletonPost />;
@@ -64,24 +57,25 @@ export default function UserPosts({userId}:UserPostsProps) {
     );
   }
 
-  if (data && data.pages.length > 0) {
+  if(status === "success" && !posts.length && !hasNextPage) {
+    return (
+      <p className="text-center mt-4">No hay publicaciones para mostrar todavia.</p>
+    )
+
+  }
+  
     
     return (
       <InfiniteScrollContainer
-        className="relative z-10 bg-card"
+        className="relative z-10 space-y-6"
         onBottomReached={() => hasNextPage && !isLoading && fetchNextPage()}
       >
-        {data.pages.flatMap((page) =>
-          page.posts.map((post: PostType) => <Post key={post.id} post={post} />)
-        )}
+        {posts.map((post: PostType) => <Post key={post.id} post={post} />)
+        }
         {isFetchingNextPage && <Loader className="mx-auto animate-spin" />}
       </InfiniteScrollContainer>
     );
-  }
+  
 
-  if(data && data.pages.length === 0) {
-    return (
-      <p>No hay publicaciones</p>
-    )
-  }
+  
 }

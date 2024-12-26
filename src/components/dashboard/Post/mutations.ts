@@ -27,11 +27,11 @@ export function useDeletePostMutation() {
       const deletedPostId = data.postDeletedId;
 
       await queryClient.cancelQueries({
-        queryKey: ["posts"],
+        queryKey: ["post-feed"],
       });
 
       queryClient.setQueryData<InfiniteData<PostsPage, string | null>>(
-        ["posts"],
+        ["post-feed"],
         (oldData) => {
           if (!oldData) return;
 
