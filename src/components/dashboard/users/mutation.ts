@@ -68,10 +68,16 @@ export function useFollowerUserMutation({
       return { previousState };
     },
     onSuccess: async (data) => {
+
+      /*
+      Si te dejo de seguir, se debe eliminar los posts de ese usuario de la lista de publicaciones de la pestaña "Siguiendo"
+      */
+
       await queryClient.cancelQueries({
         queryKey: ["post-feed","following"],
       });
 
+      //Actualizar la lista de publicaciones en cache de la pestaña "Siguiendo" 
       queryClient.setQueryData<InfiniteData<PostsPage, string | null>>(
         ["post-feed","following"],
         (oldData) => {

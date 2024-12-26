@@ -26,8 +26,8 @@ export default async function Publications() {
           <div className="w-full min-w-0 space-y-5 ">
             <Tabs defaultValue="for-you">
           <TabsList className="px-0 flex  space-x-4 bg-card border-[1px] border-border rounded-lg ">
-            <TabsTrigger className="w-1/2 " value="for-you">For you</TabsTrigger>
-            <TabsTrigger className="w-1/2 " value="following">Following</TabsTrigger>
+            <TabsTrigger className="w-1/2 " value="for-you">Para ti</TabsTrigger>
+            <TabsTrigger className="w-1/2 " value="following">Siguiendo</TabsTrigger>
           </TabsList>
           <TabsContent value="for-you">
             <PostForYou/>
