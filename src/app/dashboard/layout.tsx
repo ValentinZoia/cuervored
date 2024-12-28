@@ -26,7 +26,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           </div>
         </main>
         
-        <MenuBar className="sticky bottom-0 z-50 flex w-full justify-center gap-12 border-t bg-primary text-primary-foreground p-3 md:hidden" />
+        <MenuBar className="sticky bottom-0 z-50 flex w-full justify-center gap-12 border-t bg-blueSanlorenzo text-primary-foreground p-3 md:hidden" />
         <Toaster />
       </div>
     </>
