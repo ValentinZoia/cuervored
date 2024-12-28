@@ -1,5 +1,5 @@
 "use client"
-import { BasicMatchData } from "@/types/Match";
+
 import React from "react";
 import {
   Table,
@@ -10,7 +10,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Home, Trophy } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { getAllMatches } from "@/data/matches";
 import SkeletonAllMatchesTable from "./SkeletonAllMatchesTable";

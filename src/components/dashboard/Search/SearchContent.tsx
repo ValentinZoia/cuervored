@@ -70,7 +70,7 @@ export default function SearchContent() {
       {data.pages.map((page) => (
         <div key={page.nextCursor}>
           {page.users.map((user) => (
-             <Link href={`users/${user.name}`}>
+             <Link href={`${baseUrl}/dashboard/users/${user.name}`}>
             <div key={user.id} className="w-full h-1/2 p-4 hover:bg-secondary border-t-[1px] ">
               <UserHeaderPost username={user.name} avatarUrl={user.image} linkTo={`${baseUrl}/dashboard/users/${user.name}`} />
             </div>
