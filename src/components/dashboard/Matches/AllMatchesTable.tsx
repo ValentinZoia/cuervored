@@ -1,3 +1,4 @@
+"use client"
 import { BasicMatchData } from "@/types/Match";
 import React from "react";
 import {
@@ -10,13 +11,35 @@ import {
 } from "@/components/ui/table";
 import { Home, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
+import { getAllMatches } from "@/data/matches";
+import SkeletonAllMatchesTable from "./SkeletonAllMatchesTable";
 
-interface AllMatchesTableProps {
-  matches: BasicMatchData[];
-}
 
-export default function AllMatchesTable({ matches }: AllMatchesTableProps) {
-  if (!matches) return <p>No hay partidos</p>;
+
+export default function AllMatchesTable() {
+  //obtenemos todos los partidos de san lorenzo con react query ta que son datos asincronos
+  const {data, error, isLoading} = useQuery({
+    queryKey: ["AllMatches"],
+    queryFn: getAllMatches,
+    staleTime: 1000 * 60 * 60 * 24,
+  })
+  
+  if (isLoading) {
+    return <SkeletonAllMatchesTable/>;
+  }
+
+  if (error) {
+    console.error(error);
+    return <p>Ocurrió un error al cargar los partidos</p>;
+  }
+  
+  if(!data || data === undefined ) {
+    return <p>No hay partidos para mostrar</p>
+  }
+  
+  
+  
 
   return (
     <>
@@ -42,8 +65,8 @@ export default function AllMatchesTable({ matches }: AllMatchesTableProps) {
             </TableRow>
           </TableHeader>
           <TableBody className="border-x-2 border-b-2 text-center  ">
-            {matches &&
-              matches.map((match, index) => (
+            {data &&
+              data.map((match, index) => (
                 <TableRow key={index}>
                   <TableCell className="font-medium p-2 sm:p-4 ">
                     {match.date}

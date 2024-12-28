@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function CuervoLogo() {
   return (
     <>
-      <svg
+      {/* <svg
         className="hidden md:block"
         version="1.1"
         viewBox="0 0 2048 512"
@@ -112,9 +112,9 @@ export default function CuervoLogo() {
           d="m0 0 5 1 1 6-5-2z"
           fill="#8f2a29"
         />
-      </svg>
+      </svg> */}
       <svg
-        className=" md:hidden"
+        className=""
         version="1.1"
         viewBox="0 0 277 512"
         width="50"

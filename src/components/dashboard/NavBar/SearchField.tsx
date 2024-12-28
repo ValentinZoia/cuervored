@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SearchIcon } from "lucide-react";
+import { LoaderCircle, SearchIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import {
@@ -31,7 +31,7 @@ export default function SearchField() {
   const [showCard, setShowCard] = useState(false); // Para manejar la visibilidad de la card
  
   // Fetch de datos con React Query
-  const { data } = useInfiniteQuery({
+  const { data, isLoading, isPending } = useInfiniteQuery({
     queryKey: ["search", query], //<-- La key de la información
     queryFn: ({
       pageParam,
@@ -112,7 +112,7 @@ export default function SearchField() {
 
       {/* Card de resultados */}
       {showCard && (
-        <Card className="absolute top-full mt-2 w-full bg-white z-10 shadow-lg p-0">
+        <Card className="absolute top-full mt-2 w-full  z-10 shadow-lg p-0">
           <CardHeader className="border-b-[1px]">
             <CardTitle>Resultados</CardTitle>
           </CardHeader>
@@ -137,7 +137,8 @@ export default function SearchField() {
             }
             
             {(results.length === 0 && query.length === 0 ) && <p className="text-center py-4">Escribe algo...</p>}
-            {(results.length === 0 && query.length > 0 ) && <p className="text-center py-4">No se encontraron resultados</p>}
+            {(results.length === 0 && data?.pages.map(page => page.users.length === 0 ) && !isLoading && !isPending ) && <p className="text-center py-4">No se encontraron resultados</p>}
+            {(isLoading )&& <div className="w-full py-4 flex justify-center"><LoaderCircle className="animate-spin"/></div>}
             {results.length > 5 && (
               <CaslaButton variant="redToBlue" className="w-full" onClick={()=>{handleSubmit}}>Ver Todos</CaslaButton>
             )}
