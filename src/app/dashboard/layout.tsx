@@ -17,7 +17,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
           <div className=" grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Columna izquierda: Proximos partidos y Usarios recomendados */}
             <div className="space-y-6">
-              <UpcomingMatches />
+              <UpcomingMatches className="hidden"/>
               <RecommendedUsers />
             </div>
 
