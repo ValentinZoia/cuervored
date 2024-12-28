@@ -137,8 +137,8 @@
     --popover-foreground: 0 0% 90%; /* Gris claro */
   
     /* Primarios */
-    --primary: 208.125 59.25925925925925% 21.176470588235297%; /* Azul San Lorenzo */
-    --primary-foreground: 0 0% 95%; /* Blanco suave */
+    --primary: 0 0% 95%; /* Blanco Suave */
+    --primary-foreground: 0 0% 90%; /* Gris claro */
   
     /* Secundarios */
     --secondary: 220 30% 18%; /* Azul medianamente oscuro */
