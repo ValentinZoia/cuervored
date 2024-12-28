@@ -104,7 +104,7 @@ export default function ShowCommentsDialog({
               variant="ghost"
               size="sm"
               onClick={handleCommentButtonClick}
-              className="className='flex items-center justify-center gap-2 hover:fill-blueSanlorenzo hover:text-blueSanlorenzo hover:bg-[#00336634]"
+              className="className='flex items-center justify-center gap-2 hover:fill-blueSanlorenzo hover:text-blueSanlorenzo dark:hover:text-[#a2b6f8] hover:bg-[#00336634]"
             >
               <MessageCircle className="size-4 md:size-5 " />
               <span className='hidden sm:inline'>Comentar</span>

@@ -72,7 +72,7 @@ export function Post({ post }: PostProps) {
         
         <div className="flex items-center space-x-2 sm:space-x-4 mb-2">
           {<LikeButton postId={post.id} initialState={LikeInfo} />}
-          <Button variant="ghost" size="sm" onClick={() => setOpenDialogComments(true)} className='flex items-center justify-center gap-2 hover:fill-blueSanlorenzo hover:text-blueSanlorenzo hover:bg-[#00336634]'>
+          <Button variant="ghost" size="sm" onClick={() => setOpenDialogComments(true)} className='flex items-center justify-center gap-2 hover:fill-blueSanlorenzo hover:text-blueSanlorenzo dark:hover:text-[#a2b6f8] hover:bg-[#00336634]'>
             <MessageCircle className="h-4 w-4 " />
             <span className='hidden sm:inline'>Comentar</span>
           </Button>

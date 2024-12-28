@@ -25,7 +25,7 @@ export default async function Publications() {
           <NewPost session={session}/>
           <div className="w-full min-w-0 space-y-5 ">
             <Tabs defaultValue="for-you">
-          <TabsList className="px-0 flex  space-x-4 bg-card border-[1px] border-border rounded-lg ">
+          <TabsList className="px-0 flex  space-x-4 bg-card border-[1px] border-border rounded-lg dark:text-primary-foreground ">
             <TabsTrigger className="w-1/2 " value="for-you">Para ti</TabsTrigger>
             <TabsTrigger className="w-1/2 " value="following">Siguiendo</TabsTrigger>
           </TabsList>

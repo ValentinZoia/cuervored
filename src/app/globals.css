@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* root */
 .example2 {
   --blueSanlorenzo: #003366; /* Azul San Lorenzo */
   --redSanlorenzo: #d94a3d; /* Rojo San Lorenzo */
@@ -30,37 +31,62 @@
   --chart-3: #4f6b8e; /* Azul */
   --chart-4: #1aa991; /* Verde intenso */
   --chart-5: #ffa000; /* Amarillo */
-  --caca:#d94a3d60;
+  
 }
 
+/*dark*/
 .example {
-  --blueSanlorenzo: #003366; /* Azul San Lorenzo */
   --redSanlorenzo: #d94a3d; /* Rojo San Lorenzo */
-  --radius: 0.5rem; /* border-radius para tema oscuro */
-  --background: #001f44; /* Azul muy oscuro */
-  --foreground: #ffffff; /* Blanco */
-  --card: #1b3a5b; /* Azul ligeramente más claro */
-  --card-foreground: #ffffff; /* Blanco */
-  --popover: #1b3a5b; /* Azul oscuro */
-  --popover-foreground: #ffffff; /* Blanco */
-  --primary: #d94a3d; /* Rojo San Lorenzo */
-  --primary-foreground: #ffffff; /* Blanco */
-  --secondary: #003366; /* Azul San Lorenzo */
-  --secondary-foreground: #ffffff; /* Blanco */
-  --muted: #1b3a5b; /* Azul ligeramente más claro */
-  --muted-foreground: #cdd6db; /* Gris claro */
-  --accent: #d94a3d; /* Rojo San Lorenzo */
-  --accent-foreground: #ffffff; /* Blanco */
-  --destructive: #c44537; /* Rojo fuerte */
-  --destructive-foreground: #ffffff; /* Blanco */
-  --border: #3a516c; /* Gris azulado oscuro */
-  --input: #1b3a5b; /* Azul muy oscuro */
+  --blueSanlorenzo: #1b2a47; /* Azul San Lorenzo */
+
+  /* Fondo y texto */
+  --background: #0b0e14; /* Negro azulado */
+  --foreground: #f2f2f2; /* Blanco suave */
+
+  /* Tarjetas */
+  --card: #1a1e28; /* Azul marino oscuro */
+  --card-foreground: #e6e6e6; /* Gris claro */
+
+  /* Popovers */
+  --popover: #141820; /* Azul grisáceo oscuro */
+  --popover-foreground: #e6e6e6; /* Gris claro */
+
+  /* Primarios */
+  --primary: #1b2a47; /* Azul San Lorenzo */
+  --primary-foreground: #f2f2f2; /* Blanco suave */
+
+  /* Secundarios */
+  --secondary: #2c3645; /* Azul medianamente oscuro */
+  --secondary-foreground: #e6e6e6; /* Gris claro */
+
+  /* Colores atenuados */
+  --muted: #141820; /* Azul grisáceo oscuro */
+  --muted-foreground: #b3b3b3; /* Gris apagado */
+
+  /* Acentos */
+  --accent: #1a1e28; /* Azul marino oscuro */
+  --accent-foreground: #f2f2f2; /* Blanco suave */
+
+  /* Colores destructivos */
+  --destructive: #d23d35; /* Rojo intenso */
+  --destructive-foreground: #f2f2f2; /* Blanco suave */
+
+  /* Bordes e inputs */
+  --border: #333940; /* Azul grisáceo muy oscuro */
+  --input: #333940; /* Azul grisáceo muy oscuro */
+
+  /* Anillos de enfoque */
   --ring: #d94a3d; /* Rojo San Lorenzo */
-  --chart-1: #d94a3d; /* Rojo */
-  --chart-2: #003366; /* Azul */
-  --chart-3: #ffa000; /* Amarillo */
-  --chart-4: #1aa991; /* Verde */
-  --chart-5: #4f6b8e; /* Azul */
+
+  /* Radios */
+  --radius: 0.5rem; /* Borde redondeado */
+
+  /* Gráficos */
+  --chart-1: #d94a3d; /* Rojo San Lorenzo */
+  --chart-2: #3d567c; /* Azul San Lorenzo más claro */
+  --chart-3: #e8ba36; /* Amarillo vibrante */
+  --chart-4: #23784d; /* Verde bosque */
+  --chart-5: #326a7d; /* Azul verdoso */
 }
 
 @layer base {
@@ -95,33 +121,57 @@
   }
 
   .dark {
-    --redSanlorenzo:0 83% 47%;
-    --blueSanlorenzo:208.125 59.25925925925925% 21.176470588235297%;
-    --radius: 0.5rem; /* border-radius para tema oscuro */
-    --background: 230 100% 22%; /* Azul muy oscuro */
-    --foreground: 0 0% 100%; /* Blanco */
-    --card: 230 60% 14%; /* Azul ligeramente más claro */
-    --card-foreground: 0 0% 100%; /* Blanco */
-    --popover: 230 60% 14%; /* Azul oscuro */
-    --popover-foreground: 0 0% 100%; /* Blanco */
-    --primary: 0 83% 47%; /* Rojo San Lorenzo */
-    --primary-foreground: 0 0% 100%; /* Blanco */
-    --secondary: 220 100% 32%; /* Azul San Lorenzo */
-    --secondary-foreground: 0 0% 100%; /* Blanco */
-    --muted: 230 60% 14%; /* Azul ligeramente más claro */
-    --muted-foreground: 210 15% 80%; /* Gris claro */
-    --accent: 0 83% 47%; /* Rojo San Lorenzo */
-    --accent-foreground: 0 0% 100%; /* Blanco */
-    --destructive: 0 79% 52%; /* Rojo fuerte */
-    --destructive-foreground: 0 0% 100%; /* Blanco */
-    --border: 230 22% 33%; /* Gris azulado oscuro */
-    --input: 230 60% 14%; /* Azul muy oscuro */
-    --ring: 0 83% 47%; /* Rojo San Lorenzo */
-    --chart-1: 0 83% 47%; /* Rojo */
-    --chart-2: 220 100% 32%; /* Azul */
-    --chart-3: 45 100% 51%; /* Amarillo */
-    --chart-4: 120 61% 34%; /* Verde */
-    --chart-5: 186 72% 42%; /* Cyan */
+    --redSanlorenzo: 0 83% 47%; /* Rojo San Lorenzo */
+    --blueSanlorenzo: 208.125 59.25925925925925% 21.176470588235297%; /* Azul San Lorenzo */
+  
+    /* Fondo y texto */
+    --background: 220 15% 10%; /* Negro azulado */
+    --foreground: 0 0% 95%; /* Blanco suave */
+  
+    /* Tarjetas */
+    --card: 220 15% 15%; /* Azul marino oscuro */
+    --card-foreground: 0 0% 90%; /* Gris claro */
+  
+    /* Popovers */
+    --popover: 220 15% 12%; /* Azul grisáceo oscuro */
+    --popover-foreground: 0 0% 90%; /* Gris claro */
+  
+    /* Primarios */
+    --primary: 208.125 59.25925925925925% 21.176470588235297%; /* Azul San Lorenzo */
+    --primary-foreground: 0 0% 95%; /* Blanco suave */
+  
+    /* Secundarios */
+    --secondary: 220 30% 18%; /* Azul medianamente oscuro */
+    --secondary-foreground: 0 0% 90%; /* Gris claro */
+  
+    /* Colores atenuados */
+    --muted: 220 15% 12%; /* Azul grisáceo oscuro */
+    --muted-foreground: 0 0% 70%; /* Gris apagado */
+  
+    /* Acentos */
+    --accent: 220 15% 15%; /* Azul marino oscuro */
+    --accent-foreground: 0 0% 95%; /* Blanco suave */
+  
+    /* Colores destructivos */
+    --destructive: 0 79% 52%; /* Rojo intenso */
+    --destructive-foreground: 0 0% 95%; /* Blanco suave */
+  
+    /* Bordes e inputs */
+    --border: 220 20% 20%; /* Azul grisáceo muy oscuro */
+    --input: 220 20% 20%; /* Azul grisáceo muy oscuro */
+  
+    /* Anillos de enfoque */
+    --ring: 208.125 59.25925925925925% 21.176470588235297%; /* Azul San Lorenzo */
+  
+    /* Radios */
+    --radius: 0.5rem; /* Borde redondeado */
+  
+    /* Gráficos */
+    --chart-1: 0 83% 47%; /* Rojo San Lorenzo */
+    --chart-2: 208 59% 34%; /* Azul San Lorenzo más claro */
+    --chart-3: 43 74% 50%; /* Amarillo vibrante */
+    --chart-4: 120 61% 30%; /* Verde bosque */
+    --chart-5: 186 72% 38%; /* Azul verdoso */
   }
 
   input:-webkit-autofill {
