@@ -16,6 +16,7 @@ import { LogOut, Settings, User } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useQueryClient } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
+import { ModeToggle } from "@/components/ui/theme-toggle";
 
 interface DropdownMenuMyAccountProps {
   sessionProp: Session | DefaultSession | null;
@@ -69,6 +70,10 @@ export function DropdownMenuMyAccount({
               <Settings className="mr-2 w-4 h-4" />
               <span>Settings</span>
             </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <ModeToggle />
+            
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
