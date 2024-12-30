@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes/routes";
+import { CaslaButton } from "@/components/ui/CaslaButton";
 
 export default function SignUpForm() {
   const [state, action] = useFormState(signup, {
@@ -36,7 +37,7 @@ export default function SignUpForm() {
     <form
       ref={formRef}
       action={action}
-      className="w-full  lg:w-[440px]  grid gap-4 p-8"
+      className="w-full    grid gap-4 py-8 md:px-0"
     >
       {state?.message && (
         <p className="text-sm text-green-500">{state?.message}</p>
@@ -157,8 +158,9 @@ export function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <Button aria-disabled={pending} type="submit" variant="blue">
+    <CaslaButton aria-disabled={pending} type="submit" variant="redToBlue" className="justify-center ">
       {pending ? "Submitting..." : "Sign up"}
-    </Button>
+    </CaslaButton>
+    
   );
 }

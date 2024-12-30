@@ -1,11 +1,4 @@
-import React from "react";
-
-import Image from "next/image";
-export default function CuervoLogo() {
-  return (
-    <>
-      
-      <svg
+<svg
         className=""
         version="1.1"
         viewBox="0 0 277 512"
@@ -70,6 +63,3 @@ export default function CuervoLogo() {
           fill="#8f2a29"
         />
       </svg>
-    </>
-  );
-}
