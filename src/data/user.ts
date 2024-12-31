@@ -61,7 +61,7 @@ export const getAllUsersByUsername =  async ({
     username?: string | null | undefined;
   }) => {
     try {
-        console.log(username, pageParam);
+        
         const response = await axios.get<SearchPage>(
           `/api/search/${username}${pageParam ? `?cursor=${pageParam}` : ""}`
         );

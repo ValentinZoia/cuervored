@@ -9,7 +9,7 @@ export default async function SearchPage() {
       if(!session?.user || !session){
           return(
               <p>
-                  Unauthorized to view this page
+                  No estas autorizado para ver esta página.
               </p>
           )
       }

@@ -10,7 +10,7 @@ export default async function MatchesPage() {
       if(!session?.user || !session){
           return(
               <p>
-                  Unauthorized to view this page
+                  No estas autorizado para ver esta página.
               </p>
           )
       }

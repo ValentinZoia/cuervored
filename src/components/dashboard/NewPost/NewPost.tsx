@@ -1,11 +1,9 @@
 "use client";
 
-import { ImageIcon, User } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
-import { Input } from "../../ui/input";
+
 import PreviewImageToPost from "./PreviewImageToPost";
 import { useNewPost } from "@/hooks/useNewPost";
 import SkeletonNewPost from "./SkeletonNewPost";
@@ -41,7 +39,7 @@ export default function NewPost({session}:NewPostProps) {
   }
   
 
-  const fallback = user?.name?.[0] || <User className="h-4 w-4" />;
+  
 
   return (
     

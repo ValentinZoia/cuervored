@@ -13,7 +13,7 @@ export default async function DashboardPage() {
   if (!session) {
     return (
       <div>
-        <h1>Unauthorized</h1>
+        <h1>No estas autorizado para ver esta página.</h1>
       </div>
     );
   }

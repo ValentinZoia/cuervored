@@ -2,19 +2,15 @@
 import { Textarea } from "@/components/ui/textarea";
 import { useNewPost } from "@/hooks/useNewPost";
 import { PostData } from "@/types/Post";
-import React, { useRef, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import PreviewImageToPost from "../../NewPost/PreviewImageToPost";
 import { Button } from "@/components/ui/button";
-import { ImageIcon } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { CaslaButton } from "@/components/ui/CaslaButton";
-import { ImageUpload } from "../../users/EditProfile/ImageUpload";
 import ButtonAddPhoto from "../../NewPost/ButtonAddPhoto";
 import { toast } from "@/components/ui/use-toast";
 import { transformImageToWebp } from "@/utils/transformImageToWebP";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import { useUpdatePostMutation } from "./mutation";
-import { text } from "stream/consumers";
 
 interface EditPostFormProps {
   post: PostData;
@@ -39,11 +35,17 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
     initialTextareaValue: post.content,
   });
 
-  
-  const handleSubmit = async () => {
+  /*
+  - Porque Utilizo useCallBack en handldesubmit?
+  useCallback se utiliza para memorizar funciones y evitar
+  que se vuelvan a crear en cada renderizado, a menos que cambien
+  sus dependencias. Esto es útil para optimizar el rendimiento,
+  especialmente cuando se pasan funciones a componentes hijos
+   que podrían desencadenar renderizados innecesarios.
+   La funcion handleSubmit se volvera a crear si cambia una de sus dependencias []
+  */
+  const handleSubmit = useCallback(async () => {
     try {
-      console.log(textareaValue, previewUrl);
-      
       //verificamos que existan cambios a subir
       if (textareaValue === post.content && post.image === previewUrl) {
         toast({
@@ -54,7 +56,7 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
         return;
       }
 
-      let imageUrl = null;
+      let imageUrl:string | null = null;
       if (file) {
         //Transformamos la imagen a webp antes de subirla a cloudinary
         const tranfromedFile = await transformImageToWebp(file);
@@ -74,10 +76,9 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
         imageUrl = data;
       }
 
-      
       mutation.mutate(
         {
-          content: !!textareaValue ? textareaValue : null,
+          content: textareaValue || null,
           imageUrl,
           postId: post.id,
         },
@@ -87,23 +88,33 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
           },
         }
       );
-    } catch (error:any) {
-      console.log(error.message as string);
+    } catch (error: any) {
       toast({
         description: (error.message as string) || "Error al actualizar el post",
         title: "Post actualización fallida",
         variant: "destructive",
       });
     }
-  };
+  }, [textareaValue, previewUrl, file, post, mutation, onClose]);
 
-   
 
-   // Deshabilitar el botón si:
-   // - El contenido está vacío
-   // - No hubo cambios en el contenido
-   // - La mutación está en progreso o el formulario está enviando
-  const disabled = ((!textareaValue && !previewUrl) || mutation.isPending || textareaValue === post.content && post.image === previewUrl);
+
+  /*
+   - Porque Utilizo useMemo en disabled?
+  useMemo se utiliza para memorizar valores calculados y evitar
+  que se vuelvan a calcular en cada renderizado, a menos que cambien
+  sus dependencias. Esto es útil para optimizar el rendimiento.
+  */
+  // Deshabilitar el botón si:
+  // - El contenido está vacío
+  // - No hubo cambios en el contenido
+  // - La mutación está en progreso o el formulario está enviando
+  const disabled = useMemo(() => 
+    (!textareaValue && !previewUrl) ||
+    mutation.isPending ||
+    (textareaValue === post.content && post.image === previewUrl),
+    [textareaValue, previewUrl, mutation.isPending, post.content, post.image]
+  );
 
   return (
     <form action="">
@@ -144,11 +155,10 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
               className="relative z-10"
               type="button"
               size="sm"
-               onClick={handleSubmit}
-               disabled={disabled}
+              onClick={handleSubmit}
+              disabled={disabled}
             >
               {mutation.isPending ? "Guardando..." : "Guardar Cambios"}
-              
             </CaslaButton>
           </div>
         </div>

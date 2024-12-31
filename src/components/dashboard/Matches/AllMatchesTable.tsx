@@ -1,6 +1,6 @@
 "use client"
 
-import React from "react";
+import React, { useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -13,12 +13,13 @@ import { Home, Trophy } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllMatches } from "@/data/matches";
 import SkeletonAllMatchesTable from "./SkeletonAllMatchesTable";
+import { BasicMatchData } from "@/types/Match";
 
 
 
 export default function AllMatchesTable() {
   //obtenemos todos los partidos de san lorenzo con react query ta que son datos asincronos
-  const {data, error, isLoading} = useQuery({
+  const {data, error, isLoading} = useQuery<BasicMatchData[]>({
     queryKey: ["AllMatches"],
     queryFn: getAllMatches,
     staleTime: 1000 * 60 * 60 * 24,
@@ -33,11 +34,12 @@ export default function AllMatchesTable() {
     return <p>Ocurrió un error al cargar los partidos</p>;
   }
   
-  if(!data || data === undefined ) {
+  if(!data || data.length === 0){ 
     return <p>No hay partidos para mostrar</p>
   }
   
-  
+  //Uso de useMemo: Memorizar los datos de los partidos para evitar recalculaciones innecesarias.
+  const matches = useMemo(()=> data, [data]);
   
 
   return (
@@ -64,8 +66,8 @@ export default function AllMatchesTable() {
             </TableRow>
           </TableHeader>
           <TableBody className="border-x-2 border-b-2 text-center  ">
-            {data &&
-              data.map((match, index) => (
+            {
+              matches.map((match, index) => (
                 <TableRow key={index}>
                   <TableCell className="font-medium p-2 sm:p-4 ">
                     {match.date}

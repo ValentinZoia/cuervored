@@ -147,7 +147,7 @@ export const useNewPost = ({
         }
         imageUrl = data;
       }
-      console.log(!!textareaValue);
+      
       mutation.mutate({
         content: !!textareaValue ? textareaValue : null,
         imageUrl,

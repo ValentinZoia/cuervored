@@ -34,7 +34,7 @@ export default function SearchField() {
 
 
 
-  // Fetch de datos con React Query
+  // Fetch de datos (usuarios) con React Query
   const { data, isLoading, isPending } = useInfiniteQuery({
     queryKey: ["search", query],
     queryFn: ({ pageParam }) =>
@@ -46,7 +46,7 @@ export default function SearchField() {
 
 
 
-  // Actualizar los resultados al recibir los datos de la consulta
+  // Actualizar los resultados al recibir los datos(usuarios) de la consulta
   useEffect(() => {
     if (data) {
       setResults(data.pages.flatMap((page) => page.users) || []);
