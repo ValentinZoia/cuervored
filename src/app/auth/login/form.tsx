@@ -61,12 +61,12 @@ export default function LoginForm() {
 
       {/* Password*/}
       <div>
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">Contraseña</Label>
         <InputPassword type="password" id="password" name="password" />
       </div>
       {state?.errors?.password && (
         <div className="text-sm text-red-500">
-          <p>Password must:</p>
+          <p>La contraseña deberia:</p>
           <ul>
             {state.errors.password.map((error) => (
               <li key={error}>- {error}</li>
@@ -81,7 +81,7 @@ export default function LoginForm() {
       {/* --- or --- */}
       <div className="flex justify-center items-center gap-2">
         <hr className="w-1/2 " />
-        <span className="text-sm text-gray-400">OR</span>
+        <span className="text-sm text-gray-400">O</span>
         <hr className="w-1/2" />
       </div>
 
@@ -97,7 +97,7 @@ export default function LoginForm() {
           });
         }}
       >
-        Log In with Github
+        Iniciar Sesión con Github
       </LogoButton>
 
       {/*Google Login Button*/}
@@ -112,13 +112,13 @@ export default function LoginForm() {
           });
         }}
       >
-        Log In with Google
+        Iniciar Sesión con Google
       </LogoButton>
 
       <p className="text-sm text-center text-gray-400">
-        Don't have an account?{" "}
+        No tienes una cuenta?{" "}
         <Link href={"/auth/register"} className="text-blue-500 font-bold">
-          Sign Up
+          Registrarse
         </Link>
       </p>
     </form>
@@ -130,7 +130,7 @@ export function SubmitButton() {
 
   return (
     <CaslaButton aria-disabled={pending} type="submit" variant="redToBlue" className="justify-center ">
-      {pending ? "Submitting..." : "Log In"}
+      {pending ? "Enviando..." : "Iniciar Sesión"}
     </CaslaButton>
     
   );

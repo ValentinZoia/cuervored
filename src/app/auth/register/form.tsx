@@ -59,7 +59,7 @@ export default function SignUpForm() {
 
       {/* FullName*/}
       <div>
-        <Label htmlFor="email">Full Name</Label>
+        <Label htmlFor="email">Nombre Completo</Label>
         <Input type="text" id="full_name" name="full_name" />
       </div>
       {state?.errors?.full_name && (
@@ -68,7 +68,7 @@ export default function SignUpForm() {
 
       {/* UserName*/}
       <div>
-        <Label htmlFor="email">Username</Label>
+        <Label htmlFor="email">Nombre de usuario</Label>
         <Input type="text" id="username" name="username" />
       </div>
       {state?.errors?.username && (
@@ -77,7 +77,7 @@ export default function SignUpForm() {
 
       {/* Password*/}
       <div>
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">Contraseña</Label>
         <InputPassword type="password" id="password" name="password" />
       </div>
       {state?.errors?.password && (
@@ -93,7 +93,7 @@ export default function SignUpForm() {
 
       {/* Confirm Password*/}
       <div>
-        <Label htmlFor="confirmPassword">Confirm Password</Label>
+        <Label htmlFor="confirmPassword">Confirmar Contraseña</Label>
         <InputPassword
           type="password"
           id="confirmPassword"
@@ -110,7 +110,7 @@ export default function SignUpForm() {
       {/* --- or --- */}
       <div className="flex justify-center items-center gap-2">
         <hr className="w-1/2 " />
-        <span className="text-sm text-gray-400">OR</span>
+        <span className="text-sm text-gray-400">O</span>
         <hr className="w-1/2" />
       </div>
 
@@ -126,7 +126,7 @@ export default function SignUpForm() {
           });
         }}
       >
-        Sign Up with Github
+        Registrarse con Github
       </LogoButton>
 
       {/*Google Login Button*/}
@@ -141,13 +141,13 @@ export default function SignUpForm() {
           });
         }}
       >
-        Sign Up with Google
+        Registrarse con Google
       </LogoButton>
 
       <p className="text-sm text-center text-gray-400">
-        Already have an account?{" "}
+        Ya tienes una cuenta?{" "}
         <Link href={"/auth/login"} className="text-blue-500 font-bold">
-          Log In
+          Iniciar Sesión
         </Link>
       </p>
     </form>
@@ -159,7 +159,7 @@ export function SubmitButton() {
 
   return (
     <CaslaButton aria-disabled={pending} type="submit" variant="redToBlue" className="justify-center ">
-      {pending ? "Submitting..." : "Sign up"}
+      {pending ? "Creando..." : "Crear cuenta"}
     </CaslaButton>
     
   );

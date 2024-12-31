@@ -25,7 +25,7 @@ export default function LoginPage() {
         <CuervoLogo />
       </div>
       <div className="w-full max-w-md">
-        <h1 className="text-3xl font-bold mb-4">Login</h1>
+        <h1 className="text-3xl font-bold mb-4">Iniciar Sesión</h1>
         <LoginForm />
       </div>
     </div>

@@ -14,6 +14,8 @@ export default function UpcomingMatchesData() {
       queryFn: getUpcomingMatches,
       staleTime: 1000 * 60 * 60 * 24,
     });
+
+
   
     if (isLoading) {
       return (
@@ -36,34 +38,33 @@ export default function UpcomingMatchesData() {
       return <p>Ocurrió un error al cargar los partidos</p>;
     }
 
-    if(!data){
-      return <p>No hay partidos para mostrar</p>
-    }
-
-    if( !data.matchesFiltered.LastMatches.length && !data.matchesFiltered.UpcomingMatches.length){ 
-      return <p>No hay partidos para mostrar</p>
-    }
+    const lastMatches =  data?.matchesFiltered.LastMatches.slice(
+        Math.max(0, data.matchesFiltered.LastMatches.length - 3)
+      ) || [];
+    
   
-    const lastMatches = data?.matchesFiltered.LastMatches.slice(
-      Math.max(0, data.matchesFiltered.LastMatches.length - 3)
-    );
-    const upcomingMatches = data?.matchesFiltered.UpcomingMatches.slice(0, 3);
+    const upcomingMatches = data?.matchesFiltered.UpcomingMatches.slice(0, 3) || [];
+    
 
-    const lastMatchesData:BasicMatchData[] = useMemo(() => lastMatches, [lastMatches]);
+    if(!data || (!lastMatches.length && !upcomingMatches.length)){
+      return <p>No hay partidos para mostrar</p>
+    }
 
-    const upcomingMatchesData:BasicMatchData[] = useMemo(() => upcomingMatches, [upcomingMatches]);
+    
+  
+    
   
     return (
       <div>
         
         <MatchesCard
           title="Últimos partidos"
-          matches={lastMatchesData || []}
+          matches={lastMatches}
           isPastMatches={true}
         />
         <MatchesCard
           title="Próximos partidos"
-          matches={upcomingMatchesData || []}
+          matches={upcomingMatches}
           isPastMatches={false}
         />
       </div>

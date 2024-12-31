@@ -38,8 +38,7 @@ export default function AllMatchesTable() {
     return <p>No hay partidos para mostrar</p>
   }
   
-  //Uso de useMemo: Memorizar los datos de los partidos para evitar recalculaciones innecesarias.
-  const matches = useMemo(()=> data, [data]);
+  
   
 
   return (
@@ -67,7 +66,7 @@ export default function AllMatchesTable() {
           </TableHeader>
           <TableBody className="border-x-2 border-b-2 text-center  ">
             {
-              matches.map((match, index) => (
+              data.map((match, index) => (
                 <TableRow key={index}>
                   <TableCell className="font-medium p-2 sm:p-4 ">
                     {match.date}
