@@ -6,12 +6,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function SkeletonMatchesCard({
     title,
-    matches,
-    isPastMatches,
+    
   }: {
     title: string;
-    matches: BasicMatchData[];
-    isPastMatches?: boolean;
+    
   }) {
     return (
       

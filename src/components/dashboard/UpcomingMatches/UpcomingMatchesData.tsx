@@ -1,9 +1,10 @@
 "use client"
 import { useQuery } from "@tanstack/react-query";
 import { getUpcomingMatches } from "@/data/matches";
-import { MatchesData } from "@/types/Match";
+import { BasicMatchData, MatchesData } from "@/types/Match";
 import MatchesCard from "./MatchesCard";
 import SkeletonMatchesCard from "./SkeletonMatchesCard";
+import { useMemo } from "react";
 
 
 
@@ -19,13 +20,12 @@ export default function UpcomingMatchesData() {
         <>
         <SkeletonMatchesCard
           title="Últimos partidos"
-          matches={[]}
-          isPastMatches={true}
+          
         />
         <SkeletonMatchesCard
           title="Próximos partidos"
-          matches={[]}
-          isPastMatches={false}
+          
+          
         />
         </>
       );
@@ -35,23 +35,35 @@ export default function UpcomingMatchesData() {
       console.error(error);
       return <p>Ocurrió un error al cargar los partidos</p>;
     }
+
+    if(!data){
+      return <p>No hay partidos para mostrar</p>
+    }
+
+    if( !data.matchesFiltered.LastMatches.length && !data.matchesFiltered.UpcomingMatches.length){ 
+      return <p>No hay partidos para mostrar</p>
+    }
   
     const lastMatches = data?.matchesFiltered.LastMatches.slice(
       Math.max(0, data.matchesFiltered.LastMatches.length - 3)
     );
     const upcomingMatches = data?.matchesFiltered.UpcomingMatches.slice(0, 3);
+
+    const lastMatchesData:BasicMatchData[] = useMemo(() => lastMatches, [lastMatches]);
+
+    const upcomingMatchesData:BasicMatchData[] = useMemo(() => upcomingMatches, [upcomingMatches]);
   
     return (
       <div>
         
         <MatchesCard
           title="Últimos partidos"
-          matches={lastMatches || []}
+          matches={lastMatchesData || []}
           isPastMatches={true}
         />
         <MatchesCard
           title="Próximos partidos"
-          matches={upcomingMatches || []}
+          matches={upcomingMatchesData || []}
           isPastMatches={false}
         />
       </div>
