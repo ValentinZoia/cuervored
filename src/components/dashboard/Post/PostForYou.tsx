@@ -67,7 +67,7 @@ export default function PostForYou() {
     
     return (
       <InfiniteScrollContainer
-        className="relative z-10 space-y-6"
+        className="relative z-0 space-y-6"
         onBottomReached={() => hasNextPage && !isLoading && fetchNextPage()}
       >
         {posts.map((post: PostType) => <Post key={post.id} post={post} />)

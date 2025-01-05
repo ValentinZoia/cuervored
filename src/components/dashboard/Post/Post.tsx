@@ -44,13 +44,13 @@ export function Post({ post }: PostProps) {
   
   return (
     <>
-    <Card className='group relative z-10 max-w-[680px] rounded-none'>
-      <CardHeader className="flex flex-row justify-between relative z-10 pb-2">
+    <Card className='group relative z-0 max-w-[680px] rounded-none'>
+      <CardHeader className="flex flex-row justify-between relative z-0 pb-2">
         <UserHeaderPost avatarUrl={avatar} username={username} timeAgo={timeAgo} />
         {session.status === "authenticated" && session.data.user.id === postUserId && (<PostMoreButton post={post} className='opacity-50 group-hover:opacity-100  border-none ' />)}
        
       </CardHeader>
-      <CardContent className="pb-2 relative z-10">
+      <CardContent className="pb-2 relative z-0">
         
         
         
@@ -67,7 +67,7 @@ export function Post({ post }: PostProps) {
           className="cursor-pointer z-0 mb-4 mx-auto size-fit max-h-[30rem]"
         />
         ):(
-          <p className=" relative z-10 text-sm mb-4 mt-2 whitespace-pre-line break-words">{content}</p>
+          <p className=" relative z-0 text-sm mb-4 mt-2 whitespace-pre-line break-words">{content}</p>
         )}
         
         <div className="flex items-center space-x-2 sm:space-x-4 mb-2">
@@ -79,7 +79,7 @@ export function Post({ post }: PostProps) {
           
         </div>
         
-        {imageUrl !== '' && (<p className=" relative z-10 text-sm whitespace-pre-line break-words ">{content}</p>)}
+        {imageUrl !== '' && (<p className=" relative z-0 text-sm whitespace-pre-line break-words ">{content}</p>)}
         <div className="mt-2 cursor-pointer text-sm text-muted-foreground  " onClick={()=>setOpenDialogComments(true)}>
         
           <ShowCommentsParagraph post={post} />
