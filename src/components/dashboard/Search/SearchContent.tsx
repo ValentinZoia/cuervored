@@ -2,12 +2,12 @@
 import { getAllUsersByUsername } from "@/data/user";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import React, { useCallback, useMemo } from "react";
+import React from "react";
 import UserHeaderPost from "../Post/UserHeaderPost";
 import Link from "next/link";
 import InfiniteScrollContainer from "../InfiniteScrollContainer";
 import { Loader, LoaderCircle } from "lucide-react";
-import { UserData } from "@/types/Post";
+
 
 export default function SearchContent() {
   const searchParams = useSearchParams();
@@ -25,6 +25,7 @@ export default function SearchContent() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    status
   } = useInfiniteQuery({
     queryKey: ["search", query], //<-- La key de la información
     queryFn: ({
@@ -38,6 +39,8 @@ export default function SearchContent() {
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined, // Define el siguiente parámetro de paginación
   });
 
+  const users = data?.pages.flatMap((page) => page.users) ?? [];
+
   if (isLoading) {
     return (
       <div className="w-full py-4 flex justify-center">
@@ -50,30 +53,25 @@ export default function SearchContent() {
     return <p>Error: {error.message}</p>;
   }
 
-  if (!data) {
-    return <p>No data</p>;
+  if (status === "success"  && !users.length &&!hasNextPage) {
+    return <p className="text-center mt-4">No se encontraron usuarios con ese nombre</p>;
   }
 
-  const users = data.pages.flatMap((page) => page.users);
-
-  //Memorizar los datos de los usuarios para evitar recalculaciones innecesarias.
-  const userData: UserData[] = useMemo(() => users, [users]);
   
-  //Memorizar la función handleBottomReached para evitar su recreación en cada renderizado.
-  const handleBottomReached = useCallback(() => {
-    if (hasNextPage && !isLoading) {
-      fetchNextPage();
-    }
-  }, [hasNextPage, isLoading, fetchNextPage]);
+
+  
+  
+  
+ 
 
 
   return (
     <InfiniteScrollContainer
       className="relative z-10 space-1-2"
-      onBottomReached={handleBottomReached}
+      onBottomReached={() => hasNextPage && !isLoading && fetchNextPage()}
     >
       <div className="w-full bg-card border-x-[1px] border-b-[1px]   h-auto flex flex-col items-stretch">
-        {userData.map((user) => (
+        {users.map((user) => (
           <div key={user.id}>
             <Link href={`${baseUrl}/dashboard/users/${user.name}`}>
               <div

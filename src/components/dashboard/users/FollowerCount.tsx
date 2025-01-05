@@ -19,7 +19,7 @@ export default function FollowerCount({userId, initialState}: FollowerCountProps
     <span className='text-muted-foreground '>
         
         <span >{data.followers}</span>
-        {" "}Followers
+        {" "}Seguidores
     </span>
   )
 }

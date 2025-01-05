@@ -1,4 +1,4 @@
-import  BannerSl from "../../../../public/banner_sl.webp"
+import Image from "next/image";
 import React from "react";
 import SignUpForm from "./form";
 import CuervoLogo from "@/components/icons/CuervoLogo";
@@ -13,31 +13,30 @@ export const metadata:Metadata={
 
 export default function LoginPage() {
   return (
-    <main className="w-full h-screen">
-    <div className="w-full h-screen flex justify-center flex-col sm:flex-row">
-      
-      {/* Imagen */}
-      
-        <img
-          src={BannerSl.src}
-          alt="Cancha de san lorenzo con logo de la app"
-          className=" hidden md:block   h-screen object-cover   "
-        />
-      
-  
-      {/* Formulario */}
-      <div className="w-full  flex flex-col justify-center items-center px-4 ">
-      
-        <div className="mb-8">
-          <CuervoLogo />
-        </div>
-        <div className="w-full max-w-md">
-          <h1 className="text-3xl font-bold mb-4">Crea tu cuenta</h1>
-          <SignUpForm />
-        </div>
-      </div>
-    </div>
-  </main>
+    <main className="min-h-screen flex">
+          {/* Imagen */}
+          <div className="hidden lg:block h-screen">
+            <Image
+              src="/banner_sl.webp"
+              alt="Cancha de san lorenzo con logo de la app"
+              width={960}
+              height={1080}
+              priority
+              className="h-full w-auto object-cover"
+            />
+          </div>
+    
+          {/* Formulario */}
+          <div className="flex-1 flex flex-col justify-center items-center px-4 py-8 lg:px-8">
+            <div className="mb-8">
+              <CuervoLogo />
+            </div>
+            <div className="w-full max-w-md space-y-6">
+              <h1 className="text-3xl font-bold">Crea tu Cuenta</h1>
+              <SignUpForm />
+            </div>
+          </div>
+        </main>
     
   );
 }

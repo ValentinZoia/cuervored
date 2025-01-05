@@ -64,7 +64,7 @@ export default function UserHeader({ user, loggedInUserId }: UserHeaderProps) {
           <p className="text-sm">
             <span className="text-muted-foreground ">
               {" "}
-              {user.following.length} Following
+              {user.following.length} Siguiendo
             </span>
           </p>
         </div>

@@ -57,12 +57,12 @@ export default function Commentslist({post}: {post: PostData}) {
           disabled={isFetching}
           onClick={() => fetchNextPage()}
         >
-          Load previous comments
+          Cargar comentarios anteriores
         </Button>
       )}
       {status === "pending" && <Loader2 className="mx-auto animate-spin" />}
       {status === "success" && !comments.length && (
-        <p className="text-center text-muted-foreground">No comments yet.</p>
+        <p className="text-center text-muted-foreground mt-4">No hay comentarios todavia.</p>
       )}
       
       <div className="divide-y">

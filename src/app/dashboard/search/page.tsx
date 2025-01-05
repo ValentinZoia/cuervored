@@ -7,13 +7,14 @@ import { Metadata} from 'next';
 
 type Props ={
     
-    searchParms: Promise<{q:string}>
+    searchParams: Promise<{q:string}>
 }
 
 //Definimos la metadata dinamica de la página
 // a partir de los parametros de busqueda search?q="query"
-export async function generateMetadata({ searchParms }:Props):Promise<Metadata> {
-    const query = (await searchParms).q;
+export async function generateMetadata({ searchParams }:Props):Promise<Metadata> {
+    const query = (await searchParams).q;
+    
     
     return {
       title: `${query} - Buscar`,
