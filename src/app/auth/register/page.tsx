@@ -2,6 +2,14 @@ import  BannerSl from "../../../../public/banner_sl.webp"
 import React from "react";
 import SignUpForm from "./form";
 import CuervoLogo from "@/components/icons/CuervoLogo";
+import { Metadata } from "next";
+
+export const metadata:Metadata={
+  title:"Crear cuenta",
+  description:"Crea tu cuenta en CuervoRed y disfruta de una simple red social para hinchas de San lorenzo."
+}
+
+
 
 export default function LoginPage() {
   return (

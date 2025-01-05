@@ -4,7 +4,7 @@
 
 /* root */
 .example2 {
-  --blueSanlorenzo: #003366; /* Azul San Lorenzo */
+  --blueSanlorenzo: #263d54; /* Azul San Lorenzo */
   --redSanlorenzo: #d94a3d; /* Rojo San Lorenzo */
   --background: #e7ecef; /* Gris muy claro */
   --foreground: #00264d; /* Azul oscuro */
@@ -92,7 +92,7 @@
 @layer base {
   :root {
     --redSanlorenzo:0 83% 47%;
-    --blueSanlorenzo:208.125 59.25925925925925% 21.176470588235297%;
+    --blueSanlorenzo:210 38% 24%;
     --background: 210 16% 96%; /* Gris muy claro */
     --foreground: 230 100% 22%; /* Azul oscuro */
     --card: 0 0% 100%; /* Blanco */
@@ -122,7 +122,7 @@
 
   .dark {
     --redSanlorenzo: 0 83% 47%; /* Rojo San Lorenzo */
-    --blueSanlorenzo: 208.125 59.25925925925925% 21.176470588235297%; /* Azul San Lorenzo */
+    --blueSanlorenzo: 210 38% 24%; /* Azul San Lorenzo */
   
     /* Fondo y texto */
     --background: 220 15% 10%; /* Negro azulado */

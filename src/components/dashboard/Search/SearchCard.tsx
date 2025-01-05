@@ -3,8 +3,6 @@ import { Card } from '@/components/ui/card'
 import React from 'react'
 import SearchNav from './SearchNav'
 import SearchContent from './SearchContent'
-import { getAllUsersByUsername } from '@/data/user';
-import { auth } from '@/auth';
 
 export default async function SearchCard() {
 
