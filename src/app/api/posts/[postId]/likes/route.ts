@@ -50,7 +50,7 @@ export async function GET(
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
     }
     
-    const userLikePost = post?.likes.some(like => like.userId === session.user.id);
+    const userLikePost:boolean = post?.likes.some(like => like.userId === session.user.id);
 
     const data: LikeInfo = {
       likes: post._count.likes,

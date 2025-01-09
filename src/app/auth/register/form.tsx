@@ -50,7 +50,7 @@ export default function SignUpForm() {
 
       {/* Email*/}
       <div>
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email" className={`${state?.errors?.email && "text-red-500"}`}>Email</Label>
         <Input type="email" id="email" name="email" />
       </div>
       {state?.errors?.email && (
@@ -59,7 +59,7 @@ export default function SignUpForm() {
 
       {/* FullName*/}
       <div>
-        <Label htmlFor="email">Nombre Completo</Label>
+        <Label htmlFor="email" className={`${state?.errors?.full_name && "text-red-500"}`}>Nombre Completo</Label>
         <Input type="text" id="full_name" name="full_name" />
       </div>
       {state?.errors?.full_name && (
@@ -68,7 +68,7 @@ export default function SignUpForm() {
 
       {/* UserName*/}
       <div>
-        <Label htmlFor="email">Nombre de usuario</Label>
+        <Label htmlFor="email" className={`${state?.errors?.username && "text-red-500"}`}>Nombre de usuario</Label>
         <Input type="text" id="username" name="username" />
       </div>
       {state?.errors?.username && (
@@ -77,12 +77,12 @@ export default function SignUpForm() {
 
       {/* Password*/}
       <div>
-        <Label htmlFor="password">Contraseña</Label>
+        <Label htmlFor="password" className={`${state?.errors?.password && "text-red-500"}`}>Contraseña</Label>
         <InputPassword type="password" id="password" name="password" />
       </div>
       {state?.errors?.password && (
         <div className="text-sm text-red-500">
-          <p>Password must:</p>
+          <p>La contraseña debe:</p>
           <ul>
             {state.errors.password.map((error) => (
               <li key={error}>- {error}</li>
@@ -93,7 +93,7 @@ export default function SignUpForm() {
 
       {/* Confirm Password*/}
       <div>
-        <Label htmlFor="confirmPassword">Confirmar Contraseña</Label>
+        <Label htmlFor="confirmPassword" className={`${state?.errors?.confirmPassword && "text-red-500"}`}>Confirmar Contraseña</Label>
         <InputPassword
           type="password"
           id="confirmPassword"

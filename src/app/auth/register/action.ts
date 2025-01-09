@@ -54,7 +54,7 @@ export async function signup(
     return {
       message: null,
       errors: {
-        general: ["Un usuario con ese nombre de usuario ya existe"],
+        general: ["El Nombre de usuario / username ya esta en uso"],
       },
     };
   }

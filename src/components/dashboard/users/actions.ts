@@ -45,7 +45,7 @@ export async function updateUserProfile(
     });
 
     if (existingUser && existingUser.id !== session.user.id) {
-      throw new Error("Username already taken");
+      throw new Error("El username ya esta en uso");
     }
 
     // Prepare data for the update
