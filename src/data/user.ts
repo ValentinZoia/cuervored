@@ -13,6 +13,8 @@ export const getUserById = async (id:string):Promise<User | null> =>{
 
         return user
     } catch (error) {
+      console.error('Error fetching users:', error);
+    throw new Error('Failed to fetch users');
         return null
     }
 }
@@ -97,6 +99,17 @@ export const getAllUsersByUsername =  async ({
         }
       }
 };
+
+export const getAllUsers = async():Promise<User[]> =>{
+  try {
+    const users = await prisma.user.findMany();
+    return users
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    throw new Error('Failed to fetch users');
+    
+  }
+}
 
 
 
