@@ -1,6 +1,6 @@
 "use client"
 import imageDontLoaded from '../../../../public/imageDontLoaded.webp'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
@@ -31,6 +31,7 @@ export function Post({ post }: PostProps) {
 
   const[openDialogComments, setOpenDialogComments] = useState(false);
   const [currentSrc, setCurrentSrc] = useState(imageUrl);
+  const [hasError, setHasError] = useState(false); 
 
   const LikeInfo: LikeInfo ={
     likes: post._count.likes,
@@ -38,7 +39,11 @@ export function Post({ post }: PostProps) {
   }
 
   
-
+  useEffect(() => {
+    setCurrentSrc(imageUrl);
+    setHasError(false);
+  }, [post])
+  
   
   
   
@@ -56,10 +61,17 @@ export function Post({ post }: PostProps) {
         
         {imageUrl ? (
           <Image
-          unoptimized={true}
+          
           onClick={() => setOpenDialogComments(true)}
           src={ currentSrc}
-          onError={() => setCurrentSrc(imageDontLoaded.src)} // Cambia a imagen de respaldo en caso de error
+          onError={() => 
+          {
+            if(!hasError){
+              setCurrentSrc(imageDontLoaded.src);// Cambia a imagen de respaldo en caso de error
+              setHasError(true);
+            }
+          }
+          } 
           priority={true}
           alt="Imagen de la publicación"
           width={500}

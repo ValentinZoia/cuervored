@@ -1,5 +1,4 @@
 
-import  BannerSl from "../../../../public/banner_sl.webp"
 import React from "react";
 import LoginForm from "./form";
 import CuervoLogo from "@/components/icons/CuervoLogo";

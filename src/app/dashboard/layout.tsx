@@ -11,7 +11,7 @@ interface DashboardLayoutProps {
 
 export const metadata:Metadata ={
   title:{
-    default:"Home",
+    default:"Inicio",
     template:" %s | CuervoRed",
   },
   description:"Una simple red social para hinchas de San lorenzo.",
