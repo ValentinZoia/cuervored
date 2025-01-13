@@ -15,7 +15,7 @@ interface UseInfinitePostsProps {
 export function useInfinitePosts({ queryKey, fetchFn }: UseInfinitePostsProps) {
   return useInfiniteQuery({
     queryKey: ["post-feed", queryKey],
-    queryFn: ({ pageParam }) => fetchFn({ pageParam }),
+    queryFn: ({ pageParam  }) => fetchFn({ pageParam }),
     initialPageParam: null as string | null,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
     staleTime: Infinity,

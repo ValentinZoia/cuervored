@@ -47,10 +47,7 @@ LoadMoreSpinner.displayName = 'LoadMoreSpinner';
 
 
 
-const MemoizedPost = memo(({ post }: { post: PostType }) => (
-  <Post post={post} />
-));
-MemoizedPost.displayName = 'MemoizedPost';
+
 
 
 
@@ -95,7 +92,7 @@ export default function PostForYou() {
     >
       <Suspense fallback={<SkeletonPost />}>
         {posts.map((post: PostType) => (
-          <MemoizedPost key={post.id} post={post} />
+          <Post key={post.id} post={post} />
         ))}
       </Suspense>
       

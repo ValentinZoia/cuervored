@@ -2,15 +2,13 @@ import { useToast } from "@/components/ui/use-toast";
 import { LikeInfo, PostsPage } from "@/types/Post";
 import {
   InfiniteData,
+  QueryFilters,
   QueryKey,
   useMutation,
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import {
-  deletePost,
-  
-} from "./action";
+import { deletePost } from "./action";
 import axios from "axios";
 
 export function useDeletePostMutation() {
@@ -23,33 +21,52 @@ export function useDeletePostMutation() {
       return deletePost(id);
     },
     onSuccess: async (data) => {
-      //data is the response from the server (deletePost action)
-      const deletedPostId = data.postDeletedId;
+      if (data.ok) {
+        const queryFilter = {
+          queryKey: ["post-feed"],
+          predicate(query) {
+            return query.queryKey.includes("for-you");
+          },
+        } satisfies QueryFilters;
 
-      await queryClient.cancelQueries({
-        queryKey: ["post-feed"],
-      });
+        await queryClient.cancelQueries(queryFilter);
 
-      queryClient.setQueryData<InfiniteData<PostsPage, string | null>>(
-        ["post-feed"],
-        (oldData) => {
-          if (!oldData) return;
+        queryClient.setQueriesData<InfiniteData<PostsPage, string | null>>(
+          queryFilter,
+          (oldData) => {
+            if (!oldData) return;
 
-          return {
-            pageParams: oldData.pageParams,
-            pages: oldData.pages.map((page) => ({
-              nextCursor: page.nextCursor,
-              posts: page.posts.filter((post) => post.id !== deletedPostId),
-            })),
-          };
-        }
-      );
+            const firstPage = oldData.pages[0];
+            if (firstPage) {
+              return {
+                ...oldData,
+                pages: [
+                  {
+                    ...firstPage,
+                    posts: firstPage.posts.filter(
+                      (post) => post.id !== data.postDeletedId
+                    ),
+                  },
+                  ...oldData.pages.slice(1),
+                ],
+              };
+            }
+            return oldData;
+          }
+        );
+        queryClient.invalidateQueries({
+          queryKey: queryFilter.queryKey,
+          predicate(query) {
+            return queryFilter.predicate(query) && !query.state.data;
+          },
+        });
 
-      toast({
-        description: "Post eliminado exitosamente",
-        title: "Post eliminado",
-        variant: "default",
-      });
+        toast({
+          description: "Post eliminado exitosamente",
+          title: "Post eliminado",
+          variant: "default",
+        });
+      }
     },
     onError: (error) => {
       console.error(error);
@@ -89,7 +106,7 @@ export function useLikePostMutation({
     staleTime: Infinity,
   });
 
-  const { mutate,isPending } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: async () =>
       data.isLikedByUser
         ? await axios.delete<LikeInfo>(`/api/posts/${postId}/likes`)
@@ -114,9 +131,9 @@ export function useLikePostMutation({
 
       return { previousState };
     },
-    
+
     onError(error, variables, context) {
-       queryClient.setQueryData(queryKey, context?.previousState);
+      queryClient.setQueryData(queryKey, context?.previousState);
       console.error(error);
       toast({
         description: "Algo salio mal, Por favor, intentalo de nuevo.",
@@ -124,7 +141,6 @@ export function useLikePostMutation({
         variant: "destructive",
       });
     },
-    
   });
 
   return {

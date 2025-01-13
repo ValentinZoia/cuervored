@@ -18,8 +18,12 @@ export async function uploadToCloudinary(file: File){
         }
 
         const data = await response.json();
+          // Asegurarse de usar HTTPS en la URL
+          const secureUrl = data.url.replace(/^http:\/\//i, "https://");
 
-        return {data: data.url, error: null} 
+          console.log(secureUrl, data);
+          return { data: secureUrl, error: null };
+        
     } catch (error) {
         return {data: null, error: "Failed to upload image"}
     }
