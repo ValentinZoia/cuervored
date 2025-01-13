@@ -2,7 +2,6 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle,  Loader } from "lucide-react";
 import { useInfiniteQuery, } from "@tanstack/react-query";
-
 import SkeletonPost from "../Post/SkeletonPost";
 import {PostData as PostType } from "@/types/Post";
 import InfiniteScrollContainer from "../InfiniteScrollContainer";

@@ -12,7 +12,7 @@ export default function ArrowBack() {
   };
 
   return (
-    <Button variant="ghost" className="rounded-full" onClick={handleBack}>
+    <Button variant="ghost" className="rounded-full" onClick={handleBack} aria-label="Regresar">
       <ArrowLeft className="size-5" />
     </Button>
   );

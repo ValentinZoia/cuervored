@@ -13,11 +13,12 @@ export default function ButtonAddPhoto({handleFileChange, fileInputRef, handleUp
     <div>
         <Button
                 variant="outline"
+                aria-label='Agregar Foto'
                 type="button"
                 size="sm"
                  onClick={handleUploadPhotoButtonClick}
               >
-                <ImageIcon className="w-4 h-4 mr-2" />
+                <ImageIcon className="w-4 h-4 mr-2" aria-hidden="true" />
                 Agregar Foto
               </Button>
               <Input
@@ -26,6 +27,7 @@ export default function ButtonAddPhoto({handleFileChange, fileInputRef, handleUp
                 id="file"
                 onChange={handleFileChange}
                 className="hidden"
+                aria-label='Seleccionar Foto'
               />
     </div>
   )

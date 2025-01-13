@@ -1,69 +1,83 @@
 "use client";
-import { getAllUsersByUsername } from "@/data/user";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import React from "react";
-import UserHeaderPost from "../Post/UserHeaderPost";
-import Link from "next/link";
+import React, { memo, Suspense } from "react";
+import { UserData } from "@/types/Post";
 import InfiniteScrollContainer from "../InfiniteScrollContainer";
-import { Loader, LoaderCircle } from "lucide-react";
+import { Loader } from "lucide-react";
+import { useSearch } from "@/hooks/useSearch";
+import dynamic from "next/dynamic";
+const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+
+// Dynamic imports
+const UserCardSearch = dynamic(() => import("./UserCardSearch").then((mod) => mod.UserCardSearch), {
+  loading: () => (
+    <div
+      role="status"
+      aria-label="Cargando comentarios"
+      className="flex justify-center p-4"
+    >
+      <Loader className="animate-spin" aria-hidden="true" />
+    </div>
+  ),
+});
+
+// Componentes memoizados para mejor rendimiento
+const ErrorAlert = memo(({ error }: { error: Error | unknown }) => (
+  <>
+    <p>Error: {error instanceof Error ? error.message : "Unexpected error"}</p>
+  </>
+));
+ErrorAlert.displayName = "ErrorAlert";
+
+const EmptyState = memo(() => (
+  <p className="text-center mt-4">No se encontraron usuarios con ese nombre.</p>
+));
+EmptyState.displayName = "EmptyState";
+
+const LoadMoreSpinner = memo(() => (
+  <div className="w-full flex justify-center py-4">
+    <Loader className="animate-spin" />
+  </div>
+));
+LoadMoreSpinner.displayName = "LoadMoreSpinner";
+
+const MemoizedUser = memo(({ user }: { user: UserData }) => (
+  <UserCardSearch user={user} baseUrl={baseUrl} />
+));
+MemoizedUser.displayName = "MemoizedUser";
+
+
 
 
 export default function SearchContent() {
   const searchParams = useSearchParams();
-  const query = searchParams.get("q");
-  const baseUrl = process.env.NEXT_PUBLIC_URL;
+  const initialQuery = searchParams.get("q");
 
-  if (!query) {
+  if (!initialQuery) {
     return <p>No se encontraron resultados</p>;
   }
 
   const {
-    data,
     isLoading,
     error,
-    fetchNextPage,
+    results: users,
     hasNextPage,
+    status,
+    fetchNextPage,
     isFetchingNextPage,
-    status
-  } = useInfiniteQuery({
-    queryKey: ["search", query], //<-- La key de la información
-    queryFn: ({
-      pageParam,
-    }: {
-      pageParam?: string | number | null | undefined;
-      username?: string | null | undefined;
-    }) => getAllUsersByUsername({ pageParam, username: query }), //<-- Cómo traer la información
-    enabled: !!query.trim(),
-    initialPageParam: null as string | null,
-    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined, // Define el siguiente parámetro de paginación
-  });
-
-  const users = data?.pages.flatMap((page) => page.users) ?? [];
+  } = useSearch(initialQuery);
 
   if (isLoading) {
-    return (
-      <div className="w-full py-4 flex justify-center">
-        <LoaderCircle className="animate-spin" />
-      </div>
-    );
+    return <LoadMoreSpinner />;
   }
 
   if (error) {
-    return <p>Error: {error.message}</p>;
+    return <ErrorAlert error={error} />;
   }
 
-  if (status === "success"  && !users.length &&!hasNextPage) {
-    return <p className="text-center mt-4">No se encontraron usuarios con ese nombre</p>;
+  if (status === "success" && !users.length && !hasNextPage) {
+    return <EmptyState />;
   }
-
-  
-
-  
-  
-  
- 
-
 
   return (
     <InfiniteScrollContainer
@@ -71,22 +85,11 @@ export default function SearchContent() {
       onBottomReached={() => hasNextPage && !isLoading && fetchNextPage()}
     >
       <div className="w-full bg-card border-x-[1px] border-b-[1px]   h-auto flex flex-col items-stretch">
-        {users.map((user) => (
-          <div key={user.id}>
-            <Link href={`${baseUrl}/dashboard/users/${user.name}`}>
-              <div
-                key={user.id}
-                className="w-full h-1/2 p-4 hover:bg-secondary border-t-[1px] "
-              >
-                <UserHeaderPost
-                  username={user.name}
-                  avatarUrl={user.image}
-                  linkTo={`${baseUrl}/dashboard/users/${user.name}`}
-                />
-              </div>
-            </Link>
-          </div>
-        ))}
+        <Suspense fallback={<LoadMoreSpinner />}>
+          {users.map((user) => (
+            <MemoizedUser key={user.id} user={user} />
+          ))}
+        </Suspense>
       </div>
       {isFetchingNextPage && <Loader className="mx-auto animate-spin" />}
     </InfiniteScrollContainer>

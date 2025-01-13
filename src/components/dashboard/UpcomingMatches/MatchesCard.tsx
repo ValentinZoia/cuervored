@@ -59,15 +59,15 @@ export default function MatchesCard({
                   {match.homeOrAway === "L" && (
                     <div className="flex mt-1 flex-wrap gap-2">
                       {isPastMatches ? (
-                        <CaslaButton size="sm" variant="redToBlue">
+                        <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes fueron">
                           Ver quienes fueron
                         </CaslaButton>
                       ) : (
                         <>
-                          <CaslaButton size="sm" variant="blueToRed">
+                          <CaslaButton size="sm" variant="blueToRed" aria-label="Voy a la cancha">
                             Voy a la cancha
                           </CaslaButton>
-                          <CaslaButton size="sm" variant="redToBlue">
+                          <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes van">
                             Ver quienes van
                           </CaslaButton>
                         </>

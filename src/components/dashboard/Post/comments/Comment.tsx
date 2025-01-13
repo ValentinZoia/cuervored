@@ -10,7 +10,7 @@ interface CommentProps {
     comment: CommentData;
 }
 
-export default function Comment(comment: CommentProps) {
+export  function Comment(comment: CommentProps) {
     const session = useSession();
     
   
@@ -40,3 +40,5 @@ export default function Comment(comment: CommentProps) {
     </div>
   )
 }
+
+Comment.displayName = 'Comment'

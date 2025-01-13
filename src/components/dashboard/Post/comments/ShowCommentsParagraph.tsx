@@ -1,6 +1,5 @@
-import { CommentsPage, PostData } from '@/types/Post';
-import { InfiniteQueryPageParamsOptions, InitialPageParam, useQuery, useQueryClient } from '@tanstack/react-query';
-import { comment } from 'postcss';
+import { PostData } from '@/types/Post';
+import { useQuery } from '@tanstack/react-query';
 import React from 'react'
 import { getCommentCount } from './actions';
 

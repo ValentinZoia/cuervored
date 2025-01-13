@@ -12,12 +12,13 @@ export default function PreviewImageToPost({previewUrlSrc, handleRemovePreview}:
     <div className="relative mt-4 rounded-lg overflow-hidden shadow-md">
           <img src={previewUrlSrc} alt="Preview" className="w-32 h-32 object-cover" />
           <Button
+            aria-label='Eliminar imagen'
             variant="destructive"
             size="icon"
             className="absolute top-1 right-1 h-6 w-6"
             onClick={handleRemovePreview}
           >
-            <X className="h-4 w-4" />
+            <X className="h-4 w-4" aria-hidden="true"/>
           </Button>
         </div>
   )

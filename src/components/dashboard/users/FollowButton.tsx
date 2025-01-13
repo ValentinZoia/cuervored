@@ -57,6 +57,7 @@ export default function FollowButton({
   
   return (
     <Button
+      aria-label="Seguir"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
       disabled={isDisabled}

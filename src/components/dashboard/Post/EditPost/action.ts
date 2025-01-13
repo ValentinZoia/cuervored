@@ -1,7 +1,7 @@
 "use server"; //nunca olvidar de colocar "use server", sino no funciona
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
-import { getPostDataInclude, getUserDataSelect } from "@/types/Post";
+import { getPostDataInclude } from "@/types/Post";
 
 export async function updatePost(
   content: string | null,

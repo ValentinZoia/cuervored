@@ -18,7 +18,7 @@ export default async  function NavBar() {
 
       <nav className=" sticky top-0 z-50 bg-blueSanlorenzo text-primary-foreground p-4">
         <div className="container mx-auto flex items-center justify-between">
-          <Link href="/dashboard" className="text-xl font-bold">
+          <Link href="/dashboard" className="text-xl font-bold" aria-label="Ir al inicio">
             <CuervoLogo />
           </Link>
           <div className="flex items-center gap-4 list-none">

@@ -46,7 +46,7 @@ export default function NewPost({session}:NewPostProps) {
     <Card className="max-w-[680px] mb-6 bg-card">
       <CardContent className="pt-6">
         <div className="flex items-start space-x-4">
-          <Link href={`/dashboard/users/${user.name}`}>
+          <Link href={`/dashboard/users/${user.name}`} aria-label="Ver perfil">
            <UserAvatar username={user.name as string} avatarUrl={user.image as string} />
           </Link>
           <div className="flex-1">
@@ -55,6 +55,7 @@ export default function NewPost({session}:NewPostProps) {
               className="bg-background"
               placeholder="¿Qué estás pensando sobre el club?"
               onChange={handleTextareaChange}
+              aria-label="Escribe tu post"
             />
             <div className="w-fit">
               {previewUrl && (
@@ -68,7 +69,8 @@ export default function NewPost({session}:NewPostProps) {
             <div className="mt-2 flex justify-between items-center">
               <ButtonAddPhoto handleFileChange={handleFileChange} fileInputRef={fileInputRef} handleUploadPhotoButtonClick={handleUploadPhotoButtonClick} />
               <CaslaButton
-              variant="blueToRed"
+                aria-label="Publicar"
+                variant="blueToRed"
                 className="relative z-10"
                 size="sm"
                 onClick={handleSubmit}

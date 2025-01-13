@@ -146,7 +146,7 @@ export default function EditProfileForm({ user, onClose }: EditProfileFormProps)
             )}
           />
 
-          <CaslaButton type="submit" variant="blueToRed">
+          <CaslaButton type="submit" variant="blueToRed" aria-label="Guardar Cambios">
           {mutation.isPending ? "Guardando..." : "Guardar Cambios"}
           </CaslaButton>
         </form>

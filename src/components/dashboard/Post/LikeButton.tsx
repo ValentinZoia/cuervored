@@ -21,7 +21,10 @@ function debounce(func: (...args: any[]) => void, delay: number) {
 }
 
 export default function LikeButton({ postId, initialState }: LikeButtonProps) {
-  const { data, mutate, isLoading, isPending } = useLikePostMutation({ postId, initialState });
+  const { data, mutate, isLoading, isPending } = useLikePostMutation({
+    postId,
+    initialState,
+  });
 
   // Crear una función `debouncedMutate`
   const debouncedMutate = useRef(
@@ -32,26 +35,27 @@ export default function LikeButton({ postId, initialState }: LikeButtonProps) {
 
   return (
     <button
-  disabled={isDisabled}
-  onClick={() => {
-    if (!isDisabled) {
-      debouncedMutate.current();
-    }
-  }}
-  className={cn(
-    " h-8 rounded-md px-3 text-xs relative capitalize inline-flex items-center justify-center whitespace-nowrap  font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none overflow-hidden group hover:bg-[#fd170221] hover:fill-redSanlorenzo hover:text-redSanlorenzo",
-    isDisabled ? "bg-[#fd170221] fill-redSanlorenzo text-redSanlorenzo" : ""
-  )}
->
-  <Heart
-    className={cn(
-      "size-4 mr-2",
-      data.isLikedByUser && "fill-redSanlorenzo text-redSanlorenzo"
-    )}
-  />
-  <span className={data.isLikedByUser ? "text-redSanlorenzo " : ""}>
-    {data.likes} <span className="hidden sm:inline">Me gusta</span>
-  </span>
-</button>
+      aria-label="Dar Like"
+      disabled={isDisabled}
+      onClick={() => {
+        if (!isDisabled) {
+          debouncedMutate.current();
+        }
+      }}
+      className={cn(
+        " h-8 rounded-md px-3 text-xs relative capitalize inline-flex items-center justify-center whitespace-nowrap  font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none overflow-hidden group hover:bg-[#fd170221] hover:fill-redSanlorenzo hover:text-redSanlorenzo",
+        isDisabled ? "bg-[#fd170221] fill-redSanlorenzo text-redSanlorenzo" : ""
+      )}
+    >
+      <Heart
+        className={cn(
+          "size-4 mr-2",
+          data.isLikedByUser && "fill-redSanlorenzo text-redSanlorenzo"
+        )}
+      />
+      <span className={data.isLikedByUser ? "text-redSanlorenzo " : ""}>
+        {data.likes} <span className="hidden sm:inline">Me gusta</span>
+      </span>
+    </button>
   );
 }

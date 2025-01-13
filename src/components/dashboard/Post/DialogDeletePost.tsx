@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDeletePostMutation } from "./mutations";
-import { useSession } from "next-auth/react";
+
 import {
   Dialog,
   DialogClose,
@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
+
 
 interface DialogDeletePostProps {
   postId: string;
@@ -59,12 +59,12 @@ export default function DialogDeletePost({
         </DialogHeader>
         <DialogFooter className="flex justify-between gap-4">
           <DialogClose asChild>
-            <Button type="button" variant="ghost" disabled={mutation.isPending}>
+            <Button type="button" variant="ghost" disabled={mutation.isPending} aria-label="Cancelar">
               Cancel
             </Button>
           </DialogClose>
 
-          <Button type="button" variant="destructive" onClick={handleDelete}>
+          <Button type="button" variant="destructive" onClick={handleDelete} aria-label="Eliminar">
             {mutation.isPending ? "Deleting..." : "Delete"}
           </Button>
         </DialogFooter>

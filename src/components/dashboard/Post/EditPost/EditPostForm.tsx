@@ -142,6 +142,7 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
           />
           <div className="w-full flex gap-2 justify-end">
             <Button
+              aria-label="Cancelar"
               type="button"
               variant={"outline"}
               size={"sm"}
@@ -151,6 +152,7 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
             </Button>
 
             <CaslaButton
+             aria-label="Guardar Cambios"
               variant="blueToRed"
               className="relative z-10"
               type="button"

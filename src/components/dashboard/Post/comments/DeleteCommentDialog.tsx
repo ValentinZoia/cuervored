@@ -51,21 +51,20 @@ export default function DeleteCommentDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete comment?</DialogTitle>
+          <DialogTitle>Eliminar Comentario?</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete this comment? This action cannot be
-            undone.
+            ¿Estas seguro de que quieres eliminar este comentario?. Esto no se puede deshacer.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex justify-between gap-4">
           <DialogClose asChild>
-            <Button type="button" variant="ghost" disabled={mutation.isPending}>
-              Cancel
+            <Button type="button" variant="ghost" disabled={mutation.isPending} aria-label="Cancel">
+              Cancelar
             </Button>
           </DialogClose>
 
-          <Button type="button" variant="destructive" onClick={handleDelete}>
-            {mutation.isPending ? "Deleting..." : "Delete"}
+          <Button type="button" variant="destructive" onClick={handleDelete} aria-label="Eliminar">
+            {mutation.isPending ? "Eliminando..." : "Eliminar"}
           </Button>
         </DialogFooter>
       </DialogContent>

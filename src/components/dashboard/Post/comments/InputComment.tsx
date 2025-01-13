@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PostData } from "@/types/Post";
-import { SendHorizonal, Smile } from "lucide-react";
-import React, { forwardRef, useRef, useState } from "react";
+import { SendHorizonal} from "lucide-react";
+import React, { forwardRef,  useState } from "react";
 import { useSubmitCommentMutation } from "./mutations";
 
 interface InputCommentProps {
@@ -48,7 +48,7 @@ const InputComment = forwardRef<HTMLInputElement, InputCommentProps>(
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
-          <Button size="sm" variant="ghost" disabled={!input.trim()}>
+          <Button size="sm" variant="ghost" disabled={!input.trim()} aria-label="Enviar">
             <SendHorizonal className="h-4 w-4" />
           </Button>
         </form>

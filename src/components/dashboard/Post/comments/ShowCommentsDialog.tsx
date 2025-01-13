@@ -101,6 +101,7 @@ export default function ShowCommentsDialog({
               }}
             />
             <Button
+              aria-label="Comentar"
               variant="ghost"
               size="sm"
               onClick={handleCommentButtonClick}

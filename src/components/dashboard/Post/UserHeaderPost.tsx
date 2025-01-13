@@ -19,12 +19,12 @@ export default function UserHeaderPost({
   const baseUrl = process.env.NEXT_PUBLIC_URL;
   return (
     <div className="relative z-10 flex items-center space-x-4 pb-2">
-      <Link href={linkTo ? linkTo : `${baseUrl}/dashboard/users/${username}`}>
+      <Link href={linkTo ? linkTo : `${baseUrl}/dashboard/users/${username}`} aria-label="Ir al perfil">
         <UserAvatar avatarUrl={avatarUrl} username={username} size="size-10"  />
       </Link>
 
       <div className="relative z-10">
-        <Link href={linkTo ? linkTo : `${baseUrl}/dashboard/users/${username}`}>
+        <Link href={linkTo ? linkTo : `${baseUrl}/dashboard/users/${username}`} aria-label="Ir al perfil">
           <p className="text-sm font-medium relative z-0">{username}</p>
         </Link>
 

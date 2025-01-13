@@ -67,6 +67,7 @@ export function DropdownMenuMyAccount({
             <Link
               href={`/dashboard/users/${user?.name}`}
               className="w-full cursor-pointer"
+              aria-label="Ver perfil de usuario"
             >
               <User className="mr-2 w-4 h-4" />
               <span>Profile</span>
@@ -74,7 +75,11 @@ export function DropdownMenuMyAccount({
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
-            <Link href="/dashboard/settings" className="w-full cursor-pointer">
+            <Link
+              href="/dashboard/settings"
+              className="w-full cursor-pointer"
+              aria-label="Ir a la configuración"
+            >
               <Settings className="mr-2 w-4 h-4" />
               <span>Settings</span>
             </Link>
@@ -92,9 +97,12 @@ export function DropdownMenuMyAccount({
               queryClient.clear();
             }}
           >
-            <button className="text-red-500 inline-flex items-center gap-2 font-bold">
+            <button
+              className="text-red-500 inline-flex items-center gap-2 font-bold"
+              aria-label="Cerrar sesión"
+            >
               {" "}
-              <LogOut className="w-5 h-5" /> Log out
+              <LogOut className="w-5 h-5" aria-hidden="true" /> Log out
             </button>
           </form>
         </DropdownMenuItem>
