@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,12 +34,17 @@ export function DropdownMenuMyAccount({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Avatar className="text-black cursor-pointer">
-          {user?.image ? (
-            <AvatarImage src={user.image} alt={user.name || "User avatar"} />
-          ) : null}
-          <AvatarFallback>{fallback}</AvatarFallback>
-        </Avatar>
+        <button
+          className="border-0 bg-transparent p-0"
+          aria-label="Abrir menú de perfil" // Atributo ARIA: mejora la accesibilidad
+        >
+          <Avatar className="text-black cursor-pointer">
+            {user?.image ? (
+              <AvatarImage src={user.image} alt={user.name || "User avatar"} />
+            ) : null}
+            <AvatarFallback>{fallback}</AvatarFallback>
+          </Avatar>
+        </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel className="flex items-center  gap-2">
@@ -59,7 +64,10 @@ export function DropdownMenuMyAccount({
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild>
-            <Link href={`/dashboard/users/${user?.name}`} className="w-full cursor-pointer">
+            <Link
+              href={`/dashboard/users/${user?.name}`}
+              className="w-full cursor-pointer"
+            >
               <User className="mr-2 w-4 h-4" />
               <span>Profile</span>
             </Link>
@@ -73,7 +81,6 @@ export function DropdownMenuMyAccount({
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <ModeToggle />
-            
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

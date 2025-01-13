@@ -71,7 +71,8 @@ export function Post({ post }: PostProps) {
               setHasError(true);
             }
           }
-          } 
+          }
+          unoptimized // Agrego esto por el error:hostname "res.cloudinary.com" is not configured under images in your next.config.js
           priority={true}
           alt="Imagen de la publicación"
           width={500}

@@ -1,16 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images:{
-        remotePatterns: [
-            {
+  images: {
+      remotePatterns: [
+          {
               protocol: 'https',
               hostname: 'res.cloudinary.com',
-              
-            },
-          ],
-          minimumCacheTTL:1500000,
-    } 
+              pathname: '/dqssedd6u/image/upload/**',
+              port: ''
+          },
+      ],
+      
+  }
 };
-
 
 module.exports = nextConfig;

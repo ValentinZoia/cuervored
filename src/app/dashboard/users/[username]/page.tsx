@@ -24,6 +24,14 @@ export async function generateMetadata({ params }: MetaDataProps): Promise<Metad
     return {
       title: `${user.fullName ? user.fullName : user.name} (@${username})`,
       description: `Perfil de ${username}`,
+      openGraph:{
+        title: `${user.fullName ? user.fullName : user.name} (@${username})`,
+        description: `Perfil de ${username}`,
+        type:"profile",
+        url:`${process.env.NEXT_PUBLIC_URL}/dashboard/users/${username}`,
+        siteName:"CuervoRed",
+        
+      }
     };
   }
 

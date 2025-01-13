@@ -13,7 +13,7 @@ export default function UserAvatar({avatarUrl, username,size}: UserAvatarProps) 
   return (
     <Avatar className={size}  >
       {avatarUrl ?(
-        <AvatarImage src={avatarUrl} alt={username as string}  />
+        <AvatarImage src={avatarUrl} alt={username as string} width={40} height={40}  />
       ):(null)}
             
             <AvatarFallback>{fallback}</AvatarFallback>
