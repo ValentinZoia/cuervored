@@ -11,9 +11,9 @@ export default function AllMatches() {
 
     return (
     <>
-    <div className="w-full min-w-0 space-y-5 ">
+    <div className="w-full min-w-0 space-y-5 px-4 ">
             <Tabs defaultValue="table-matches">
-          <TabsList className="px-0 flex  space-x-4 bg-card border-[1px] border-border rounded-lg ">
+          <TabsList className="sticky top-[82px] z-50  px-0 flex  space-x-4 bg-card border-[1px] border-border rounded-lg ">
             <TabsTrigger className="w-1/2 " value="table-matches">Partidos en el año</TabsTrigger>
             <TabsTrigger className="w-1/2 " value="upcoming-matches">Ultimos y Proximos Partidos</TabsTrigger>
           </TabsList>

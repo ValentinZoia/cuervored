@@ -31,13 +31,13 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
       <NavBar />
       <div className="flex-1 container py-8 px-2">
         <div className="flex justify-center gap-1">
-          <aside className="hidden lg:block w-[400px] space-y-4 ">
+          <aside className="hidden lg:block w-[350px] space-y-4 ">
             <div className="sticky top-24">
               <UpcomingMatches />
             </div>
           </aside>
           
-          <main className="w-full max-w-[680px] flex-shrink-0">
+          <main className="w-full max-w-[700px] flex-shrink-0">
             {children}
           </main>
 
