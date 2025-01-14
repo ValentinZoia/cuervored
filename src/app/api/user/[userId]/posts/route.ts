@@ -12,7 +12,7 @@ export async function GET(req: NextRequest,{ params: { userId } }: { params: { u
 
     //get searchParmas
     const cursor = req.nextUrl.searchParams.get("cursor") || undefined;
-    const pageSize = 10;
+    const pageSize = 5;
     
     if(!userId){
         return NextResponse.json({ error: "ID is required" }, { status: 400 });

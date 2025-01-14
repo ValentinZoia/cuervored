@@ -45,7 +45,7 @@ export async function RecommendedUsers() {
   const baseUrl = process.env.NEXT_PUBLIC_URL;
 
   return (
-    <Card className="sticky top-[248px] hidden lg:block lg:col-span-1 lg:h-fit ">
+    <Card className=" lg:col-span-1 lg:h-fit ">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg">Usuarios Recomendados</CardTitle>
       </CardHeader>

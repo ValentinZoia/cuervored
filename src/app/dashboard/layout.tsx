@@ -27,26 +27,31 @@ export const metadata:Metadata ={
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
     <>
-      <div className="min-h-screen w-full  ">
-        <NavBar />
-        <main className="flex-1  container py-8 px-2 ">
-          <div className=" grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Columna izquierda: Proximos partidos y Usarios recomendados */}
-            <div className="space-y-6">
-              {/* <UpcomingMatches className="hidden sticky top-[118px] z-10 "/> */}
-              <UpcomingMatches className="hidden z-10" />
+      <div className="min-h-screen flex flex-col">
+      <NavBar />
+      <div className="flex-1 container py-8 px-2">
+        <div className="flex justify-center gap-1">
+          <aside className="hidden lg:block w-[400px] space-y-4 ">
+            <div className="sticky top-24">
+              <UpcomingMatches />
+            </div>
+          </aside>
+          
+          <main className="w-full max-w-[680px] flex-shrink-0">
+            {children}
+          </main>
+
+          <aside className="hidden lg:block w-[300px] space-y-4 ">
+            <div className="sticky top-24">
               <RecommendedUsers />
             </div>
-            
-
-            {/* Columna Central: Page.tsx */}
-            {children}
-          </div>
-        </main>
-        
-        <MenuBar className="sticky bottom-0 z-50 flex w-full justify-center gap-12 border-t bg-blueSanlorenzo text-primary-foreground p-3 md:hidden" />
-        <Toaster />
+          </aside>
+        </div>
       </div>
+      
+      <MenuBar className="sticky bottom-0 z-50 flex w-full justify-center gap-12 border-t bg-blueSanlorenzo text-primary-foreground p-3 md:hidden" />
+      <Toaster />
+    </div>
     </>
   );
 };
