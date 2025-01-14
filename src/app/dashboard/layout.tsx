@@ -29,9 +29,9 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     <>
       <div className="min-h-screen flex flex-col">
       <NavBar />
-      <div className="flex-1 container py-8 px-2">
-        <div className="flex justify-center gap-1">
-          <aside className="hidden lg:block w-[350px] space-y-4 ">
+      <div className="flex-1 container max-w-[1600px] mx-auto py-8 px-2">
+        <div className="flex justify-center gap-6">
+          <aside className="hidden lg:block w-[450px] space-y-4 ">
             <div className="sticky top-24">
               <UpcomingMatches />
             </div>
@@ -41,7 +41,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
             {children}
           </main>
 
-          <aside className="hidden lg:block w-[300px] space-y-4 ">
+          <aside className="hidden lg:block w-[350px] space-y-4 ">
             <div className="sticky top-24">
               <RecommendedUsers />
             </div>
