@@ -6,8 +6,16 @@ const nextConfig = {
               protocol: 'https',
               hostname: 'res.cloudinary.com',
               pathname: '/dqssedd6u/image/upload/**',
-              port: ''
+              port: '',
+              search: '',
           },
+          {
+            protocol: 'https',
+            hostname:"api.promiedos.com.ar",
+            pathname:"/images/team/**",
+            port:"",
+            search:"",
+          }
       ],
       
   }

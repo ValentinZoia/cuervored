@@ -50,6 +50,7 @@ export async function GET(req: NextRequest) {
                   ?.getAttribute("src")
                   ?.trim()}`,
                 time: cells[3]?.textContent?.trim(),
+                isPastMatches: false,
               };
             })
           )
@@ -62,7 +63,7 @@ export async function GET(req: NextRequest) {
         status: 500,
       });
 
-    const LatestMatches = await page.$$eval(
+    const LastMatches = await page.$$eval(
       ".tbody_tablebody__cDt0I", // Selecciona todas las tablas con la clase
       (tables) =>
         Array.from(tables) // Convierte NodeList a Array para manipulación
@@ -80,32 +81,29 @@ export async function GET(req: NextRequest) {
                   ?.getAttribute("src")
                   ?.trim()}`,
                 result: cells[3]?.textContent?.trim(),
+                isPastMatches: true,
               };
             })
           )
     );
 
-    // buscamos el indice del proximo partido a jugar.
-    // const FindIndexLastMatch = AllMatches.findIndex(
-    //   (match) => match?.result === "-"
-    // );
+    if(!LastMatches.length)
+      return NextResponse.json({
+        error: "No se encontraron partidos",
+        status: 500,
+      });
 
-    //si no hay proximo partido a jugar, tomamos el ultimo partido
-    // const lastMatchIndex =
-    //   FindIndexLastMatch === -1 ? AllMatches.length - 1 : FindIndexLastMatch;
+      const AllMatches = [...LastMatches.reverse(), ...UpcomingMatches];
 
-    //tomamos solo los ultimos dos partidos que se jugaron
-    // const LastMatches = AllMatches.slice(
-    //   Math.max(0, lastMatchIndex - 1),
-    //   lastMatchIndex + 1
-    // );
+      const UpcomingMatchesSlice = UpcomingMatches.slice(0, 3);
 
-    //tomamos solo los proximos partidos que no se jugaron aun.
-    // const UpcomingMatches = AllMatches.filter((match) => match?.result === "-");
+      const LastMatchesSlice = LastMatches.slice(Math.max(0, LastMatches.length - 3));
+
+    
 
     await browser.close();
 
-    return NextResponse.json({ UpcomingMatches, LatestMatches, status: 200 });
+    return NextResponse.json({ AllMatches:{ LastMatches: LastMatches.reverse(), UpcomingMatches: UpcomingMatches }, matchesFiltered: { LastMatches: LastMatchesSlice, UpcomingMatches: UpcomingMatchesSlice }, status: 200 });
   } catch (error) {
     return NextResponse.json({ error: error, status: 500 });
   }

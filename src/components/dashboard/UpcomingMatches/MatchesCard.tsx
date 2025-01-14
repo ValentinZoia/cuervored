@@ -7,11 +7,11 @@ import Image from "next/image";
 export default function MatchesCard({
     title,
     matches,
-    isPastMatches,
+    
   }: {
     title: string;
     matches: BasicMatchData[];
-    isPastMatches?: boolean;
+    
   }) {
     return (
       <Card className="mb-4">
@@ -26,7 +26,7 @@ export default function MatchesCard({
                   <div className="flex items-center justify-between mb-1">
                     <div className="flex items-center">
                       <CalendarDays className="w-3 h-3 mr-1" />
-                      <span className="text-sm font-medium">{match.date}</span>
+                      <span className="text-sm font-medium">{match.date} {!match.isPastMatches && `- ${match.time}`}</span>
                     </div>
                     <span
                       className={`text-sm font-semibold px-1 py-0.5 rounded ${
@@ -38,22 +38,22 @@ export default function MatchesCard({
                       {match.homeOrAway === "L" ? "Local" : "Visitante"}
                     </span>
                   </div>
-                  <p className="text-lg font-bold mb-1 flex gap-1 flex-wrap">
+                  <p className="text-lg font-bold mb-1 flex gap-2 flex-wrap">
                     <span className="flex items-center gap-2">
                     
                         <Image
-                        src={"https://www.promiedos.com.ar/images/18/19.png"}
+                        src={"https://api.promiedos.com.ar/images/team/igf/1"}
                         alt={"Escudo Sanlorenzo"}
                         width={18}
                         height={20}
                         />
-                    San Lorenzo vs
+                    San Lorenzo {match.isPastMatches ? match.result : "vs" }
                     </span>
                     
                     <span className="flex items-center gap-2">
                     <Image
                         src={match.opponentImage as string}
-                        alt={"Escudo Sanlorenzo"}
+                        alt={"Escudo Oponente de  Sanlorenzo"}
                         width={18}
                         height={20}
                         />
@@ -62,7 +62,7 @@ export default function MatchesCard({
                   </p>
                   {match.homeOrAway === "L" && (
                     <div className="flex mt-1 flex-wrap gap-2">
-                      {isPastMatches ? (
+                      {match.isPastMatches ? (
                         <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes fueron">
                           Ver quienes fueron
                         </CaslaButton>
@@ -83,7 +83,7 @@ export default function MatchesCard({
             ))
           ) : (
             <>
-              {isPastMatches ? (
+              {matches[0].isPastMatches ? (
                 <>
                   <p className="text-sm text-gray-600">
                     No hay partidos disponibles o Recién comienza la temporada.

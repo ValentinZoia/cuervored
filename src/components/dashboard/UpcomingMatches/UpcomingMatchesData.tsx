@@ -1,6 +1,6 @@
 "use client"
-import { useQuery } from "@tanstack/react-query";
-import { getUpcomingMatches } from "@/data/matches";
+
+import { getUpcomingAndLastMatches } from "@/data/matches";
 import { MatchesData } from "@/types/Match";
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
@@ -14,6 +14,7 @@ const MatchesCard = dynamic(() => import('./MatchesCard'), {
 
 // Mantenemos SkeletonMatchesCard como import estático ya que es necesario para el loading
 import SkeletonMatchesCard from "./SkeletonMatchesCard";
+import { useQueryMatches } from "@/hooks/useQueryMatches";
 
 
 
@@ -29,15 +30,9 @@ const getUpcomingMatchesSlice = (matches: MatchesData['matchesFiltered']['Upcomi
 
 
 export default function UpcomingMatchesData() {
-  const { data, isLoading, error } = useQuery<MatchesData>({
-    queryKey: ["matches"],
-    queryFn: getUpcomingMatches,
-    staleTime: 1000 * 60 * 60 * 24, // 24 horas
-    // Agregamos configuraciones adicionales para optimizar el cache
-    gcTime: 1000 * 60 * 60 * 24 * 7, // 7 días - remplaza a cacheTime
-    refetchOnWindowFocus: false, // Evitamos refetch innecesarios
-    retry: 2 // Limitamos los reintentos en caso de error
-  });
+ 
+
+  const {data, error, isLoading} = useQueryMatches({queryKey:"matches", fetchFn:getUpcomingAndLastMatches, type: {} as MatchesData})
 
   if (isLoading) {
     return (
@@ -70,7 +65,7 @@ export default function UpcomingMatchesData() {
         <MatchesCard
           title="Últimos partidos"
           matches={lastMatches}
-          isPastMatches={true}
+          
         />
       </Suspense>
       
@@ -78,7 +73,7 @@ export default function UpcomingMatchesData() {
         <MatchesCard
           title="Próximos partidos"
           matches={upcomingMatches}
-          isPastMatches={false}
+          
         />
       </Suspense>
     </div>

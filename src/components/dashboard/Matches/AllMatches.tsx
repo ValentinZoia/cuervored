@@ -1,8 +1,5 @@
-
-
 import React from 'react'
-import AllMatchesTable from './AllMatchesTable';
-
+import AllMatchesFetch from './AllMatchesFetch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import UpcomingMatches from '../UpcomingMatches/UpcomingMatches';
 
@@ -21,7 +18,7 @@ export default function AllMatches() {
             <TabsTrigger className="w-1/2 " value="upcoming-matches">Ultimos y Proximos Partidos</TabsTrigger>
           </TabsList>
           <TabsContent value="table-matches">
-          <AllMatchesTable />
+          <AllMatchesFetch />
           </TabsContent>
           <TabsContent value="upcoming-matches">
             <UpcomingMatches/>

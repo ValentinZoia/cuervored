@@ -1,3 +1,4 @@
+
 import { AllMatchesData, MatchesData } from "@/types/Match";
 import axios from "axios";
 const urlProyect = process.env.NEXT_PUBLIC_URL;
@@ -5,7 +6,7 @@ const urlProyect = process.env.NEXT_PUBLIC_URL;
 const url = `${urlProyect}/api/sanlorenzo`;
 
 
-export async function getUpcomingMatches(){
+export async function getUpcomingAndLastMatches(){
     try {
         const response = await axios.get<MatchesData>(url);
 
@@ -13,6 +14,7 @@ export async function getUpcomingMatches(){
 
         
         return{
+          //vienen solo tres partidos de ambos
           matchesFiltered:{
             LastMatches: response.data.matchesFiltered.LastMatches,
             UpcomingMatches: response.data.matchesFiltered.UpcomingMatches
@@ -61,7 +63,13 @@ export async function getAllMatches(){
 
     
 
-    return response.data.AllMatches;
+    return{
+      //vienen todos los partidos
+      AllMatches:{
+        LastMatches: response.data.AllMatches.LastMatches,
+        UpcomingMatches: response.data.AllMatches.UpcomingMatches
+      }
+    }
 
 } catch (error: any) {
 
