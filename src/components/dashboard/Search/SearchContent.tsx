@@ -53,10 +53,7 @@ export default function SearchContent() {
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get("q");
 
-  if (!initialQuery) {
-    return <p>No se encontraron resultados</p>;
-  }
-
+ 
   const {
     isLoading,
     error,
@@ -65,7 +62,11 @@ export default function SearchContent() {
     status,
     fetchNextPage,
     isFetchingNextPage,
-  } = useSearch(initialQuery);
+  } = useSearch(initialQuery || "");
+
+  if (!initialQuery) {
+    return <p>No se encontraron resultados</p>;
+  }
 
   if (isLoading) {
     return <LoadMoreSpinner />;

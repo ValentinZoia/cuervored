@@ -6,6 +6,8 @@ import { UserData } from "@/types/Post";
 import { useDebounce } from './useDebounce';
 
 export function useSearch(initialQuery: string) {
+  
+  
   const [query, setQuery] = useState(initialQuery);
   const [results, setResults] = useState<UserData[]>([]);
   const [showCard, setShowCard] = useState(false);

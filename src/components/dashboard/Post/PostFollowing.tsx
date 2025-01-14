@@ -8,14 +8,15 @@ import SkeletonPost from "./SkeletonPost";
 import { useInfinitePosts } from '@/hooks/useInfinitePosts';
 
 // Dynamic imports para componentes pesados
-const Alert = dynamic(() => import("@/components/ui/alert").then(mod => mod.Alert));
-const AlertTitle = dynamic(() => import("@/components/ui/alert").then(mod => mod.AlertTitle));
-const AlertDescription = dynamic(() => import("@/components/ui/alert").then(mod => mod.AlertDescription));
-const AlertCircle = dynamic(() => import("lucide-react").then(mod => mod.AlertCircle));
+const Alert = dynamic(() => import("@/components/ui/alert").then(mod => mod.Alert),{ssr:false});
+const AlertTitle = dynamic(() => import("@/components/ui/alert").then(mod => mod.AlertTitle),{ssr:false});
+const AlertDescription = dynamic(() => import("@/components/ui/alert").then(mod => mod.AlertDescription),{ssr:false});
+const AlertCircle = dynamic(() => import("lucide-react").then(mod => mod.AlertCircle),{ssr:false});
 const Post = dynamic(() => import("./Post").then(mod => mod.Post), {
+  ssr: false,
   loading: () => <SkeletonPost />
 });
-const InfiniteScrollContainer = dynamic(() => import("../InfiniteScrollContainer"));
+const InfiniteScrollContainer = dynamic(() => import("../InfiniteScrollContainer"),{ssr:false});
 
 // Componentes memoizados para mejor rendimiento
 const ErrorAlert = memo(({ error }: { error: Error | unknown }) => (

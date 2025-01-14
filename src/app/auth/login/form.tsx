@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
 import { Input, InputPassword } from "@/components/ui/input";
 import { LogoButton } from "@/components/ui/button-logo";
 import Link from "next/link";
@@ -31,7 +30,7 @@ export default function LoginForm() {
       formRef.current?.reset(); //clean form
       router.push("/dashboard");
     }
-  }, [state?.message]);
+  }, [state?.message, router]);
 
   return (
     <form

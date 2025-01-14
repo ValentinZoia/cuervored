@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BasicMatchData } from "@/types/Match";
 import { CaslaButton } from "@/components/ui/CaslaButton";
 import { CalendarDays } from "lucide-react";
+import Image from "next/image";
 
 export default function MatchesCard({
     title,
@@ -39,19 +40,22 @@ export default function MatchesCard({
                   </div>
                   <p className="text-lg font-bold mb-1 flex gap-1 flex-wrap">
                     <span className="flex items-center gap-2">
-                    <img
-                          src={"https://www.promiedos.com.ar/images/18/19.png"}
-                          alt={"Escudo Sanlorenzo"}
-                          className="w-[18px] h-[20px] "
+                    
+                        <Image
+                        src={"https://www.promiedos.com.ar/images/18/19.png"}
+                        alt={"Escudo Sanlorenzo"}
+                        width={18}
+                        height={20}
                         />
                     San Lorenzo vs
                     </span>
                     
                     <span className="flex items-center gap-2">
-                    <img
-                          src={match.opponentImage}
-                          alt={"Escudo " + match.opponent}
-                          className="w-[18px] h-[20px] "
+                    <Image
+                        src={match.opponentImage as string}
+                        alt={"Escudo Sanlorenzo"}
+                        width={18}
+                        height={20}
                         />
                       {" " + match.opponent}
                     </span>   

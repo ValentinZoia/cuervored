@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 
 
 const Comment = dynamic(() => import("./Comment").then((mod) => mod.Comment), {
+  ssr: false,
   loading: () => (
     <div
       role="status"

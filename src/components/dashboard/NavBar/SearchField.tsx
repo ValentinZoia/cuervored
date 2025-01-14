@@ -53,7 +53,7 @@ export default function SearchField() {
       document.removeEventListener("click", handleClickOutside);
       setQuery("");
     };
-  }, [setQuery]);
+  }, [setQuery, setShowCard]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

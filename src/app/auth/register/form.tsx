@@ -31,7 +31,7 @@ export default function SignUpForm() {
       formRef.current?.reset();
       router.push("/auth/login");
     }
-  }, [state?.message]);
+  }, [state?.message, router]);
 
   return (
     <form

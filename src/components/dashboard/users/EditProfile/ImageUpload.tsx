@@ -27,7 +27,7 @@ export function ImageUpload({ value, onChange, className, setFile }: ImageUpload
         reader.readAsDataURL(file)
       }
     },
-    [onChange]
+    [onChange, setFile, setPreview]
   )
 
   return (

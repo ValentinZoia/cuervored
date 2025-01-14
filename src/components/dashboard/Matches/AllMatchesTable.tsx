@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useMemo } from "react";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllMatches } from "@/data/matches";
 import SkeletonAllMatchesTable from "./SkeletonAllMatchesTable";
 import { BasicMatchData } from "@/types/Match";
+import Image from "next/image";
 
 
 
@@ -94,11 +95,12 @@ export default function AllMatchesTable() {
                   <TableCell className="p-2 sm:p-4 ">
                     <div className="w-full flex justify-start">
                       <div className="flex gap-2 md:pl-12 justify-center items-center align-middle ">
-                        <img
-                          src={match.opponentImage}
-                          alt={"Escudo "  +  match.opponent}
-                          className="w-[18px] h-[20px] "
-                        />
+                        <Image
+                          src={match.opponentImage as string}
+                          alt={"Escudo " + match.opponent}
+                          width={18}
+                          height={20}
+                          />
                         <p>{match.opponent}</p>
                       </div>
                     </div>

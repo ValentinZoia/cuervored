@@ -42,7 +42,7 @@ export function Post({ post }: PostProps) {
   useEffect(() => {
     setCurrentSrc(imageUrl);
     setHasError(false);
-  }, [post])
+  }, [post, imageUrl]);
   
   
   
