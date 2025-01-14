@@ -1,106 +1,102 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BasicMatchData } from "@/types/Match";
 import { CaslaButton } from "@/components/ui/CaslaButton";
-import { CalendarDays } from "lucide-react";
+import { CalendarDays, ChevronRight } from 'lucide-react';
 import Image from "next/image";
 
+
 export default function MatchesCard({
-    title,
-    matches,
-    
-  }: {
-    title: string;
-    matches: BasicMatchData[];
-    
-  }) {
-    return (
-      <Card className="mb-4">
-        <CardHeader>
-          <CardTitle className="text-lg">{title}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {matches?.length > 0 ? (
-            matches.map((match, index) => (
-              <Card key={index} className="p-2 mb-2">
-                <CardContent className="py-4 px-2">
-                  <div className="flex items-center justify-between mb-1">
-                    <div className="flex items-center">
-                      <CalendarDays className="w-3 h-3 mr-1" />
-                      <span className="text-sm font-medium">{match.date} {!match.isPastMatches && `- ${match.time}`}</span>
+  title,
+  matches,
+}: {
+  title: string;
+  matches: BasicMatchData[];
+}) {
+  return (
+    <Card className="w-full">
+      <CardHeader className="p-4">
+        <CardTitle className="text-base font-semibold">{title}</CardTitle>
+      </CardHeader>
+      <CardContent className="p-0">
+        {matches?.length > 0 ? (
+          <ul className="divide-y divide-border">
+            {matches.map((match, index) => (
+              <li key={index} className="p-3 hover:bg-border transition-colors cursor-pointer">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <Image
+                      src={match.homeOrAway === "L" ? "https://api.promiedos.com.ar/images/team/igf/1": match.opponentImage as string}
+                      alt={match.homeOrAway === "L" ? "Escudo de San Lorenzo": "Escudo de " + match.opponent}
+                      width={16}
+                      height={16}
+                      className="rounded-full"
+                    />
+                    <Image
+                      src={match.homeOrAway === "V" ? "https://api.promiedos.com.ar/images/team/igf/1": match.opponentImage as string}
+                      alt={match.homeOrAway === "V" ? "Escudo de San Lorenzo": "Escudo de " + match.opponent}
+                      width={16}
+                      height={16}
+                      className="rounded-full"
+                    />
+
+                    <div className="flex flex-col">
+                      <span className="text-sm font-medium">
+                        
+                        {match.homeOrAway === "L" ? "San Lorenzo " : match.opponent }
+                        {" "}
+                        {match.isPastMatches ? match.result : "vs"}
+                        {" "}
+                        {match.homeOrAway === "L" ? match.opponent : "San Lorenzo"}
+                      </span>
+                      <span className="text-xs text-gray-500 flex items-center">
+                        <CalendarDays className="w-3 h-3 mr-1" />
+                        {match.date} {!match.isPastMatches && `- ${match.time}`}
+                      </span>
                     </div>
+                  </div>
+                  <div className="flex items-center">
                     <span
-                      className={`text-sm font-semibold px-1 py-0.5 rounded ${
+                      className={`text-xs font-medium px-2 py-1 rounded-full ${
                         match.homeOrAway === "L"
                           ? "bg-green-100 text-green-800"
                           : "bg-blue-100 text-blue-800"
                       }`}
                     >
-                      {match.homeOrAway === "L" ? "Local" : "Visitante"}
+                      {match.homeOrAway === "L" ? "L" : "V"}
                     </span>
+                    
                   </div>
-                  <p className="text-lg font-bold mb-1 flex gap-2 flex-wrap">
-                    <span className="flex items-center gap-2">
-                    
-                        <Image
-                        src={"https://api.promiedos.com.ar/images/team/igf/1"}
-                        alt={"Escudo Sanlorenzo"}
-                        width={18}
-                        height={20}
-                        />
-                    San Lorenzo {match.isPastMatches ? match.result : "vs" }
-                    </span>
-                    
-                    <span className="flex items-center gap-2">
-                    <Image
-                        src={match.opponentImage as string}
-                        alt={"Escudo Oponente de  Sanlorenzo"}
-                        width={18}
-                        height={20}
-                        />
-                      {" " + match.opponent}
-                    </span>   
-                  </p>
-                  {match.homeOrAway === "L" && (
-                    <div className="flex mt-1 flex-wrap gap-2">
-                      {match.isPastMatches ? (
-                        <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes fueron">
-                          Ver quienes fueron
-                        </CaslaButton>
-                      ) : (
-                        <>
-                          <CaslaButton size="sm" variant="blueToRed" aria-label="Voy a la cancha">
-                            Voy a la cancha
-                          </CaslaButton>
-                          <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes van">
-                            Ver quienes van
-                          </CaslaButton>
-                        </>
-                      )}
-                    </div>
+                </div>
+                {match.homeOrAway === "L" && (
+                  <div className="mt-2 flex justify-between">
+                    {match.isPastMatches ? (
+                    <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes fueron">
+                      Ver quienes fueron
+                    </CaslaButton>
+                  ) : (
+                    <>
+                      <CaslaButton size="sm" variant="blueToRed" aria-label="Voy a la cancha">
+                        Voy a la cancha
+                      </CaslaButton>
+                      <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes van">
+                        Ver quienes van
+                      </CaslaButton>
+                    </>
                   )}
-                </CardContent>
-              </Card>
-            ))
-          ) : (
-            <>
-              {matches[0].isPastMatches ? (
-                <>
-                  <p className="text-sm text-gray-600">
-                    No hay partidos disponibles o Recién comienza la temporada.
-                  </p>
-                </>
-              ) : (
-                <>
-                  <p className="text-sm text-gray-600">
-                    No hay partidos próximos en lo que queda del año.
-                  </p>
-                </>
-              )}
-            </>
-          )}
-        </CardContent>
-      </Card>
-    );
-  }
-
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-sm text-gray-600 p-4">
+            {matches[0]?.isPastMatches
+              ? "No hay partidos disponibles o recién comienza la temporada."
+              : "No hay partidos próximos en lo que queda del año."}
+          </p>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
 

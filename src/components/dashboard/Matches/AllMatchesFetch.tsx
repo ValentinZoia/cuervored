@@ -2,14 +2,15 @@
 
 import React, { memo, Suspense } from "react";
 import { getAllMatches } from "@/data/matches";
-import SkeletonAllMatchesTable from "./SkeletonAllMatchesTable";
+import {MatchTablesSkeleton, TableSkeleton } from "./MatchTablesSkeleton";
 import { AllMatchesData, BasicMatchData } from "@/types/Match";
 import { useQueryMatches } from "@/hooks/useQueryMatches";
 import dynamic from "next/dynamic";
 
 
+
 const MatchTable = dynamic(() => import('./MatchTable'), {
-  loading: () => <SkeletonAllMatchesTable/>,
+  loading: () => <TableSkeleton/>,
   ssr: false // Deshabilitamos SSR para componentes que solo necesitan renderizar en cliente
 });
 
@@ -22,7 +23,7 @@ export default function AllMatchesFetch() {
   const {data, error, isLoading} = useQueryMatches({queryKey:"AllMatches", fetchFn:getAllMatches, type: {} as AllMatchesData})
   
   if (isLoading) {
-    return <SkeletonAllMatchesTable/>;
+    return <MatchTablesSkeleton/>;
   }
 
   if (error) {
@@ -51,7 +52,7 @@ export default function AllMatchesFetch() {
         <div className="w-full lg:w-1/2">
           <h2 className="text-2xl font-bold mb-4 text-center">Partidos Pasados</h2>
           <div className="border rounded-lg overflow-hidden">
-            <Suspense fallback={<SkeletonAllMatchesTable/>}>
+            <Suspense fallback={<TableSkeleton/>}>
               <MemoizedMatchTable matches={AllLastMatches} isPastMatches={true} />
             </Suspense>
           </div>
@@ -59,7 +60,7 @@ export default function AllMatchesFetch() {
         <div className="w-full lg:w-1/2">
           <h2 className="text-2xl font-bold mb-4 text-center">Próximos Partidos</h2>
           <div className="border rounded-lg overflow-hidden">
-          <Suspense fallback={<SkeletonAllMatchesTable/>}>
+          <Suspense fallback={<TableSkeleton/>}>
               <MemoizedMatchTable matches={AllUpcomingMatches} isPastMatches={false} />
             </Suspense>
           </div>

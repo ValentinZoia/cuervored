@@ -60,7 +60,7 @@ export default function UpcomingMatchesData() {
   const upcomingMatches = getUpcomingMatchesSlice(data.matchesFiltered.UpcomingMatches);
 
   return (
-    <div>
+    <div className="space-y-4">
       <Suspense fallback={<SkeletonMatchesCard title="Cargando últimos partidos" />}>
         <MatchesCard
           title="Últimos partidos"
