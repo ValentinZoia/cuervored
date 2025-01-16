@@ -5,7 +5,7 @@ import UpcomingMatches from "@/components/UpcomingMatches/UpcomingMatches";
 import { Toaster } from "@/components/ui/toaster";
 import { Metadata } from "next";
 
-interface LayoutProps {
+interface MainLayoutProps {
   children: React.ReactNode;
 }
 
@@ -14,20 +14,11 @@ export const metadata:Metadata ={
     default:"Inicio",
     template:" %s | CuervoRed",
   },
-  description:"Una simple red social para hinchas de San lorenzo.",
-  twitter:{
-    card:"summary_large_image",
-  },
-  icons:{
-    icon:"/favicon.ico"
-  },
-  authors:[{name:"Valentin Zoia"}],
-  creator:"Valentin Zoia",
-  publisher:"Valentin Zoia",
-  keywords:["San Lorenzo","Red Social","Hinchas","Futbol","Argentina","CuervoRed","Cuervo","SL","San Lorenzo de Almagro","Valentin Zoia","Iker Muniain","AzulGrana","oficial","Oficial","Moretti","Valentin","Zoia","Iker","Muniain","Moretti","Azul","Grana","SLdeA","SLdeAlmagro","SLdeAlmagroOficial","SLdeA"],
+  
+  
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <>
       <div className="min-h-screen flex flex-col">
@@ -59,4 +50,4 @@ const Layout = ({ children }: LayoutProps) => {
   );
 };
 
-export default Layout;
+export default MainLayout;

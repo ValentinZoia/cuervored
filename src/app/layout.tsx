@@ -13,9 +13,8 @@ export const metadata:Metadata ={
     twitter:{
       card:"summary_large_image",
     },
-    icons:{
-      icon:"/favicon.ico"
-    },
+   icons:[{rel:"icon",url:"/favicon.ico"}],
+    
     authors:[{name:"Valentin Zoia"}],
     creator:"Valentin Zoia",
     publisher:"Valentin Zoia",
@@ -27,8 +26,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="es">
+      <head>
       
+      </head>
       <body >
         <Providers>
            {children} 
