@@ -25,7 +25,7 @@ export default auth((req) => {
   }
 
   // Redirect to / if authenticated and im in a auth route
-  // Redirigir a / si esto autenticado y estoy en una ruta de autenticacion
+  // Redirigir a / si estoy autenticado y estoy en una ruta de autenticacion
   if(isAuth){
     if(isLoggedIn){
       return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT[0].path, req.url));

@@ -18,6 +18,9 @@ export const metadata:Metadata ={
   twitter:{
     card:"summary_large_image",
   },
+  icons:{
+    icon:"/favicon.ico"
+  },
   authors:[{name:"Valentin Zoia"}],
   creator:"Valentin Zoia",
   publisher:"Valentin Zoia",
