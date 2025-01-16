@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from "react";
-import { submitPost } from "@/components/dashboard/NewPost/action";
+import { submitPost } from "@/components/NewPost/action";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";

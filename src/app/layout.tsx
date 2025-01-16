@@ -1,45 +1,39 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
 
-import { Providers } from "./Provider";
-import { Toaster } from "@/components/ui/toaster";
-import CuervoLogo from "@/components/icons/CuervoLogo";
+import { Metadata } from 'next'
+import './globals.css'
+import { Providers } from './Provider'
+import { Toaster } from '@/components/ui/toaster'
 
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: {
-    default:"Home",
-    template: "%s | CuervoRed",
-  },
-  description: "Una simple red social para hinchas de San lorenzo.",
-  twitter:{
-    card:"summary_large_image",
-  },
-  icons:{
-    icon:"/favicon.ico"
+export const metadata:Metadata ={
+    title:{
+      default:"",
+      template:" %s | CuervoRed",
+    },
+    description:"Una simple red social para hinchas de San lorenzo.",
+    twitter:{
+      card:"summary_large_image",
+    },
+    icons:{
+      icon:"/favicon.ico"
+    },
+    authors:[{name:"Valentin Zoia"}],
+    creator:"Valentin Zoia",
+    publisher:"Valentin Zoia",
+    keywords:["San Lorenzo","Red Social","Hinchas","Futbol","Argentina","CuervoRed","Cuervo","SL","San Lorenzo de Almagro","Valentin Zoia","Iker Muniain","AzulGrana","oficial","Oficial","Moretti","Valentin","Zoia","Iker","Muniain","Moretti","Azul","Grana","SLdeA","SLdeAlmagro","SLdeAlmagroOficial","SLdeA"],
   }
-  
-  
-};
-
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
-      <head>
-      <meta name="apple-mobile-web-app-title" content="MyWebSite" />
-      </head>
-      <body className={inter.className}>
+      <body >
         <Providers>
-          {children}
+           {children} 
         </Providers>
         <Toaster />
         </body>
     </html>
-  );
+  )
 }

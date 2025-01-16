@@ -6,9 +6,9 @@
  */
 export const publicRoutes = [
     {
-        path: "/",
-        name: "Home",
-        component: "Home",
+        path: "",
+        name: "",
+        component: "",
     },
     
     
@@ -92,8 +92,8 @@ export const apiAuthPrefix =[
  */
 export const DEFAULT_LOGIN_REDIRECT = [
     {
-        path: "/dashboard",
-        name: "Dashboard",
-        component: "Dashboard",
+        path: "/",
+        name: "Home",
+        component: "Home",
     }
 ]

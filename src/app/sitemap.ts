@@ -28,10 +28,10 @@ const BASE_URL = process.env.NEXT_PUBLIC_URL ?? "http://localhost:3000";
 const STATIC_ROUTES = [
   "/auth/login",
   "/auth/register",
-  "/dashboard",
-  "/dashboard/search",
-  "/dashboard/matches",
-  "/dashboard/settings",
+  "/",
+  "/search",
+  "/matches",
+  "/settings",
 ] as const;
 
 type SitemapEntry = {
@@ -57,7 +57,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const users = await usersPromise;
   const userEntries: SitemapEntry[] = users.map(
     ({ name, createdAt }: User) => ({
-      url: `${BASE_URL}/dashboard/users/${name}`,
+      url: `${BASE_URL}/${name}`,
       lastModified: new Date(createdAt),
       changeFrequency: "daily",
       priority: 0.8,

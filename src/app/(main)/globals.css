@@ -1,0 +1,225 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* root */
+.example2 {
+  --blueSanlorenzo: #263d54; /* Azul San Lorenzo */
+  --redSanlorenzo: #d94a3d; /* Rojo San Lorenzo */
+  --background: #e7ecef; /* Gris muy claro */
+  --foreground: #00264d; /* Azul oscuro */
+  --card: #ffffff; /* Blanco */
+  --card-foreground: #00264d; /* Azul oscuro */
+  --popover: #ffffff; /* Blanco */
+  --popover-foreground: #1b1d1f; /* Gris oscuro */
+  --primary: #00264d; /* Azul muy oscuro */
+  --primary-foreground: #fafafa; /* Blanco */
+  --secondary: #f5f7fa; /* Gris claro */
+  --secondary-foreground: #1b1d1f; /* Gris oscuro */
+  --muted: #f5f7fa; /* Gris claro */
+  --muted-foreground: #777d8a; /* Gris medio */
+  --accent: #f5f7fa; /* Gris claro */
+  --accent-foreground: #1b1d1f; /* Gris oscuro */
+  --destructive: #d94a3d; /* Rojo intenso */
+  --destructive-foreground: #fafafa; /* Blanco */
+  --border: #e1e4e8; /* Gris claro */
+  --input: #e1e4e8; /* Gris claro */
+  --ring: #00264d; /* Azul oscuro */
+  --radius: 0.5rem; /* Valor de border-radius */
+  --chart-1: #d32f2f; /* Rojo */
+  --chart-2: #67b38f; /* Verde */
+  --chart-3: #4f6b8e; /* Azul */
+  --chart-4: #1aa991; /* Verde intenso */
+  --chart-5: #ffa000; /* Amarillo */
+  
+}
+
+/*dark*/
+.example {
+  --redSanlorenzo: #d94a3d; /* Rojo San Lorenzo */
+  --blueSanlorenzo: #1b2a47; /* Azul San Lorenzo */
+
+  /* Fondo y texto */
+  --background: #0b0e14; /* Negro azulado */
+  --foreground: #f2f2f2; /* Blanco suave */
+
+  /* Tarjetas */
+  --card: #1a1e28; /* Azul marino oscuro */
+  --card-foreground: #e6e6e6; /* Gris claro */
+
+  /* Popovers */
+  --popover: #141820; /* Azul grisáceo oscuro */
+  --popover-foreground: #e6e6e6; /* Gris claro */
+
+  /* Primarios */
+  --primary: #1b2a47; /* Azul San Lorenzo */
+  --primary-foreground: #f2f2f2; /* Blanco suave */
+
+  /* Secundarios */
+  --secondary: #2c3645; /* Azul medianamente oscuro */
+  --secondary-foreground: #e6e6e6; /* Gris claro */
+
+  /* Colores atenuados */
+  --muted: #141820; /* Azul grisáceo oscuro */
+  --muted-foreground: #b3b3b3; /* Gris apagado */
+
+  /* Acentos */
+  --accent: #1a1e28; /* Azul marino oscuro */
+  --accent-foreground: #f2f2f2; /* Blanco suave */
+
+  /* Colores destructivos */
+  --destructive: #d23d35; /* Rojo intenso */
+  --destructive-foreground: #f2f2f2; /* Blanco suave */
+
+  /* Bordes e inputs */
+  --border: #333940; /* Azul grisáceo muy oscuro */
+  --input: #333940; /* Azul grisáceo muy oscuro */
+
+  /* Anillos de enfoque */
+  --ring: #d94a3d; /* Rojo San Lorenzo */
+
+  /* Radios */
+  --radius: 0.5rem; /* Borde redondeado */
+
+  /* Gráficos */
+  --chart-1: #d94a3d; /* Rojo San Lorenzo */
+  --chart-2: #3d567c; /* Azul San Lorenzo más claro */
+  --chart-3: #e8ba36; /* Amarillo vibrante */
+  --chart-4: #23784d; /* Verde bosque */
+  --chart-5: #326a7d; /* Azul verdoso */
+}
+
+@layer base {
+  :root {
+    --redSanlorenzo:0 83% 47%;
+    --blueSanlorenzo:210 38% 24%;
+    --background: 210 16% 96%; /* Gris muy claro */
+    --foreground: 230 100% 22%; /* Azul oscuro */
+    --card: 0 0% 100%; /* Blanco */
+    --card-foreground: 240 5.9% 10%; /* Azul oscuro */
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 208.125 59.25925925925925% 21.176470588235297%; 
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --redSanlorenzo: 0 83% 47%; /* Rojo San Lorenzo */
+    --blueSanlorenzo: 210 38% 24%; /* Azul San Lorenzo */
+  
+    /* Fondo y texto */
+    --background: 220 15% 10%; /* Negro azulado */
+    --foreground: 0 0% 95%; /* Blanco suave */
+  
+    /* Tarjetas */
+    --card: 220 15% 15%; /* Azul marino oscuro */
+    --card-foreground: 0 0% 90%; /* Gris claro */
+  
+    /* Popovers */
+    --popover: 220 15% 12%; /* Azul grisáceo oscuro */
+    --popover-foreground: 0 0% 90%; /* Gris claro */
+  
+    /* Primarios */
+    --primary: 0 0% 95%; /* Blanco Suave */
+    --primary-foreground: 0 0% 90%; /* Gris claro */
+  
+    /* Secundarios */
+    --secondary: 220 30% 18%; /* Azul medianamente oscuro */
+    --secondary-foreground: 0 0% 90%; /* Gris claro */
+  
+    /* Colores atenuados */
+    --muted: 220 15% 12%; /* Azul grisáceo oscuro */
+    --muted-foreground: 0 0% 70%; /* Gris apagado */
+  
+    /* Acentos */
+    --accent: 220 15% 15%; /* Azul marino oscuro */
+    --accent-foreground: 0 0% 95%; /* Blanco suave */
+  
+    /* Colores destructivos */
+    --destructive: 0 79% 52%; /* Rojo intenso */
+    --destructive-foreground: 0 0% 95%; /* Blanco suave */
+  
+    /* Bordes e inputs */
+    --border: 220 20% 20%; /* Azul grisáceo muy oscuro */
+    --input: 220 20% 20%; /* Azul grisáceo muy oscuro */
+  
+    /* Anillos de enfoque */
+    --ring: 208.125 59.25925925925925% 21.176470588235297%; /* Azul San Lorenzo */
+  
+    /* Radios */
+    --radius: 0.5rem; /* Borde redondeado */
+  
+    /* Gráficos */
+    --chart-1: 0 83% 47%; /* Rojo San Lorenzo */
+    --chart-2: 208 59% 34%; /* Azul San Lorenzo más claro */
+    --chart-3: 43 74% 50%; /* Amarillo vibrante */
+    --chart-4: 120 61% 30%; /* Verde bosque */
+    --chart-5: 186 72% 38%; /* Azul verdoso */
+  }
+
+  input:-webkit-autofill {
+    -webkit-text-fill-color: var(
+      --input-text-autocomplete
+    ); /* Color del texto autocompletado */
+    caret-color: var(--input-text-autocomplete);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.san-lorenzo-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.san-lorenzo-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right, 
+    #003366, 
+    #003366 45%, 
+    #003366 45%, 
+    #003366 55%, 
+    #003366 55%, 
+    #003366 100%
+  );
+  transition: left 0.3s ease-in-out;
+}
+
+.san-lorenzo-effect:hover::before {
+  left: 0;
+}
+
+.san-lorenzo-effect > * {
+  position: relative;
+  z-index: 1;
+}

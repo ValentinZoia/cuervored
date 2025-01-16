@@ -24,7 +24,8 @@ export default auth((req) => {
     return NextResponse.next();
   }
 
-  // Redirect to /dashboard if authenticated and im in a auth route
+  // Redirect to / if authenticated and im in a auth route
+  // Redirigir a / si esto autenticado y estoy en una ruta de autenticacion
   if(isAuth){
     if(isLoggedIn){
       return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT[0].path, req.url));
@@ -34,6 +35,7 @@ export default auth((req) => {
 
   
   // Redirect to login if not authenticated and im not a public route
+  // Redirigir a login si no estoy autenticado y no estoy en una ruta publica
   if(!isLoggedIn && !isPublic && !isApi){
     return NextResponse.redirect(new URL("/auth/login", req.url));
   }

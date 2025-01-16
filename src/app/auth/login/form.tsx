@@ -28,7 +28,7 @@ export default function LoginForm() {
       });
 
       formRef.current?.reset(); //clean form
-      router.push("/dashboard");
+      router.push("/");
     }
   }, [state?.message, router]);
 

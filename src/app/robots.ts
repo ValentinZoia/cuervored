@@ -28,13 +28,13 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: [
-        '/',
-        '/dashboard/users/*',
-        '/dashboard/search',
-        '/dashboard/matches',
+        '/*',
+        '/[username]',
+        '/search',
+        '/matches',
       ],
       disallow: [
-        '/dashboard/settings',  // Páginas privadas de configuración
+        '/settings',  // Páginas privadas de configuración
         '/api/*',              // Rutas de API
         '/auth/*',             // Rutas de autenticación
         '/_next/*',            // Archivos internos de Next.js

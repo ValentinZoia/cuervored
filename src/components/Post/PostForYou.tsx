@@ -1,0 +1,105 @@
+"use client"
+import dynamic from 'next/dynamic';
+import { Suspense, memo } from 'react';
+import { Loader } from "lucide-react";
+import { PostData as PostType } from "@/types/Post";
+import { getPostsForYou } from "@/data/posts";
+import SkeletonPost from "./SkeletonPost";
+import { useInfinitePosts } from '@/hooks/useInfinitePosts';
+
+// Dynamic imports para componentes pesados
+const Alert = dynamic(() => import("@/components/ui/alert").then(mod => mod.Alert),{ssr:false});
+const AlertTitle = dynamic(() => import("@/components/ui/alert").then(mod => mod.AlertTitle),{ssr:false});
+const AlertDescription = dynamic(() => import("@/components/ui/alert").then(mod => mod.AlertDescription),{ssr:false});
+const AlertCircle = dynamic(() => import("lucide-react").then(mod => mod.AlertCircle),{ssr:false});
+const Post = dynamic(() => import("./Post").then(mod => mod.Post), {
+  ssr: false,
+  
+},);
+
+
+const InfiniteScrollContainer = dynamic(() => import("../InfiniteScrollContainer"),{ssr:false});
+
+// Componentes memoizados para mejor rendimiento
+const ErrorAlert = memo(({ error }: { error: Error | unknown }) => (
+  <Alert variant="destructive">
+    <AlertCircle className="h-4 w-4" />
+    <AlertTitle>Error</AlertTitle>
+    <AlertDescription>
+      {error instanceof Error ? error.message : "Unexpected error"}
+    </AlertDescription>
+  </Alert>
+));
+ErrorAlert.displayName = 'ErrorAlert';
+
+
+
+const EmptyState = memo(() => (
+  <p className="text-center mt-4">No hay publicaciones para mostrar todavia.</p>
+));
+EmptyState.displayName = 'EmptyState';
+
+
+
+const LoadMoreSpinner = memo(() => (
+  <div className="flex justify-center py-4">
+    <Loader className="animate-spin" />
+  </div>
+));
+LoadMoreSpinner.displayName = 'LoadMoreSpinner';
+
+
+
+
+
+
+
+export default function PostForYou() {
+  const {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    status,
+  } = useInfinitePosts({
+    queryKey: "for-you",
+    fetchFn: getPostsForYou
+  });
+
+  const posts = data?.pages.flatMap((page) => page.posts) || [];
+
+  if (isLoading) {
+    return <SkeletonPost />;
+  }
+
+  if (error) {
+    return <ErrorAlert error={error} />;
+  }
+
+  if (status === "success" && !posts.length && !hasNextPage) {
+    return <EmptyState />;
+  }
+
+  const handleLoadMore = () => {
+    if (hasNextPage && !isLoading) {
+      fetchNextPage();
+    }
+  };
+
+  return (
+    <InfiniteScrollContainer
+      className="relative z-0 space-y-6"
+      onBottomReached={handleLoadMore}
+    >
+      <Suspense fallback={<SkeletonPost />}>
+        {posts.map((post: PostType) => (
+          <Post key={post.id} post={post} />
+        ))}
+      </Suspense>
+      
+      {isFetchingNextPage && <LoadMoreSpinner />}
+    </InfiniteScrollContainer>
+  );
+}
