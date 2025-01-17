@@ -29,7 +29,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: [
         '/*',
-        '/[username]',
         '/search',
         '/matches',
       ],

@@ -1,9 +1,10 @@
 import MenuBar from "@/components/NavBar/MenuBar";
 import NavBar from "@/components/NavBar/NavBar";
-import { RecommendedUsers } from "@/components/WhoToFollow/RecommendedUsers";
-import UpcomingMatches from "@/components/UpcomingMatches/UpcomingMatches";
+
+
 import { Toaster } from "@/components/ui/toaster";
 import { Metadata } from "next";
+import dynamic from "next/dynamic";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -17,6 +18,12 @@ export const metadata:Metadata ={
   
   
 }
+
+const UpcomingMatches = dynamic(() => import('@/components/UpcomingMatches/UpcomingMatches'), {
+  ssr: false // Ya que usa estados y eventos del cliente
+});
+
+const RecommendedUsers = dynamic(() => import('@/components/WhoToFollow/RecommendedUsers').then(mod => mod.RecommendedUsers), {ssr: false});
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (

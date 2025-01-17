@@ -8,7 +8,7 @@ import { notFound } from "next/navigation";
 export const getUserById = async (id:string):Promise<User | null> =>{
     try {
         const user = await prisma.user.findUnique({
-            where: {id}
+            where: {id},
         })
 
         return user
@@ -18,6 +18,26 @@ export const getUserById = async (id:string):Promise<User | null> =>{
         return null
     }
 }
+
+export const getUserDataById = async (id:string):Promise<UserData> =>{
+  try {
+      const user = await prisma.user.findUnique({
+          where: {id},
+          select: getUserDataSelect(id)
+      })
+      if(!user){
+        notFound();
+      }
+
+      return user
+  } catch (error) {
+    console.error('Error fetching users:', error);
+  throw new Error('Failed to fetch users');
+      
+  }
+}
+
+
 
 export const getUserByEmail = async (email:string):Promise<User | null> =>{
     try {

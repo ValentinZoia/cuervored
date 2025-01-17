@@ -21,9 +21,10 @@ import { transformImageToWebp } from "@/utils/transformImageToWebP";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import { toast } from "@/components/ui/use-toast";
 import { CaslaButton } from "@/components/ui/CaslaButton";
+import { User } from "@prisma/client";
 
 interface EditProfileFormProps {
-  user: UserData;
+  user: UserData ;
   onClose: (isOpen: boolean) => void
 }
 

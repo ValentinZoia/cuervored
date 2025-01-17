@@ -1,3 +1,4 @@
+"use client"
 import { useToast } from "@/components/ui/use-toast";
 import { PostsPage } from "@/types/Post";
 import {
@@ -6,7 +7,7 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { updateUserProfile } from "../actions";
 import { z } from "zod";
 import { EditProfileUserSchema } from "@/lib/zodSchema";
@@ -14,6 +15,7 @@ import { EditProfileUserSchema } from "@/lib/zodSchema";
 export function useUpdateProfileMutation() {
   const { toast } = useToast();
   const router = useRouter();
+  const pathname = usePathname()
   const queryClient = useQueryClient();
 
   type ProfileFormValues = z.infer<typeof EditProfileUserSchema>;
@@ -81,8 +83,10 @@ export function useUpdateProfileMutation() {
         }
       );
 
-      // Refrescamos la página para mostrar los datos actualizados
-      router.push(`${updatedUser?.name}`);
+      // Refrescamos la página en la que estamos actualmente
+      
+      router.push(pathname)
+      router.refresh()
 
       // Mostramos una notificación de éxito
       toast({
