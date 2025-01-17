@@ -2,6 +2,7 @@ import MenuBar from "@/components/NavBar/MenuBar";
 import NavBar from "@/components/NavBar/NavBar";
 import { Toaster } from "@/components/ui/toaster";
 import { ConditionalUpcomingMatches } from "@/components/UpcomingMatches/ConditionalUpcomingMatches";
+import { Loader2 } from "lucide-react";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
 
@@ -22,7 +23,7 @@ export const metadata:Metadata ={
 
 
 
-const RecommendedUsers = dynamic(() => import('@/components/WhoToFollow/RecommendedUsers').then(mod => mod.RecommendedUsers), {ssr: false});
+const RecommendedUsers = dynamic(() => import('@/components/WhoToFollow/RecommendedUsers').then(mod => mod.RecommendedUsers), {ssr: false, loading: () => <div className='w-full py-4 flex justify-center'><Loader2 className="animate-spin text-blue-500" aria-hidden="true" /></div>});
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (

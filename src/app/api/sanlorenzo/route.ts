@@ -63,6 +63,7 @@ export async function GET(req: NextRequest) {
         status: 500,
       });
 
+      //Obtner los partidos pasados
     const LastMatches = await page.$$eval(
       ".tbody_tablebody__cDt0I", // Selecciona todas las tablas con la clase
       (tables) =>
@@ -93,11 +94,11 @@ export async function GET(req: NextRequest) {
         status: 500,
       });
 
-      const AllMatches = [...LastMatches.reverse(), ...UpcomingMatches];
+      
 
       const UpcomingMatchesSlice = UpcomingMatches.slice(0, 3);
 
-      const LastMatchesSlice = LastMatches.slice(Math.max(0, LastMatches.length - 3));
+      const LastMatchesSlice = LastMatches.reverse().slice(Math.max(0, LastMatches.length - 3));
 
     
 
