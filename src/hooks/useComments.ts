@@ -3,6 +3,7 @@ import { getComments } from '@/data/posts';
 import { PostData,CommentData} from '@/types/Post';
 
 export function useComments(post: PostData) {
+  //traer todos los comentarios del post con post.id
   const {
     data,
     isLoading,

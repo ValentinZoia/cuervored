@@ -35,6 +35,9 @@ export default function SearchField() {
     setQuery(""); // Resetear query si cambia la URL
   }, [pathname, setQuery]);
 
+
+
+  //logica para ocultar la card de resluts
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (

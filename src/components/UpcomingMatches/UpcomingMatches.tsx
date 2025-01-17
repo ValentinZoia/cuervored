@@ -1,7 +1,7 @@
 
-import React from "react";
+import React, { lazy } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import UpcomingMatchesData from "./UpcomingMatchesData";
+
 
 
 
@@ -10,12 +10,12 @@ interface UpcomingMatchesProps {
   className?: string;
 }
 
-
+const UpcomingMatchesData = lazy(() => import("./UpcomingMatchesData"));
 
 
 export default function UpcomingMatches({ className }: UpcomingMatchesProps) {
   return (
-    <Card className={`${className} lg:block lg:col-span-1 lg:h-fit`} >
+    <Card className={`${className}  lg:col-span-1 lg:h-fit`} >
       <CardHeader className="pb-2">
         <CardTitle className="text-lg">Partidos de San Lorenzo</CardTitle>
       </CardHeader>

@@ -9,40 +9,40 @@ import FollowButton from "../users/FollowButton";
 
 
 export async function RecommendedUsers() {
-  // const session = await auth();
-  // if (!session || !session.user || session.user.id === "") return null;
+  const session = await auth();
+  if (!session || !session.user || session.user.id === "") return null;
 
-  // //devuelve info del usuario logeado, nos sirve sus followings.
-  // const loggedInUser = await getUserByUsername(
-  //   session.user.name as string,
-  //   session.user.id
-  // );
+  //devuelve info del usuario logeado, nos sirve sus followings.
+  const loggedInUser = await getUserByUsername(
+    session.user.name as string,
+    session.user.id
+  );
 
-  // // devuelve 3 o menos usuarios que no sigue el usuario logeado
-  // const usersToFollow = await prisma.user.findMany({
-  //   where: {
-  //     AND: [
-  //       {
-  //         NOT: {
-  //           id: session.user.id,
-  //         },
-  //       },
-  //       {
-  //         NOT: {
-  //           id: {
-  //             in: loggedInUser?.following.map((follow) => follow.followingId),
-  //           },
-  //         },
-  //       },
-  //     ],
-  //   },
-  //   select: getUserDataSelect(session.user.id),
-  //   take: 3,
-  // });
+  // devuelve 3 o menos usuarios que no sigue el usuario logeado
+  const usersToFollow = await prisma.user.findMany({
+    where: {
+      AND: [
+        {
+          NOT: {
+            id: session.user.id,
+          },
+        },
+        {
+          NOT: {
+            id: {
+              in: loggedInUser?.following.map((follow) => follow.followingId),
+            },
+          },
+        },
+      ],
+    },
+    select: getUserDataSelect(session.user.id),
+    take: 3,
+  });
 
   
 
-  // const baseUrl = process.env.NEXT_PUBLIC_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_URL;
 
   return (
     <Card className=" lg:col-span-1 lg:h-fit ">
@@ -51,8 +51,8 @@ export async function RecommendedUsers() {
       </CardHeader>
       <CardContent className="pt-0">
         <div className="space-y-2">
-          hola
-          {/* {usersToFollow.length > 0 ? (usersToFollow.map((user, index) => (
+          
+          {usersToFollow.length > 0 ? (usersToFollow.map((user, index) => (
             //todas las referencias a user en este scope son el usuario el cual  sale en recomendados, no el loggeado
             <div key={index} className="flex items-center justify-between py-1">
               <div className="flex items-center space-x-2">
@@ -73,7 +73,7 @@ export async function RecommendedUsers() {
                 }}
               />
             </div>
-          ))):(<><p>No hay usuarios para mostrar</p></>)} */}
+          ))):(<><p>No hay usuarios para mostrar</p></>)}
         </div>
       </CardContent>
     </Card>
