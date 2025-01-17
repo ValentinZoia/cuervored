@@ -23,12 +23,11 @@ export async function deleteAccount(id:string):Promise<{ok:boolean, error:any | 
             }
 
             //4. Delete the user
-            await prisma.user.delete({
+             await prisma.user.delete({
                 where:{id}
             });
             
-            await signOut();
-            redirect('/auth/login');
+            
             
             return {ok:true, error: null, message: "Cuenta eliminada con exito"}
     } catch (error: any) {

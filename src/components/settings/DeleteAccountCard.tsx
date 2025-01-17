@@ -35,18 +35,21 @@ export default function DeleteAccountCard({session}:{session:Session |DefaultSes
       if(ok){
         setIsDeleting(false);
         setConfirmText("");
+        signOut();
+        queryClient.clear();
+        router.push('/auth/login');
+        
+       
+       
         toast({
           title: 'Cuenta eliminada',
           description: message,
           variant: 'success',
         });
-        router.refresh();
-        signOut();
-       queryClient.clear();
-       router.refresh();
+        
         return;
       }
-      console.log(error)
+      
       setIsDeleting(false);
       setConfirmText("");
       toast({

@@ -36,7 +36,7 @@ export const authOptions = {
         const validateFields = LogInFormSchema.safeParse(credentials);
 
         if (!validateFields.success) {
-          throw new Error("Please provide both email and password");
+          throw new Error("Por favor, ingresa tu correo y contraseña.");
         }
 
         const { email, password } = validateFields.data;
@@ -47,7 +47,7 @@ export const authOptions = {
           },
         });
         if (!user) {
-          throw new Error("Invalid email or password");
+          throw new Error("Email o contraseña incorrectos.");
         }
 
         //this means the user loggin with google or github
@@ -61,7 +61,7 @@ export const authOptions = {
         );
 
         if (!isPasswordCorrect) {
-          throw new Error("Password did not match");
+          throw new Error("La contraseña no es correcta.");
         }
         
 
