@@ -17,6 +17,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useQueryClient } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
 import { ModeToggle } from "@/components/ui/theme-toggle";
+import UserAvatar from "../Post/UserAvatar";
 
 interface DropdownMenuMyAccountProps {
   sessionProp: Session | DefaultSession | null;
@@ -38,22 +39,12 @@ export function DropdownMenuMyAccount({
           className="border-0 bg-transparent p-0"
           aria-label="Abrir menú de perfil" // Atributo ARIA: mejora la accesibilidad
         >
-          <Avatar className="text-black cursor-pointer">
-            {user?.image ? (
-              <AvatarImage src={user.image} alt={user.name || "User avatar"} />
-            ) : null}
-            <AvatarFallback>{fallback}</AvatarFallback>
-          </Avatar>
+          <UserAvatar avatarUrl={user?.image} username={user?.name} imageType="profileSmall" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel className="flex items-center  gap-2">
-          <Avatar className="h-8 w-8">
-            {user?.image ? (
-              <AvatarImage src={user.image} alt={user.name || "User avatar"} />
-            ) : null}
-            <AvatarFallback>{fallback}</AvatarFallback>
-          </Avatar>
+        <UserAvatar avatarUrl={user?.image} username={user?.name} imageType="profileSmall" />
           <p className="text-sm overflow-hidden">{user?.name}</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
