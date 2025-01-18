@@ -46,8 +46,8 @@ export default function NewPost({session}:NewPostProps) {
     <Card className="max-w-[680px] mb-6 bg-card">
       <CardContent className="pt-6">
         <div className="flex items-start space-x-4">
-          <Link href={`/users/${user.name}`} aria-label="Ver perfil">
-           <UserAvatar username={user.name as string} avatarUrl={user.image as string} />
+          <Link href={`/${user.name}`} aria-label="Ver perfil">
+           <UserAvatar username={user.name as string} avatarUrl={user.image as string} imageType="profileSmall" />
           </Link>
           <div className="flex-1">
             <Textarea

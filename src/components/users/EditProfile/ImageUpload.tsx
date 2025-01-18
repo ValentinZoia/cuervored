@@ -5,14 +5,14 @@ import { CameraIcon } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 interface ImageUploadProps {
-  value: string | undefined
+  previewUrl: string | undefined
   onChange: (value: string) => void
   className?: string
   setFile: React.Dispatch<React.SetStateAction<File | null>>
 }
 
-export function ImageUpload({ value, onChange, className, setFile }: ImageUploadProps) {
-  const [preview, setPreview] = useState(value)
+export function ImageUpload({ previewUrl, onChange, className, setFile }: ImageUploadProps) {
+  const [preview, setPreview] = useState(previewUrl)
 
   const handleFileChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {

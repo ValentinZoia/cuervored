@@ -32,7 +32,8 @@ model User {
   emailVerified DateTime?
   password      String? 
   role          UserRole @default(USER)
-  image         String? 
+  image         String?
+  image_100     String?
   provider      String?
   accounts      Account[]
   createdAt     DateTime @default(now())

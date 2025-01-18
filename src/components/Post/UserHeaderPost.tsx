@@ -20,7 +20,7 @@ export default function UserHeaderPost({
   return (
     <div className="relative z-10 flex items-center space-x-4 pb-2">
       <Link href={linkTo ? linkTo : `${baseUrl}/${username}`} aria-label="Ir al perfil">
-        <UserAvatar avatarUrl={avatarUrl} username={username} size="size-10"  />
+        <UserAvatar avatarUrl={avatarUrl} username={username} imageType="profileSmall"   />
       </Link>
 
       <div className="relative z-10">

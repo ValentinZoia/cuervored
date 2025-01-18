@@ -27,9 +27,9 @@ export default function UserHeader({ user, loggedInUserId }: UserHeaderProps) {
           <div className="min-w-12 -mt-1 w-1/4 mb-3 h-auto overflow-visible">
             <div className="">
               <UserAvatar
-                avatarUrl={user?.image}
+                avatarUrl={user?.image_100}
                 username={user?.name}
-                size="size-[100px]"
+                imageType="profileLarge"
               />
             </div>
           </div>

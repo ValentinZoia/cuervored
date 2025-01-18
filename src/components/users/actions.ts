@@ -11,7 +11,8 @@ type ProfileFormValues = z.infer<typeof EditProfileUserSchema>;
 
 export async function updateUserProfile(
   values: ProfileFormValues,
-  imageUrl: string | null
+  imageUrl: string | null,
+  image_100:string | null,
 ) {
   try {
     
@@ -45,7 +46,7 @@ export async function updateUserProfile(
     });
 
     if (existingUser && existingUser.id !== session.user.id) {
-      throw new Error("El username ya esta en uso");
+      throw new Error("No esta autorizado para hacer modificaciones a este perfil.");
     }
 
     // Prepare data for the update
@@ -58,6 +59,10 @@ export async function updateUserProfile(
       // Include image only if imageUrl is provided
       if (imageUrl) {
         updateData.image = imageUrl;
+      }
+
+      if (image_100) {
+        updateData.image_100 = image_100;
       }
   
       // Update the user in the database

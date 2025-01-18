@@ -59,7 +59,7 @@ export default function EditPostForm({ post, onClose }: EditPostFormProps) {
       let imageUrl:string | null = null;
       if (file) {
         //Transformamos la imagen a webp antes de subirla a cloudinary
-        const tranfromedFile = await transformImageToWebp(file);
+        const tranfromedFile = await transformImageToWebp(file, "post");
 
         //Verificamos si esa transformacion salio con exito
         if (!tranfromedFile) {

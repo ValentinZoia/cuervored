@@ -133,7 +133,7 @@ export const useNewPost = ({
 
       if (file) {
         //Transform image to webp before uploading
-        const tranfromedFile = await transformImageToWebp(file);
+        const tranfromedFile = await transformImageToWebp(file,"post");
 
         //Verify if transformedFile exists
         if (!tranfromedFile) {

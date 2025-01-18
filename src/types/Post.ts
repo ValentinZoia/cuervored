@@ -12,6 +12,7 @@ import { Prisma } from "@prisma/client";
       fullName: true,
       bio: true,
       image:true,
+      image_100:true,
       createdAt: true,
       followers:{
         

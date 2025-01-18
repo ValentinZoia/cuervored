@@ -21,7 +21,7 @@ import { transformImageToWebp } from "@/utils/transformImageToWebP";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import { toast } from "@/components/ui/use-toast";
 import { CaslaButton } from "@/components/ui/CaslaButton";
-import { User } from "@prisma/client";
+
 
 interface EditProfileFormProps {
   user: UserData ;
@@ -45,8 +45,8 @@ export default function EditProfileForm({ user, onClose }: EditProfileFormProps)
 
   const onSubmit = async (FormData: ProfileFormValues) => {
     
-    //Check if there are no changes
-    if(FormData.username === user.name && FormData.full_name === user.fullName && FormData.bio === user.bio){
+    //Verificar que existan cambios
+    if(FormData.username === user.name && FormData.full_name === user.fullName && FormData.bio === user.bio && !file){
       toast({
         variant:"default",
         description:"No se han realizado cambios",
@@ -57,23 +57,44 @@ export default function EditProfileForm({ user, onClose }: EditProfileFormProps)
 
 
     let imageUrl = null;
+    let image_100 = null;
     if(file){
-      //Transform image to webp before uploading
-      const tranfromedFile = await transformImageToWebp(file);
+      //Transformar imagenes a webp y comprimirlas antes de subir
+      // Para imagen pequeña de perfil (en publicaciones)
+      const smallProfileImage = await transformImageToWebp(file, "profileSmall");
+
+      // Para imagen grande de perfil (en página de perfil)
+      const largeProfileImage = await transformImageToWebp(file, "profileLarge");
 
       //Verify if transformedFile exists
-      if(!tranfromedFile){
-        throw new Error("Failed to transform image to webp");
+      if(!smallProfileImage || !largeProfileImage){
+        toast({
+          variant: "destructive",
+          description: "Error al procesar las imágenes. Por favor, intenta con otra imagen",
+          title: "Error de procesamiento"
+      });
+      return;
       }
       
 
-      //Upload to Cloudinary
-      const{data, error} = await uploadToCloudinary(tranfromedFile);
-      if (error) {
-        throw new Error("Failed to upload image");
+      
+       // Subir a Cloudinary
+       const [smallImageResult, largeImageResult] = await Promise.all([
+        uploadToCloudinary(smallProfileImage),
+        uploadToCloudinary(largeProfileImage)
+    ]);
+
+      if (smallImageResult.error || largeImageResult.error) {
+        toast({
+          variant: "destructive",
+          description: "Error al procesar las imágenes. Por favor, intenta con otra imagen",
+          title: "Error de procesamiento"
+      });
+      return;
       }
 
-      imageUrl = data;
+      imageUrl = smallImageResult.data;
+      image_100 = largeImageResult.data;
     }
         
 
@@ -83,6 +104,7 @@ export default function EditProfileForm({ user, onClose }: EditProfileFormProps)
       {
         values: FormData,
         imageUrl,
+        image_100,
       },
       {
         onSuccess: () => {
@@ -95,7 +117,7 @@ export default function EditProfileForm({ user, onClose }: EditProfileFormProps)
   return (
     <>
       <ImageUpload
-        value={user.image ? user.image : ""}
+        previewUrl={user.image_100 ? user.image_100 : ""}
         onChange={() => {}}
         className="mx-0"
         setFile={setFile}

@@ -24,11 +24,13 @@ export function useUpdateProfileMutation() {
     mutationFn: async ({
       values,
       imageUrl,
+      image_100
     }: {
       values: ProfileFormValues;
       imageUrl: string | null;
+      image_100: string | null
     }) => {
-      return updateUserProfile(values, imageUrl);
+      return updateUserProfile(values, imageUrl, image_100);
     },
     onSuccess: async (data) => {
 
