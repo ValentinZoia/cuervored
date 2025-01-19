@@ -69,10 +69,25 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        fadeOut: {
+          '0%': { opacity: '1' },
+          '100%': { 
+            opacity: '0', 
+            visibility: 'hidden',
+            display: 'none'  // Asegura que el elemento se elimine del flujo
+          },
+        },
+        scaleUp: {
+          '0%': { transform: 'scale(0.8)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        'fadeOut': 'fadeOut 0.5s ease 2s forwards',
+        'scaleUp': 'scaleUp 0.3s ease-in-out',
       },
     },
   },

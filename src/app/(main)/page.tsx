@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import Publications from "@/components/Publications";
+import SplashScreen from "@/components/SplashScreen";
 
 
 
@@ -18,8 +19,12 @@ export default async function Home() {
   }
  
   return (
-    <main className="min-h-screen h-fit w-full">
-    <Publications />
-    </main>
+    <>
+      <SplashScreen />
+      <main className="min-h-screen h-fit w-full">
+        <Publications />
+      </main>
+    </>
+    
   );
 }
