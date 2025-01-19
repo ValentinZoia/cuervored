@@ -19,7 +19,7 @@ export default function EditProfileButton({ user }: EditProfileButtonProps) {
 
       <CaslaButton aria-label="Editar Perfil" variant="blueToRed" onClick={() => setShowDialog(true)} className="text-sm">
       
-        < EditIcon className="mr-2 h-4 w-4" />
+        < EditIcon className=" sm:mr-2 h-4 w-4" />
         <span className="hidden sm:inline">Editar Perfil</span>
       
       </CaslaButton>
