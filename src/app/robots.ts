@@ -19,30 +19,28 @@ Protege contenido sensible o privado
 Ayuda a los motores de búsqueda a indexar tu sitio eficientemente
 */
 
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_URL ?? "http://localhost:3000"
-  
+  const baseUrl = process.env.NEXT_PUBLIC_URL ?? 'http://localhost:3000';
+
   return {
-    rules: {
-      userAgent: '*',
-      allow: [
-        '/*',
-        '/search',
-        '/matches',
-      ],
-      disallow: [
-        '/settings',  // Páginas privadas de configuración
-        '/api/*',              // Rutas de API
-        '/auth/*',             // Rutas de autenticación
-        '/_next/*',            // Archivos internos de Next.js
-        '/admin/*',            // Área de administración si existe
-        '/*.json',             // Archivos JSON
-        '/*.xml',              // Archivos XML
-        '/private/*',          // Cualquier ruta privada
-      ]
-    },
-    sitemap: `${baseUrl}/sitemap.xml`,  // Referencia a tu sitemap
-  }
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/', // Permite el acceso a la página principal y las rutas públicas
+        disallow: [
+          '/settings',        // Páginas privadas de configuración
+          '/api/*',           // Rutas de API
+          '/auth/*',          // Rutas de autenticación
+          '/_next/*',         // Archivos internos de Next.js
+          '/admin/*',         // Área de administración si existe
+          '/*.json',          // Archivos JSON
+          '/*.xml',           // Archivos XML
+          '/private/*',       // Cualquier ruta privada
+        ],
+      },
+    ],
+    sitemap: `${baseUrl}/sitemap.xml`, // Enlace al sitemap
+  };
 }
