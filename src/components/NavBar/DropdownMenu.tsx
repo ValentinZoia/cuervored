@@ -8,12 +8,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
 import { DefaultSession } from "next-auth";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { LogOut, Settings, User } from "lucide-react";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useQueryClient } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
 import { ModeToggle } from "@/components/ui/theme-toggle";
@@ -61,7 +59,7 @@ export function DropdownMenuMyAccount({
               aria-label="Ver perfil de usuario"
             >
               <User className="mr-2 w-4 h-4" />
-              <span>Profile</span>
+              <span>Perfil</span>
             </Link>
           </DropdownMenuItem>
 
@@ -72,7 +70,7 @@ export function DropdownMenuMyAccount({
               aria-label="Ir a la configuración"
             >
               <Settings className="mr-2 w-4 h-4" />
-              <span>Settings</span>
+              <span>Configuración</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
@@ -93,7 +91,7 @@ export function DropdownMenuMyAccount({
               aria-label="Cerrar sesión"
             >
               {" "}
-              <LogOut className="w-5 h-5" aria-hidden="true" /> Log out
+              <LogOut className="w-5 h-5" aria-hidden="true" /> Cerrar Sesión
             </button>
           </form>
         </DropdownMenuItem>
