@@ -2,8 +2,9 @@ export interface MatchesData {
   matchesFiltered: {
     LastMatches: [
       {
+        id:string;
         date: string | undefined;
-        round: string | undefined;
+       
         homeOrAway: string | undefined;
         opponent: string | undefined;
         isPastMatches: boolean | undefined;
@@ -13,8 +14,9 @@ export interface MatchesData {
     ];
     UpcomingMatches: [
       {
+        id:string;
         date: string | undefined;
-        round: string | undefined;
+    
         homeOrAway: string | undefined;
         opponent: string | undefined;
         isPastMatches: boolean | undefined;
@@ -29,8 +31,9 @@ export interface AllMatchesData {
   AllMatches: {
     LastMatches: [
       {
+        id:string;
         date: string | undefined;
-        round: string | undefined;
+       
         homeOrAway: string | undefined;
         opponent: string | undefined;
         isPastMatches: boolean | undefined;
@@ -40,8 +43,9 @@ export interface AllMatchesData {
     ];
     UpcomingMatches: [
       {
+        id:string;
         date: string | undefined;
-        round: string | undefined;
+       
         homeOrAway: string | undefined;
         opponent: string | undefined;
         isPastMatches: boolean | undefined;
@@ -53,8 +57,9 @@ export interface AllMatchesData {
 }
 
 export interface BasicMatchData {
+  id:string;
   date: string | undefined;
-  round: string | undefined;
+
   homeOrAway: string | undefined;
   opponent: string | undefined;
   opponentImage: string | undefined;

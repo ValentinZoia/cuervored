@@ -24,25 +24,26 @@ enum UserRole {
 }
 
 model User {
-  id            String @id @default(auto()) @map("_id") @db.ObjectId
-  name          String? @unique
-  fullName      String? 
-  bio           String?
-  email         String @unique
-  emailVerified DateTime?
-  password      String? 
-  role          UserRole @default(USER)
-  image         String?
-  image_100     String?
-  provider      String?
-  accounts      Account[]
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  post          Post[]
-  following     Follow[]       @relation("Following")
-  followers     Follow[]       @relation("Followers")
-  comments      Comment[]
-  likes         Like[]
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  name              String? @unique
+  fullName          String? 
+  bio               String?
+  email             String @unique
+  emailVerified     DateTime?
+  password          String? 
+  role              UserRole @default(USER)
+  image             String?
+  image_100         String?
+  provider          String?
+  accounts          Account[]
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  post              Post[]
+  following         Follow[]       @relation("Following")
+  followers         Follow[]       @relation("Followers")
+  comments          Comment[]
+  likes             Like[]
+  MatchesAttendance MatchAttendance[]
 
 
   
@@ -127,3 +128,20 @@ model Like {
   
 }
 
+
+
+model MatchAttendance {
+  id                String @id @default(auto()) @map("_id") @db.ObjectId
+  
+  userId            String @db.ObjectId
+  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  matchId           String
+  matchDate         DateTime
+  confirmationDate  DateTime @default(now())
+  status            String   @default("confirmed")
+  expiresAt         DateTime
+
+  @@unique([userId, matchId])
+  @@index([expiresAt])
+}

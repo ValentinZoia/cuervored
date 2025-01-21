@@ -3,7 +3,7 @@ import { useSearchParams } from "next/navigation";
 import React, { memo, Suspense } from "react";
 import { UserData } from "@/types/Post";
 import InfiniteScrollContainer from "../InfiniteScrollContainer";
-import { Loader } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useSearch } from "@/hooks/useSearch";
 import dynamic from "next/dynamic";
 const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
@@ -11,14 +11,9 @@ const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
 // Dynamic imports
 const UserCardSearch = dynamic(() => import("./UserCardSearch").then((mod) => mod.UserCardSearch), {
   loading: () => (
-    <div
-      role="status"
-      aria-label="Cargando comentarios"
-      className="flex justify-center p-4"
-    >
-      <Loader className="animate-spin" aria-hidden="true" />
-    </div>
+    <LoadMoreSpinner />
   ),
+  ssr: false,
 });
 
 // Componentes memoizados para mejor rendimiento
@@ -36,7 +31,7 @@ EmptyState.displayName = "EmptyState";
 
 const LoadMoreSpinner = memo(() => (
   <div className="w-full flex justify-center py-4">
-    <Loader className="animate-spin" />
+    <Loader2 className="animate-spin text-blue-500" />
   </div>
 ));
 LoadMoreSpinner.displayName = "LoadMoreSpinner";
@@ -92,7 +87,7 @@ export default function SearchContent() {
           ))}
         </Suspense>
       </div>
-      {isFetchingNextPage && <Loader className="mx-auto animate-spin" />}
+      {isFetchingNextPage && <LoadMoreSpinner />}
     </InfiniteScrollContainer>
   );
 }

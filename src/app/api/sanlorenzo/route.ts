@@ -1,5 +1,6 @@
 // -----------WEB SCRAPPING-------------
 
+import { BasicMatchData } from "@/types/Match";
 import { NextRequest, NextResponse } from "next/server";
 import { chromium } from "playwright";
 import { late } from "zod";
@@ -15,24 +16,38 @@ export async function GET(req: NextRequest) {
     //establecemos url
     await page.goto("https://www.promiedos.com.ar/team/san-lorenzo/igf");
 
-    // Selecciona todos los botones "VER MÁS"
-    const buttons = await page.$$(".table_toggle_button__ZThKd");
+    // Esperar a que los botones estén disponibles
+    await page.waitForSelector(".styles_toggle_button__MNpwf", { timeout: 1000 });
+    
+    // Obtener todos los botones
+    const buttons = await page.$$(".styles_toggle_button__MNpwf");
 
-    // Itera sobre los botones y haz clic en cada uno
+    // Hacer clic en cada botón y esperar su transformación
     for (const button of buttons) {
-      await button.click();
+      try {
+        // Verificar si el botón ya está activado
+        const isActive = await button.evaluate((el) => 
+          el.classList.contains('styles_active__s3Kv8')
+        );
 
-      // Espera a que el botón cambie a "VER MENOS" (clase activa)
-      await page.waitForSelector(
-        ".table_toggle_button__ZThKd.table_active__Mk7ov",
-        {
-          timeout: 500, // Tiempo máximo para esperar (5 segundos)
+        if (!isActive) {
+          await button.click();
+          
+          // Esperar a que el botón específico tenga la clase active
+          await page.waitForFunction(
+            (buttonEl) => buttonEl.classList.contains('styles_active__s3Kv8'),
+            button,
+            { timeout: 1000 }
+          );
         }
-      );
+      } catch (err) {
+        console.error('Error al procesar botón:', err);
+        continue; // Continuar con el siguiente botón si hay error
+      }
     }
 
     //obtener los partidos proximos
-    const UpcomingMatches = await page.$$eval(
+    const UpcomingMatches:BasicMatchData[] = await page.$$eval(
       ".tbody_tablebody__cDt0I", // Selecciona todas las tablas con la clase
       (tables) =>
         Array.from(tables) // Convierte NodeList a Array para manipulación
@@ -42,6 +57,7 @@ export async function GET(req: NextRequest) {
               const cells = row.querySelectorAll("td");
 
               return {
+                id:`${cells[0]?.textContent?.trim().replace('/', '-')}-${cells[1]?.textContent?.trim()}-${cells[2]?.textContent?.trim()}`,//Ejemplo de un id: 25/01-L-Talleres
                 date: cells[0]?.textContent?.trim(),
                 homeOrAway: cells[1]?.textContent?.trim(),
                 opponent: cells[2]?.textContent?.trim(),
@@ -64,7 +80,7 @@ export async function GET(req: NextRequest) {
       });
 
       //Obtner los partidos pasados
-    const LastMatches = await page.$$eval(
+    const LastMatches:BasicMatchData[] = await page.$$eval(
       ".tbody_tablebody__cDt0I", // Selecciona todas las tablas con la clase
       (tables) =>
         Array.from(tables) // Convierte NodeList a Array para manipulación
@@ -74,6 +90,7 @@ export async function GET(req: NextRequest) {
               const cells = row.querySelectorAll("td");
 
               return {
+                id:`${cells[0]?.textContent?.trim().replace('/', '-')}-${cells[1]?.textContent?.trim()}-${cells[2]?.textContent?.trim()}`,//Ejemplo de un id: 25/01-L-Talleres
                 date: cells[0]?.textContent?.trim(),
                 homeOrAway: cells[1]?.textContent?.trim(),
                 opponent: cells[2]?.textContent?.trim(),

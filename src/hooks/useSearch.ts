@@ -12,8 +12,11 @@ export function useSearch(initialQuery: string) {
   const [results, setResults] = useState<UserData[]>([]);
   const [showCard, setShowCard] = useState(false);
   const queryClient = useQueryClient();
+
+  useEffect(() => {setQuery(initialQuery)}, [initialQuery]);
+
   
-  // Aplicamos debounce al query
+  //Aplicamos debounce al query
   const debouncedQuery = useDebounce(query, 300);
 
   const { data, isLoading, isPending, error, hasNextPage, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery({
@@ -39,7 +42,7 @@ export function useSearch(initialQuery: string) {
   useEffect(() => {
     if (!debouncedQuery) {
       setResults([]);
-      setShowCard(false);
+      
     }
   }, [debouncedQuery]);
 

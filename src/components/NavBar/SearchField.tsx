@@ -90,6 +90,7 @@ export default function SearchField() {
             aria-label="Buscar usuarios"
           />
           <Button
+            disabled={!query}
             type="submit"
             className="bg-transparent shadow-none absolute right-0 top-1/2 -translate-y-1/2 sm:size-6 md:size-4 hover:bg-transparent hover:shadow-none"
             aria-label="Buscar"

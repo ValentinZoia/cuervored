@@ -3,6 +3,7 @@ import { BasicMatchData } from "@/types/Match";
 import { CaslaButton } from "@/components/ui/CaslaButton";
 import { CalendarDays } from 'lucide-react';
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 
 export default function MatchesCard({
@@ -12,6 +13,14 @@ export default function MatchesCard({
   title: string;
   matches: BasicMatchData[];
 }) {
+const router = useRouter();
+const handleClick=(id:string)=>{
+router.push(`/quien-fue/${id}`)
+}
+
+
+
+
   return (
     <Card className="w-full">
       <CardHeader className="p-4">
@@ -70,7 +79,7 @@ export default function MatchesCard({
                 {match.homeOrAway === "L" && (
                   <div className="mt-2 flex justify-between">
                     {match.isPastMatches ? (
-                    <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes fueron">
+                    <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes fueron" onClick={()=>{handleClick(match.id)}}>
                       Ver quienes fueron
                     </CaslaButton>
                   ) : (
@@ -78,7 +87,7 @@ export default function MatchesCard({
                       <CaslaButton size="sm" variant="blueToRed" aria-label="Voy a la cancha">
                         Voy a la cancha
                       </CaslaButton>
-                      <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes van">
+                      <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes van" onClick={()=>{handleClick(match.id)}}>
                         Ver quienes van
                       </CaslaButton>
                     </>
