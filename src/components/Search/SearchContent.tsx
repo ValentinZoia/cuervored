@@ -2,11 +2,12 @@
 import { useSearchParams } from "next/navigation";
 import React, { memo, Suspense } from "react";
 import { UserData } from "@/types/Post";
-import InfiniteScrollContainer from "../InfiniteScrollContainer";
-import { Loader2 } from "lucide-react";
 import { useSearch } from "@/hooks/useSearch";
 import dynamic from "next/dynamic";
-const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
+import { LoadMoreSpinner } from "../LoadMoreSpinner";
+import { ErrorAlert } from "../ErrorAlert";
+import {EmptyState} from "../EmptyState";
+
 
 // Dynamic imports
 const UserCardSearch = dynamic(() => import("./UserCardSearch").then((mod) => mod.UserCardSearch), {
@@ -16,28 +17,11 @@ const UserCardSearch = dynamic(() => import("./UserCardSearch").then((mod) => mo
   ssr: false,
 });
 
-// Componentes memoizados para mejor rendimiento
-const ErrorAlert = memo(({ error }: { error: Error | unknown }) => (
-  <>
-    <p>Error: {error instanceof Error ? error.message : "Unexpected error"}</p>
-  </>
-));
-ErrorAlert.displayName = "ErrorAlert";
+export const InfiniteScrollContainer = dynamic(() => import("../InfiniteScrollContainer"),{ssr:false});
 
-const EmptyState = memo(() => (
-  <p className="text-center mt-4">No se encontraron usuarios con ese nombre.</p>
-));
-EmptyState.displayName = "EmptyState";
 
-const LoadMoreSpinner = memo(() => (
-  <div className="w-full flex justify-center py-4">
-    <Loader2 className="animate-spin text-blue-500" />
-  </div>
-));
-LoadMoreSpinner.displayName = "LoadMoreSpinner";
-
-const MemoizedUser = memo(({ user }: { user: UserData }) => (
-  <UserCardSearch user={user} baseUrl={baseUrl} />
+export const MemoizedUser = memo(({ user }: { user: UserData }) => (
+  <UserCardSearch user={user}  />
 ));
 MemoizedUser.displayName = "MemoizedUser";
 
@@ -72,7 +56,7 @@ export default function SearchContent() {
   }
 
   if (status === "success" && !users.length && !hasNextPage) {
-    return <EmptyState />;
+    return <EmptyState text="No se encontraron usuarios con ese nombre." />;
   }
 
   return (

@@ -138,7 +138,7 @@ model MatchAttendance {
 
   matchId           String
   matchDate         DateTime
-  confirmationDate  DateTime @default(now())
+  createdAt DateTime @default(now())
   status            String   @default("confirmed")
   expiresAt         DateTime
 

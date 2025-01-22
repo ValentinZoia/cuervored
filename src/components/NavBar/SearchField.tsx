@@ -13,8 +13,6 @@ export default function SearchField() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
-
   const initialQuery = searchParams.get("q") || "";
   const cardRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -64,12 +62,13 @@ export default function SearchField() {
     setShowCard(true);
   };
 
+  //redirigir a la pagina de busqueda con el username buscado
   const handleSubmit = (e?: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
     if (!debouncedQuery.trim()) return;
 
     queryClient.invalidateQueries({ queryKey: ["search", debouncedQuery] });
-    router.push(`${baseUrl}/search?q=${encodeURIComponent(debouncedQuery.trim())}`);
+    router.push(`/search?q=${encodeURIComponent(debouncedQuery.trim())}`);
     setQuery("");
   };
 
@@ -120,7 +119,6 @@ export default function SearchField() {
             isLoading={isLoading}
             isPending={isPending}
             query={query}
-            baseUrl={baseUrl}
             handleSubmit={() => handleSubmit()}
           />
         </Card>

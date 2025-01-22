@@ -15,7 +15,7 @@ export default function MatchesCard({
 }) {
 const router = useRouter();
 const handleClick=(id:string)=>{
-router.push(`/quien-fue/${id}`)
+router.push(`/match-attendance/${id}`)
 }
 
 

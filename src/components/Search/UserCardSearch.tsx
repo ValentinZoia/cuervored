@@ -5,21 +5,20 @@ import UserHeaderPost from '../Post/UserHeaderPost';
 
 interface UserHeaderPostProps {
     user:UserData;
-    baseUrl:string;
 }
 
-export function UserCardSearch({user,baseUrl}:UserHeaderPostProps) {
+export function UserCardSearch({user}:UserHeaderPostProps) {
   return (
     <Link
           key={user.id}
-          href={`${baseUrl}/${user.name}`}
+          href={`/${user.name}`}
           aria-label={`Ver perfil de ${user.name}`}
         >
           <div className="w-full h-1/2 p-4 hover:bg-secondary border-b-[1px]">
             <UserHeaderPost
               username={user.name}
               avatarUrl={user.image}
-              linkTo={`${baseUrl}/${user.name}`}
+              linkTo={`/${user.name}`}
             />
           </div>
         </Link>

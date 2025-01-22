@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import SearchField from "./SearchField";
 import MenuBar from "./MenuBar";
 import { auth } from "@/auth";

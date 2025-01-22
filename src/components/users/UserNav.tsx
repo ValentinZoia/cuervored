@@ -5,12 +5,12 @@ import ArrowBack from '@/components/ArrowBack'
 
 //usuario al cual corresponde el perfil que se esta viendo, NO EL LOGEADO
 interface UserNavProps {
-    username: string | null
-    full_name: string | null
+    text_1: string | null
+    text_2?: string | null
 }
 
 
-export default function UserNav({username, full_name}:UserNavProps) {
+export default function UserNav({text_1, text_2}:UserNavProps) {
  
   
     return (
@@ -21,7 +21,7 @@ export default function UserNav({username, full_name}:UserNavProps) {
         </div>
         <div>
             <h1 className='text-2xl font-bold'>
-                {full_name ? full_name : username ? username : "Unknown"}
+                {text_1 ? text_1 : text_2 ? text_2 : "Unknown"}
             </h1>
 
         </div>

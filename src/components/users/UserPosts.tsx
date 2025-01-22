@@ -1,12 +1,12 @@
 "use client"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle,  Loader } from "lucide-react";
 import { useInfiniteQuery, } from "@tanstack/react-query";
 import SkeletonPost from "../Post/SkeletonPost";
 import {PostData as PostType } from "@/types/Post";
 import InfiniteScrollContainer from "@/components/InfiniteScrollContainer";
 import { Post } from "../Post/Post";
 import { getUserPosts } from "@/data/posts";
+import { LoadMoreSpinner } from "../LoadMoreSpinner";
+import { ErrorAlert } from "../ErrorAlert";
 
 
 
@@ -53,13 +53,7 @@ export default function UserPosts({userId}:UserPostsProps) {
 
   if (error) {
     return (
-      <Alert variant="destructive">
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription>
-          {error instanceof Error ? error.message : "Unexpected error"}
-        </AlertDescription>
-      </Alert>
+     <ErrorAlert error={error} />
     );
   }
 
@@ -73,7 +67,7 @@ export default function UserPosts({userId}:UserPostsProps) {
         {data.pages.flatMap((page) =>
           page.posts.map((post: PostType) => <Post key={post.id} post={post} />)
         )}
-        {isFetchingNextPage && <Loader className="mx-auto animate-spin" />}
+        {isFetchingNextPage && <LoadMoreSpinner />}
       </InfiniteScrollContainer>
     );
   }

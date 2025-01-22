@@ -1,17 +1,15 @@
 "use client"
 import dynamic from 'next/dynamic';
 import { Suspense, memo } from 'react';
-import { Loader } from "lucide-react";
 import { PostData as PostType } from "@/types/Post";
 import { getPostsForYou } from "@/data/posts";
 import SkeletonPost from "./SkeletonPost";
 import { useInfinitePosts } from '@/hooks/useInfinitePosts';
+import { ErrorAlert } from '../ErrorAlert';
+import { EmptyState } from '../EmptyState';
+import { LoadMoreSpinner } from '../LoadMoreSpinner';
 
 // Dynamic imports para componentes pesados
-const Alert = dynamic(() => import("@/components/ui/alert").then(mod => mod.Alert),{ssr:false});
-const AlertTitle = dynamic(() => import("@/components/ui/alert").then(mod => mod.AlertTitle),{ssr:false});
-const AlertDescription = dynamic(() => import("@/components/ui/alert").then(mod => mod.AlertDescription),{ssr:false});
-const AlertCircle = dynamic(() => import("lucide-react").then(mod => mod.AlertCircle),{ssr:false});
 const Post = dynamic(() => import("./Post").then(mod => mod.Post), {
   ssr: false,
   
@@ -20,38 +18,12 @@ const Post = dynamic(() => import("./Post").then(mod => mod.Post), {
 
 const InfiniteScrollContainer = dynamic(() => import("../InfiniteScrollContainer"),{ssr:false});
 
+
 // Componentes memoizados para mejor rendimiento
-const ErrorAlert = memo(({ error }: { error: Error | unknown }) => (
-  <Alert variant="destructive">
-    <AlertCircle className="h-4 w-4" />
-    <AlertTitle>Error</AlertTitle>
-    <AlertDescription>
-      {error instanceof Error ? error.message : "Unexpected error"}
-    </AlertDescription>
-  </Alert>
+const MemoizedPost = memo(({ post }: { post: PostType }) => (
+  <Post post={post} />
 ));
-ErrorAlert.displayName = 'ErrorAlert';
-
-
-
-const EmptyState = memo(() => (
-  <p className="text-center mt-4">No hay publicaciones para mostrar todavia.</p>
-));
-EmptyState.displayName = 'EmptyState';
-
-
-
-const LoadMoreSpinner = memo(() => (
-  <div className="flex justify-center py-4">
-    <Loader className="animate-spin" />
-  </div>
-));
-LoadMoreSpinner.displayName = 'LoadMoreSpinner';
-
-
-
-
-
+MemoizedPost.displayName = 'MemoizedPost';
 
 
 export default function PostForYou() {
@@ -79,7 +51,7 @@ export default function PostForYou() {
   }
 
   if (status === "success" && !posts.length && !hasNextPage) {
-    return <EmptyState />;
+    return <EmptyState text='No hay publicaciones para mostrar todavia.'/>;
   }
 
   const handleLoadMore = () => {
@@ -95,7 +67,7 @@ export default function PostForYou() {
     >
       <Suspense fallback={<SkeletonPost />}>
         {posts.map((post: PostType) => (
-          <Post key={post.id} post={post} />
+          <MemoizedPost key={post.id} post={post} />
         ))}
       </Suspense>
       
