@@ -134,7 +134,8 @@ import { Prisma } from "@prisma/client";
     isLikedByUser: boolean;
   }
 
-  export interface SearchPage {
+  export interface UserPage {
     users: UserData[];
+    isUserSession?: boolean;
     nextCursor: string | null;
   }

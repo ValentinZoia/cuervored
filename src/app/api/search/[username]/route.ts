@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
-import { getUserDataSelect, SearchPage } from "@/types/Post";
+import { getUserDataSelect, UserPage } from "@/types/Post";
 import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -54,7 +54,7 @@ export async function GET(
 
         const nextCursor = users.length > pageSize ? users[pageSize].id : null;
 
-        const data: SearchPage = {
+        const data: UserPage = {
             users: users.slice(0, pageSize),
             nextCursor
         }
