@@ -43,7 +43,7 @@ model User {
   followers         Follow[]       @relation("Followers")
   comments          Comment[]
   likes             Like[]
-  MatchesAttendance MatchAttendance[]
+  matchesAttendance MatchAttendance[]
 
 
   
