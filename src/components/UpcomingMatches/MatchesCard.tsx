@@ -4,6 +4,7 @@ import { CaslaButton } from "@/components/ui/CaslaButton";
 import { CalendarDays } from 'lucide-react';
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import {MatchAttendanceButton} from "./MatchAttendanceButton";
 
 
 export default function MatchesCard({
@@ -84,9 +85,7 @@ router.push(`/match-attendance/${id}`)
                     </CaslaButton>
                   ) : (
                     <>
-                      <CaslaButton size="sm" variant="blueToRed" aria-label="Voy a la cancha">
-                        Voy a la cancha
-                      </CaslaButton>
+                      <MatchAttendanceButton matchId={match.id}  />
                       <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes van" onClick={()=>{handleClick(match.id)}}>
                         Ver quienes van
                       </CaslaButton>

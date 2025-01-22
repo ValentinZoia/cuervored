@@ -12,7 +12,7 @@ interface LikeButtonProps {
   Función de debounce, que retrasara la funcion para evitar clics repetitivos y
   ocasionar bugs. Esto evita que el servidor reciba multimples solicitudes consecutivas.
 */
-function debounce(func: (...args: any[]) => void, delay: number) {
+export function debounce(func: (...args: any[]) => void, delay: number) {
   let timeoutId: NodeJS.Timeout | null = null;
   return (...args: any[]) => {
     if (timeoutId) clearTimeout(timeoutId);
