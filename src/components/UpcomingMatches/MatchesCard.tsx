@@ -5,16 +5,27 @@ import { CalendarDays } from 'lucide-react';
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {MatchAttendanceButton} from "./MatchAttendanceButton";
+import { useSession } from "next-auth/react";
+import { UserData, UserMatchAttendanceInfo } from "@/types/User";
 
 
 export default function MatchesCard({
   title,
   matches,
+  user,
+  
 }: {
   title: string;
   matches: BasicMatchData[];
+  user:UserData;
+  
 }) {
 const router = useRouter();
+
+
+
+
+
 const handleClick=(id:string)=>{
 router.push(`/match-attendance/${id}`)
 }
@@ -85,7 +96,11 @@ router.push(`/match-attendance/${id}`)
                     </CaslaButton>
                   ) : (
                     <>
-                      <MatchAttendanceButton matchId={match.id}  />
+                      <MatchAttendanceButton loggedInUserId={user.id} matchId={match.id} initialState={
+                        {isUserAttendingMatch: user.matchesAttendance.some(
+                          (AttendanceMatch) => AttendanceMatch.matchId === match.id
+                        )}
+                      } />
                       <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes van" onClick={()=>{handleClick(match.id)}}>
                         Ver quienes van
                       </CaslaButton>

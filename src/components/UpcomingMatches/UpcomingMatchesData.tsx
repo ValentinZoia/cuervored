@@ -15,6 +15,7 @@ const MatchesCard = dynamic(() => import('./MatchesCard'), {
 // Mantenemos SkeletonMatchesCard como import estático ya que es necesario para el loading
 import SkeletonMatchesCard from "./SkeletonMatchesCard";
 import { useQueryMatches } from "@/hooks/useQueryMatches";
+import { UserData } from "@/types/User";
 
 
 
@@ -29,7 +30,7 @@ const getUpcomingMatchesSlice = (matches: MatchesData['matchesFiltered']['Upcomi
 
 
 
-export default function UpcomingMatchesData() {
+export default function UpcomingMatchesData({user}:{user:UserData}) {
  
 
   const {data, error, isLoading} = useQueryMatches({queryKey:"matches", fetchFn:getUpcomingAndLastMatches, type: {} as MatchesData})
@@ -65,6 +66,7 @@ export default function UpcomingMatchesData() {
         <MatchesCard
           title="Últimos partidos"
           matches={lastMatches}
+          user={user}
           
         />
       </Suspense>
@@ -73,6 +75,7 @@ export default function UpcomingMatchesData() {
         <MatchesCard
           title="Próximos partidos"
           matches={upcomingMatches}
+          user={user}
           
         />
       </Suspense>

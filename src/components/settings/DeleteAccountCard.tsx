@@ -59,7 +59,7 @@ export default function DeleteAccountCard({session}:{session:Session |DefaultSes
         variant: "destructive"
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setIsDeleting(false);
       setConfirmText("");
       toast({

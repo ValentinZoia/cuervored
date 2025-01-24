@@ -18,6 +18,11 @@ export default function MatchAttendanceContent({
 }: {
   matchId: string;
 }) {
+
+  if (!matchId) {
+    return null;
+  }
+
   //obtener todos los usuarios
   const {
     data,
@@ -34,9 +39,9 @@ export default function MatchAttendanceContent({
         pageParam,
         matchId: matchId,
       }),
-    enabled: !!matchId.trim(),
     initialPageParam: null as string | null,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+    staleTime: Infinity,
     gcTime: 1000 * 60 * 5, // 5 minutos
   });
 

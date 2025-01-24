@@ -3,6 +3,7 @@ import MenuBar from "@/components/NavBar/MenuBar";
 import NavBar from "@/components/NavBar/NavBar";
 import { Toaster } from "@/components/ui/toaster";
 import { ConditionalUpcomingMatches } from "@/components/UpcomingMatches/ConditionalUpcomingMatches";
+import UpcomingMatches from "@/components/UpcomingMatches/UpcomingMatches";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
 
@@ -34,7 +35,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         <div className="flex justify-center gap-6">
           <aside className="hidden lg:block w-[450px] space-y-4 ">
             <div className="sticky top-24">
-              <ConditionalUpcomingMatches />
+              <UpcomingMatches />
             </div>
           </aside>
           

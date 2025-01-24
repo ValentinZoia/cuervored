@@ -95,15 +95,32 @@ export async function POST(
         { status: 400 }
       );
 
-    //3. Obtenemos el matchDate del body
-    const body = await req.json();
+    // 3. Obtenemos el cuerpo de la solicitud
+    let body;
+    try {
+      body = await req.json();
+    } catch (parseError) {
+      return NextResponse.json(
+        { error: "Invalid request body" },
+        { status: 400 }
+      );
+    }
+
+    // 4. Verificamos si el cuerpo de la solicitud contiene matchDate
+    if (!body || !body.matchDate)
+      return NextResponse.json(
+        { error: "matchDate es requerido" },
+        { status: 400 }
+      );
+
     const matchDate = new Date(body.matchDate);
     const expiresAt = new Date(matchDate);
     expiresAt.setMonth(expiresAt.getMonth() + 1);
 
-    console.log(matchDate, expiresAt);
+    
 
-    //4. Verificamos si el usuario de la sesión ya está en la lista de asistentes
+    
+    //5. Verificamos si el usuario de la sesión ya está en la lista de asistentes
     const sessionUserAttendance = await prisma.matchAttendance.findFirst({
       where: {
         matchId: matchId,
@@ -118,7 +135,7 @@ export async function POST(
       );
     }
 
-    console.log(sessionUserAttendance);
+    
 
     //5. Creamos un nuevo registro en la tabla matchAttendance
     const newAttendance = await prisma.matchAttendance.create({
@@ -135,7 +152,7 @@ export async function POST(
       },
     });
 
-    console.log(newAttendance.user);
+    
 
     return NextResponse.json(newAttendance.user, { status: 201 });
   } catch (error: any) {
@@ -195,7 +212,12 @@ export async function DELETE(
         matchId: matchId,
         userId: session.user.id,
       },
-      select: getUserDataSelect(session.user.id),
+      include: {
+        user: {
+          select: getUserDataSelect(session.user.id),
+        },
+      },
+      
     });
 
     if (!sessionUserAttendance) {

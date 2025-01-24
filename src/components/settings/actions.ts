@@ -31,7 +31,7 @@ export async function deleteAccount(id:string):Promise<{ok:boolean, error:any | 
             
             return {ok:true, error: null, message: "Cuenta eliminada con exito"}
     } catch (error: any) {
-        console.log(error, error.message);
+        console.error(error, error.message);
         return {
           ok: false,
           message: null,

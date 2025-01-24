@@ -21,7 +21,7 @@ export async function uploadToCloudinary(file: File){
           // Asegurarse de usar HTTPS en la URL
           const secureUrl = data.url.replace(/^http:\/\//i, "https://");
 
-          console.log(secureUrl, data);
+          
           return { data: secureUrl, error: null };
         
     } catch (error) {
