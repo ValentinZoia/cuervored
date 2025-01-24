@@ -57,7 +57,7 @@ export async function GET(req: NextRequest) {
               const cells = row.querySelectorAll("td");
 
               return {
-                id:`${cells[0]?.textContent?.trim().replace('/', '-')}-${cells[1]?.textContent?.trim()}-${cells[2]?.textContent?.trim()}`,//Ejemplo de un id: 25/01-L-Talleres
+                id:`${cells[0]?.textContent?.trim().replace('/', '-')}-${cells[1]?.textContent?.trim()}-${cells[2]?.textContent?.trim().replace(/\s/g, '')}`,//Ejemplo de un id: 25/01-L-Talleres
                 date: cells[0]?.textContent?.trim(),
                 homeOrAway: cells[1]?.textContent?.trim(),
                 opponent: cells[2]?.textContent?.trim(),
@@ -90,7 +90,7 @@ export async function GET(req: NextRequest) {
               const cells = row.querySelectorAll("td");
 
               return {
-                id:`${cells[0]?.textContent?.trim().replace('/', '-')}-${cells[1]?.textContent?.trim()}-${cells[2]?.textContent?.trim()}`,//Ejemplo de un id: 25/01-L-Talleres
+                id:`${cells[0]?.textContent?.trim().replace('/', '-')}-${cells[1]?.textContent?.trim()}-${cells[2]?.textContent?.trim().replace(/\s/g, '')}`,//Ejemplo de un id: 25/01-L-Talleres
                 date: cells[0]?.textContent?.trim(),
                 homeOrAway: cells[1]?.textContent?.trim(),
                 opponent: cells[2]?.textContent?.trim(),
