@@ -26,6 +26,7 @@ export async function GET(
       );
     }
 
+    //buscamos el contador de seguidores del usuario(userId). Y si el usuario de la sesión lo sigue.
     const user = await prisma.user.findUnique({
       where: { id: userId },
       select: {
@@ -52,7 +53,7 @@ export async function GET(
     }
     
     
-
+    //Devolvemos la cantidad de seguidores y si el usuario de la sesión sigue al usuario o no.
     const data:FollowerInfo = {
         followers: user._count.followers,
         isFollowedByUser: user.followers.length > 0,

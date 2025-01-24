@@ -54,4 +54,6 @@ import { Prisma } from "@prisma/client";
     nextCursor: string | null;
   }
 
-  
+  export interface UserMatchAttendanceInfo{
+    isUserAttendingMatch:boolean;
+  }
