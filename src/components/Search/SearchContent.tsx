@@ -1,7 +1,7 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import React, { memo, Suspense } from "react";
-import { UserData } from "@/types/Post";
+import { UserData } from "@/types/User";
 import { useSearch } from "@/hooks/useSearch";
 import dynamic from "next/dynamic";
 import { LoadMoreSpinner } from "../LoadMoreSpinner";

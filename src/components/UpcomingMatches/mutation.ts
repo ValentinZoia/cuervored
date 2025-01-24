@@ -3,7 +3,7 @@ import { InfiniteData, QueryKey, useMutation, useQueryClient } from "@tanstack/r
 import { useToast } from "../ui/use-toast";
 
 import axios, { AxiosError } from "axios";
-import { UserData, UserPage } from "@/types/Post";
+import { UserData, UserPage } from "@/types/User";
 import { MatchesData } from "@/types/Match";
 import { useMemo } from "react";
 
@@ -40,77 +40,77 @@ function useMatchData(matchId: string): number {
 }
 
 export function useMatchAttendanceMutation({ matchId, isAttending }: UseMatchAttendanceMutationProps) {
-  const matchDate = useMatchData(matchId);
-  const { toast } = useToast();
-  const queryClient = useQueryClient();
-  const queryKey: QueryKey = ["match-attendance", matchId];
+  // const matchDate = useMatchData(matchId);
+  // const { toast } = useToast();
+  // const queryClient = useQueryClient();
+  // const queryKey: QueryKey = ["match-attendance", matchId];
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: async () => {
-      if (isAttending) {
-        const { data: user } = await axios.delete<UserData>(`/api/matchAttendance/${matchId}`);
-        return { user, isAttending };
-      } else {
-        const { data: user } = await axios.post<UserData>(`/api/matchAttendance/${matchId}`, { 
-          matchDate 
-        });
-        return { user, isAttending };
-        }
-      },
-      onMutate: async () => {
-        await queryClient.cancelQueries({ queryKey });
+  // const { mutate, isPending } = useMutation({
+  //   mutationFn: async () => {
+  //     if (isAttending) {
+  //       const { data: user } = await axios.delete<UserData>(`/api/matchAttendance/${matchId}`);
+  //       return { user, isAttending };
+  //     } else {
+  //       const { data: user } = await axios.post<UserData>(`/api/matchAttendance/${matchId}`, { 
+  //         matchDate 
+  //       });
+  //       return { user, isAttending };
+  //       }
+  //     },
+  //     onMutate: async () => {
+  //       await queryClient.cancelQueries({ queryKey });
         
-      },
-      onSuccess: (data) => {
+  //     },
+  //     onSuccess: (data) => {
 
-        const oldData = queryClient.getQueryData<InfiniteData<UserPage>>(queryKey);
-        const isAttending = oldData?.pages[0]?.isUserSession ?? false;
+  //       const oldData = queryClient.getQueryData<InfiniteData<UserPage>>(queryKey);
+  //       const isAttending = oldData?.pages[0]?.isUserSession ?? false;
     
-        // Optimistic update
-        queryClient.setQueryData<InfiniteData<UserPage>>(queryKey, old => {
-          if (!old) return old;
-          return {
-            ...old,
-            pages: old.pages.map(page => ({
-              ...page,
-              isUserSession: !isAttending,
-              users: isAttending 
-                ? page.users.filter(user => user.id !== data?.user.id)
-                : data.user ? [...page.users, data?.user] : page.users
-            }))
-          };
-        });
+  //       // Optimistic update
+  //       queryClient.setQueryData<InfiniteData<UserPage>>(queryKey, old => {
+  //         if (!old) return old;
+  //         return {
+  //           ...old,
+  //           pages: old.pages.map(page => ({
+  //             ...page,
+  //             isUserSession: !isAttending,
+  //             users: isAttending 
+  //               ? page.users.filter(user => user.id !== data?.user.id)
+  //               : data.user ? [...page.users, data?.user] : page.users
+  //           }))
+  //         };
+  //       });
     
-        return { oldData };
+  //       return { oldData };
 
 
         
 
 
-      },
-      onError: (error: AxiosError) => {
-        const responseData:any = error.response?.data;
-        const message:string = 
-          responseData && typeof responseData === "object" && "error" in responseData
-            ? responseData.error
-            : error.message || "Error inesperado";
+  //     },
+  //     onError: (error: AxiosError) => {
+  //       const responseData:any = error.response?.data;
+  //       const message:string = 
+  //         responseData && typeof responseData === "object" && "error" in responseData
+  //           ? responseData.error
+  //           : error.message || "Error inesperado";
       
-        toast({
-          variant: "default",
-          title: "Error al actualizar la asistencia",
-          description: message,
-        });
+  //       toast({
+  //         variant: "default",
+  //         title: "Error al actualizar la asistencia",
+  //         description: message,
+  //       });
       
-        console.log("Error capturado:", responseData);
-      },
+  //       console.log("Error capturado:", responseData);
+  //     },
       
-    });
+  //   });
     
-    return{
+  //   return{
       
-      mutate,
-      isPending,
-    }
+  //     mutate,
+  //     isPending,
+  //   }
     
 }
   

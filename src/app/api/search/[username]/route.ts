@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
-import { getUserDataSelect, UserPage } from "@/types/Post";
+import { getUserDataSelect, UserPage } from "@/types/User";
 import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 

@@ -51,7 +51,6 @@ import { Prisma } from "@prisma/client";
 
   export interface UserPage {
     users: UserData[];
-    isUserSession?: boolean;
     nextCursor: string | null;
   }
 

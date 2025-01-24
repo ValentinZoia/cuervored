@@ -2,7 +2,7 @@
 
 import { Card } from "@/components/ui/card";
 
-import { UserData } from "@/types/Post";
+import { UserData } from "@/types/User";
 import UserNav from "./UserNav";
 import UserHeader from "./UserHeader";
 import UserPosts from "./UserPosts";

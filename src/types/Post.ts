@@ -82,8 +82,4 @@ import { getUserDataSelect, UserData } from "./User";
     isLikedByUser: boolean;
   }
 
-  export interface UserPage {
-    users: UserData[];
-    isUserSession?: boolean;
-    nextCursor: string | null;
-  }
+  

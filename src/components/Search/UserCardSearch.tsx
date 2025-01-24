@@ -1,4 +1,4 @@
-import { UserData } from '@/types/Post'
+import { UserData } from '@/types/User'
 import Link from 'next/link';
 import React from 'react'
 import UserHeaderPost from '../Post/UserHeaderPost';

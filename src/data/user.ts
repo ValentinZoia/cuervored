@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { getUserDataSelect, UserPage, UserData } from "@/types/Post";
+import { getUserDataSelect, UserPage, UserData } from "@/types/User";
 import { User } from "@prisma/client";
 import axios from "axios";
 import { notFound } from "next/navigation";

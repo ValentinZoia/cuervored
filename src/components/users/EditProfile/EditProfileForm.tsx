@@ -8,7 +8,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { EditProfileUserSchema } from "@/lib/zodSchema";
-import { UserData } from "@/types/Post";
+import { UserData } from "@/types/User";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

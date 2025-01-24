@@ -1,6 +1,6 @@
 "use client";
 
-import { UserData } from "@/types/Post"
+import { UserData } from "@/types/User"
 import EditProfileForm from "../users/EditProfile/EditProfileForm"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 

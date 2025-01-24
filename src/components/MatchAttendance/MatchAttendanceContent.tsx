@@ -11,7 +11,6 @@ import { LoadMoreSpinner } from "../LoadMoreSpinner";
 import { ErrorAlert } from "../ErrorAlert";
 import { EmptyState } from "../EmptyState";
 import { Suspense } from "react";
-import { useMatchAttendanceMutation } from "../UpcomingMatches/mutation";
 import { getAllUsersByIdToMatchAttendance } from "@/data/user";
 
 export default function MatchAttendanceContent({

@@ -4,7 +4,7 @@ import NavBar from "@/components/NavBar/NavBar";
 import ClientEditProfile from "@/components/settings/ClientEditProfile";
 import DeleteAccountCard from "@/components/settings/DeleteAccountCard";
 import { getUserDataById } from "@/data/user";
-import { UserData } from "@/types/Post";
+import { UserData } from "@/types/User";
 import { Metadata } from "next";
 
 

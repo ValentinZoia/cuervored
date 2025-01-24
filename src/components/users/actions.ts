@@ -3,7 +3,7 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { EditProfileUserSchema } from "@/lib/zodSchema";
-import { getUserDataSelect } from "@/types/Post";
+import { getUserDataSelect } from "@/types/User";
 
 import { z } from "zod";
 

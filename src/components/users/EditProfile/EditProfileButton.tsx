@@ -1,6 +1,6 @@
 "use client";
 
-import { UserData } from "@/types/Post";
+import { UserData } from "@/types/User";
 import React, { useState } from "react";
 import EditProfileDialog from "./EditProfileDialog";
 import { EditIcon } from "lucide-react";

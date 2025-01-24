@@ -1,6 +1,7 @@
 import React from "react";
 import UserAvatar from "../Post/UserAvatar";
-import { FollowerInfo, UserData } from "@/types/Post";
+import {  UserData } from "@/types/User";
+import {FollowerInfo} from "@/types/Follower"
 import EditProfileButton from "./EditProfile/EditProfileButton";
 import FollowButton from "./FollowButton";
 import FollowerCount from "./FollowerCount";

@@ -1,6 +1,6 @@
 import { CardContent } from "@/components/ui/card";
 import { CaslaButton } from "@/components/ui/CaslaButton";
-import { UserData } from "@/types/Post";
+import { UserData } from "@/types/User";
 import dynamic from "next/dynamic";
 import { memo } from "react";
 import { LoadMoreSpinner } from "../LoadMoreSpinner";

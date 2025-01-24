@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
-import { FollowerInfo, getFollowerDataInclude, getUserDataSelect, LikeInfo } from "@/types/Post";
+import { FollowerInfo } from "@/types/Follower";
 import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 

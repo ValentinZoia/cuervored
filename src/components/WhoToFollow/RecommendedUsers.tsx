@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
-import { getUserDataSelect } from "@/types/Post";
+import { getUserDataSelect } from "@/types/User";
 import UserHeaderPost from "../Post/UserHeaderPost";
 import { getUserByUsername } from "@/data/user";
 import FollowButton from "../users/FollowButton";

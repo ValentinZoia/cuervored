@@ -2,7 +2,7 @@
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { getAllUsersByUsername } from "@/data/user";
 import { useState, useEffect } from "react";
-import { UserData } from "@/types/Post";
+import { UserData } from "@/types/User";
 import { useDebounce } from './useDebounce';
 
 export function useSearch(initialQuery: string) {

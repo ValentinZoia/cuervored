@@ -9,7 +9,7 @@ import {
   DialogTitle,
   
 } from "@/components/ui/dialog";
-import { UserData } from '@/types/Post'
+import { UserData } from '@/types/User'
 import React from 'react'
 import EditProfileForm from "./EditProfileForm";
 
