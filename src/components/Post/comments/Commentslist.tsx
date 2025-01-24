@@ -6,12 +6,13 @@ import dynamic from "next/dynamic";
 import { LoadMoreSpinner } from "@/components/LoadMoreSpinner";
 import { ErrorAlert } from "@/components/ErrorAlert";
 import { EmptyState } from "@/components/EmptyState";
+import SkeletonComment from "./SkeletonComment";
 
 
 const Comment = dynamic(() => import("./Comment").then((mod) => mod.Comment), {
   ssr: false,
   loading: () => (
-    <LoadMoreSpinner />
+    <SkeletonComment />
   ),
 });
 
