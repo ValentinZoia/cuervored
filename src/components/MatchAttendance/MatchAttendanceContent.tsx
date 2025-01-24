@@ -48,7 +48,7 @@ export default function MatchAttendanceContent({
   const users = data?.pages.flatMap((page) => page.users) || [];
 
   if (isLoading) {
-    return <LoadMoreSpinner />;
+    return <div className="bg-card"><LoadMoreSpinner /></div> ;
   }
 
   if (error) {
@@ -56,7 +56,7 @@ export default function MatchAttendanceContent({
   }
 
   if (status === "success" && !users.length && !hasNextPage) {
-    return <EmptyState text="Aun no hay usuarios anotados" />;
+    return <div className="w-full bg-card border-x-[1px] border-b-[1px]   h-auto flex flex-col items-stretch text-center"><EmptyState text="Aun no hay usuarios anotados" /></div>;
   }
 
   return (
@@ -65,6 +65,7 @@ export default function MatchAttendanceContent({
       onBottomReached={() => hasNextPage && !isLoading && fetchNextPage()}
     >
       <div className="w-full bg-card border-x-[1px] border-b-[1px]   h-auto flex flex-col items-stretch">
+        <h2 className="px-4 py-2 text-bold">Usuarios:</h2>
         <Suspense fallback={<LoadMoreSpinner />}>
           {users.map((user) => (
             <MemoizedUser key={user.id} user={user} />

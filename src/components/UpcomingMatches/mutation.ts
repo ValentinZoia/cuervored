@@ -13,7 +13,7 @@ interface UseMatchAttendanceMutationProps {
   loggedInUserId:string;
 }
 
-interface localStorageData{
+export interface localStorageData{
   data: MatchesData;
   expiryTime:number;
   
