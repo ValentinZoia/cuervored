@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { FollowerInfo } from "@/types/Post";
+import { FollowerInfo } from "@/types/Follower";
 import React from "react";
 import { useFollowerUserMutation } from "./mutation";
 import { useRef } from "react";

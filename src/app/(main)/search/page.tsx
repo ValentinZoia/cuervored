@@ -25,7 +25,7 @@ export async function generateMetadata({ searchParams }:Props):Promise<Metadata>
 
 
 
-export default async function UserPage() {
+export default async function SearchPage() {
   const session = await auth();
       if(!session?.user || !session){
           return(

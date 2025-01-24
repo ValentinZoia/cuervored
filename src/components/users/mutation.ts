@@ -1,6 +1,7 @@
 "use client";
 import { toast } from "@/components/ui/use-toast";
-import { FollowerInfo, PostsPage } from "@/types/Post";
+import {  PostsPage } from "@/types/Post";
+import { FollowerInfo } from "@/types/Follower";
 import {
   InfiniteData,
   QueryFilters,
@@ -24,9 +25,9 @@ export function useFollowerUserMutation({
 
   const queryKey: QueryKey = ["follower-info", userId];
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading } = useQuery<FollowerInfo, Error>({
     queryKey,
-    queryFn: async () => {
+    queryFn: async (): Promise<FollowerInfo> => {
       const response = await axios.get<FollowerInfo>(
         `/api/user/${userId}/followers`
       );
@@ -72,6 +73,7 @@ export function useFollowerUserMutation({
       /*
       Si te dejo de seguir, se debe eliminar los posts de ese usuario de la lista de publicaciones de la pestaña "Siguiendo"
       */
+      
 
       await queryClient.cancelQueries({
         queryKey: ["post-feed","following"],
