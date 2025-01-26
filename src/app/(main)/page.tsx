@@ -1,23 +1,21 @@
-import { auth } from "@/auth";
-import Publications from "@/components/Publications";
-import SplashScreen from "@/components/SplashScreen";
+import { auth } from "@/auth"
+import Publications from "@/components/Publications"
+import dynamic from "next/dynamic"
 
-
-
-
+// Importamos SplashScreen de forma dinámica para evitar problemas con SSR
+const SplashScreen = dynamic(() => import("@/components/SplashScreen"), { ssr: false })
 
 export default async function Home() {
-  const session = await auth();
-
+  const session = await auth()
 
   if (!session) {
     return (
       <div>
-        <h1>No estas autorizado para ver esta página.</h1>
+        <h1>No estás autorizado para ver esta página.</h1>
       </div>
-    );
+    )
   }
- 
+
   return (
     <>
       <SplashScreen />
@@ -25,6 +23,6 @@ export default async function Home() {
         <Publications />
       </main>
     </>
-    
-  );
+  )
 }
+
