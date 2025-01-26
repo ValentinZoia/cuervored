@@ -43,7 +43,7 @@ type SitemapEntry = {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Get all users in parallel with static route processing
-  const usersPromise = getAllUsers();
+  const usersPromise = await getAllUsers();
 
   // Generate static routes while waiting for users
   const staticEntries: SitemapEntry[] = STATIC_ROUTES.map((route) => ({
@@ -63,6 +63,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     })
   );
+
+  
 
   return [...staticEntries, ...userEntries];
 }
