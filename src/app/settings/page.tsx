@@ -1,6 +1,4 @@
 import { auth } from "@/auth";
-import MenuBar from "@/components/NavBar/MenuBar";
-import NavBar from "@/components/NavBar/NavBar";
 import ClientEditProfile from "@/components/settings/ClientEditProfile";
 import DeleteAccountCard from "@/components/settings/DeleteAccountCard";
 import { getUserDataById } from "@/data/user";
@@ -26,14 +24,14 @@ export const metadata:Metadata={
     
     return (
       <>
-      <NavBar />
+      
       <main className=" container max-w-[1600px] py-10">
         <h1 className="text-3xl font-bold mb-6">Configuracion de la cuenta</h1>
         
          <ClientEditProfile user={user} />
         <DeleteAccountCard session={session} />
       </main>
-      <MenuBar className="sticky bottom-0 z-50 flex w-full justify-center gap-12 border-t bg-blueSanlorenzo text-primary-foreground p-3 md:hidden" />
+      
       </>
       
     );

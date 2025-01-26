@@ -13,7 +13,7 @@ export default function MatchAttendanceHeader({oponent, oponentImage, date}:Matc
     <section className='flex flex-col items-center justify-center gap-3 w-full h-full bg-card border-b-[1px] border-x-[1px] pt-4'>
 
     <div>
-        <h1 className='mb-4 text-center text-2xl text-gray-200'>
+        <h1 className='mb-4 text-center text-2xl text-card-foreground'>
             {`San Lorenzo vs ${oponent}`}
         </h1>
     </div>
@@ -29,7 +29,7 @@ export default function MatchAttendanceHeader({oponent, oponentImage, date}:Matc
 
 
     <div>
-        <h2 className='mb-8 text-center text-md text-gray-200'>
+        <h2 className='mb-8 text-center text-md text-card-foreground'>
             {`${date}`}
         </h2>
     </div>

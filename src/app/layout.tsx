@@ -3,6 +3,9 @@ import { Metadata } from 'next'
 import './globals.css'
 import { Providers } from './Provider'
 import { Toaster } from '@/components/ui/toaster'
+import Footer from '@/components/Footer'
+import MenuBar from '@/components/NavBar/MenuBar'
+import NavBar from '@/components/NavBar/NavBar'
 
 export const metadata:Metadata ={
     title:{
@@ -32,10 +35,17 @@ export default function RootLayout({
       </head>
       <body >
         <Providers>
+          <NavBar />
            {children} 
+          
+          <Footer />
+          <MenuBar className="sticky bottom-0 z-40 flex w-full justify-center gap-12 border-t bg-blueSanlorenzo text-primary-foreground p-3 md:hidden" />
         </Providers>
         <Toaster />
         </body>
+        
+      
+
     </html>
   )
 }
