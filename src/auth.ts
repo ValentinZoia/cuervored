@@ -3,23 +3,36 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { LogInFormSchema } from "./lib/zodSchema";
+import { Session } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { getUserById } from "./data/user";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
+import { JWT } from "next-auth/jwt";
+
+// Extendemos el tipo Session de NextAuth para incluir nuestros tokens personalizados
+declare module "next-auth" {
+  interface Session {
+    accessToken?: string;
+    refreshToken?: string;
+    error?: string;
+  }
+}
 
 export const authOptions = {
-  // debug: true,
   providers: [
+    // Configuración del proveedor de GitHub
     Github({
       clientId: process.env.AUTH_GITHUB_ID as string,
       clientSecret: process.env.AUTH_GITHUB_SECRET as string,
     }),
+    // Configuración del proveedor de Google
     Google({
       clientId: process.env.AUTH_GOOGLE_ID as string,
       clientSecret: process.env.AUTH_GOOGLE_SECRET as string,
     }),
 
+    // Configuración del proveedor de credenciales (email/password)
     Credentials({
       name: "Credentials",
       credentials: {
@@ -33,6 +46,7 @@ export const authOptions = {
         },
       },
       async authorize(credentials) {
+        // Validación de campos usando Zod
         const validateFields = LogInFormSchema.safeParse(credentials);
 
         if (!validateFields.success) {
@@ -41,20 +55,21 @@ export const authOptions = {
 
         const { email, password } = validateFields.data;
 
+        // Buscar usuario en la base de datos
         const user = await prisma.user.findUnique({
-          where: {
-            email,
-          },
+          where: { email },
         });
+
         if (!user) {
           throw new Error("Email o contraseña incorrectos.");
         }
 
-        //this means the user loggin with google or github
+        // Si el usuario se registró con OAuth, no permitir login con password
         if(!user.password){
-          return null
+          return null;
         }
         
+        // Verificar contraseña
         const isPasswordCorrect = await bcrypt.compare(
           password,
           user.password as string
@@ -63,8 +78,8 @@ export const authOptions = {
         if (!isPasswordCorrect) {
           throw new Error("La contraseña no es correcta.");
         }
-        
 
+        // Retornar datos básicos del usuario
         return {
           id: user.id,
           name: user.name,
@@ -78,73 +93,125 @@ export const authOptions = {
 };
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  pages:{
+  // Configuración de páginas personalizadas
+  pages: {
     signIn: "/auth/login",
-    error:"/auth/error",
+    error: "/auth/error",
   },
   
-  events:{
-    async linkAccount({user}){
+  // Eventos de autenticación
+  events: {
+    // Se ejecuta cuando se vincula una cuenta OAuth
+    async linkAccount({user}) {
       await prisma.user.update({
-        where:{id: user.id},
-        data:{ emailVerified: new Date() }
-      })
+        where: {id: user.id},
+        data: { emailVerified: new Date() }
+      });
+    },
+    // Se ejecuta al cerrar sesión
+    async signOut() {
+      try {
+        // Limpiar tokens almacenados
+        await prisma.account.updateMany({
+          where: { refresh_token: { not: null } },
+          data: { 
+            refresh_token: null,
+            access_token: null,
+            expires_at: null
+          }
+        });
+      } catch (error) {
+        console.error("Error al limpiar tokens:", error);
+      }
     }
   },
   
+  // Callbacks para personalizar el proceso de autenticación
   callbacks: {
-    async session({ session, token,user }) {
+    // Modificar la sesión antes de enviarla al cliente
+    async session({ session, token }) {
+      // Agregar ID de usuario a la sesión
       if (token?.sub && session?.user) {
         session.user.id = token.sub;
       }
 
+      // Agregar rol de usuario a la sesión
       if (token?.role && session?.user) {
         session.user.role = token.role;
       }
 
-      if(session?.user){
+      // Actualizar datos de usuario en la sesión
+      if(session?.user) {
         const user = await prisma.user.findUnique({
-          where:{id: session.user.id},
-          select:{image: true, name: true}
+          where: {id: session.user.id},
+          select: {image: true, name: true}
         });
 
-        session.user.image = user?.image
-        session.user.name = user?.name
-
-        
+        session.user.image = user?.image;
+        session.user.name = user?.name;
       }
 
-      
+      // Agregar tokens a la sesión
+      session.accessToken = token.accessToken as string;
+      session.refreshToken = token.refreshToken as string;
+      session.error = token.error as string;
+
+      // Manejar token expirado
+      if (token.error === "RefreshTokenExpired") {
+        await signOut({ redirectTo: '/auth/login' });
+        return session;
+      }
 
       return session;
     },
 
-    async jwt({ token }) {
+    // Modificar el token JWT
+    async jwt({ token, user, account }) {
       if (!token.sub) return token;
 
       const existingUser = await getUserById(token.sub);
-
       if (!existingUser) return token;
 
       token.role = existingUser.role;
-      
-      
 
-      return token;
+      // Si es un nuevo inicio de sesión, configurar tokens
+      if (user) {
+        return {
+          ...token,
+          accessToken: account?.access_token,
+          refreshToken: account?.refresh_token,
+          accessTokenExpires: account?.expires_at ? account.expires_at * 1000 : Date.now() + 3600 * 1000,
+          refreshTokenExpires: Date.now() + (30 * 24 * 60 * 60 * 1000),
+        };
+      }
+
+      // Verificar expiración del refresh token
+      if (Date.now() > (typeof token.refreshTokenExpires === 'number' ? token.refreshTokenExpires : 0)) {
+        return { ...token, error: "RefreshTokenExpired" };
+      }
+
+      // Verificar si el access token necesita renovación
+      if (Date.now() < (typeof token.accessTokenExpires === 'number' ? token.accessTokenExpires : 0)) {
+        return token;
+      }
+
+      // Renovar token si es necesario
+      return await refreshAccessToken(token);
     },
-    async signIn({ user, account, profile }) {
-      
 
+    // Manejar el proceso de inicio de sesión
+    async signIn({ user, account, profile }) {
       if (account?.provider) {
+        // Buscar usuario existente
         const existingUser = await prisma.user.findUnique({
           where: { email: user.email as string },
           include: { accounts: true },
         });
 
         if (existingUser) {
-          // Determinar la imagen y el nombre basado en el proveedor
-          let imageUrl = existingUser.image; // Mantener la imagen existente por defecto
-          let name = existingUser.name; // Mantener el nombre existente por defecto
+          // Actualizar imagen y nombre según el proveedor
+          let imageUrl = existingUser.image;
+          let name = existingUser.name;
 
           if (account.provider === "github") {
             imageUrl = (profile as any)?.avatar_url || imageUrl;
@@ -153,9 +220,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             imageUrl = (profile as any)?.picture || imageUrl;
             name = (profile as any)?.name || name;
           }
-          
 
-          // Actualizar usuario solo si hay cambios
+          // Actualizar datos de usuario si han cambiado
           if (imageUrl !== existingUser.image || name !== existingUser.name) {
             await prisma.user.update({
               where: { id: existingUser.id },
@@ -166,13 +232,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             });
           }
 
-          // Verifica si ya existe una cuenta para este proveedor
+          // Manejar la cuenta vinculada
           const existingAccount = existingUser.accounts.find(
             (acc) => acc.provider === account.provider
           );
 
           if (existingAccount) {
-            // La cuenta para este proveedor ya existe, actualiza los tokens si es necesario
+            // Actualizar tokens de la cuenta existente
             await prisma.account.update({
               where: { id: existingAccount.id },
               data: {
@@ -185,7 +251,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               },
             });
           } else {
-            // El usuario existe pero no tiene una cuenta para este proveedor, crea una nueva
+            // Crear nueva cuenta vinculada
             await prisma.account.create({
               data: {
                 userId: existingUser.id,
@@ -198,7 +264,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token_type: account.token_type,
                 scope: account.scope,
                 id_token: account.id_token,
-                // image: user.image,
               },
             });
           }
@@ -209,6 +274,41 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   adapter: PrismaAdapter(prisma),
-  session: { strategy: "jwt" },
+  session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 }, // Sesión dura 30 días
   ...authOptions,
 });
+
+// Función para renovar el access token
+async function refreshAccessToken(token: JWT) {
+  try {
+    // Llamada al endpoint de renovación
+    const response = await fetch("/api/auth/refresh", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        refresh_token: token.refreshToken,
+      }),
+    });
+
+    const refreshedTokens = await response.json();
+
+    if (!response.ok) {
+      throw refreshedTokens;
+    }
+
+    // Retornar token actualizado
+    return {
+      ...token,
+      accessToken: refreshedTokens.access_token,
+      refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
+      accessTokenExpires: Date.now() + 3600 * 1000, // 1 hora
+    };
+  } catch (error) {
+    return {
+      ...token,
+      error: "RefreshAccessTokenError",
+    };
+  }
+}
