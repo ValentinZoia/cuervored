@@ -2,13 +2,15 @@
 
 import { BasicMatchData } from "@/types/Match";
 import { NextRequest, NextResponse } from "next/server";
-import { chromium } from "playwright";
-import { late } from "zod";
+import   { launchChromium }  from "playwright-aws-lambda";
+
 
 export async function GET(req: NextRequest) {
   try {
     //abrimos navegador, pero con la config de que no lo haga con la ventana
-    const browser = await chromium.launch({ headless: true });
+    const browser = await launchChromium({
+      headless: true,
+    });
 
     //creamos nueva pagina
     const page = await browser.newPage();
