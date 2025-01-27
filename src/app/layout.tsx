@@ -35,11 +35,10 @@ export default function RootLayout({
       </head>
       <body >
         <Providers>
-          <NavBar />
+          
            {children} 
           
-          <Footer />
-          <MenuBar className="sticky bottom-0 z-40 flex w-full justify-center gap-12 border-t bg-blueSanlorenzo text-primary-foreground p-3 md:hidden" />
+          
         </Providers>
         <Toaster />
         </body>

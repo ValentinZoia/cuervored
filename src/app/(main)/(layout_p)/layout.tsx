@@ -27,20 +27,34 @@ export const metadata:Metadata ={
 
 const RecommendedUsers = dynamic(() => import('@/components/WhoToFollow/RecommendedUsers').then(mod => mod.RecommendedUsers), {ssr: false, loading: () => <LoadMoreSpinner />});
 
-const MainLayout = ({ children }: MainLayoutProps) => {
+const Layout_pLayout = ({ children }: MainLayoutProps) => {
   return (
     <>
 
-      <div className="min-h-screen flex flex-col">
-      <NavBar />
-      {children}
-      <Footer />
-          <MenuBar className="sticky bottom-0 z-40 flex w-full justify-center gap-12 border-t bg-blueSanlorenzo text-primary-foreground p-3 md:hidden" />
       
-    </div>
-    <Toaster />
+      <div className="flex-1 container max-w-[1600px] mx-auto py-8 px-2">
+        <div className="flex justify-center gap-6">
+          <aside className="hidden lg:block w-[450px] space-y-4 ">
+            <div className="sticky top-24">
+              <UpcomingMatches />
+            </div>
+          </aside>
+          
+          <main className="w-full max-w-[700px] flex-shrink-0">
+            {children}
+          </main>
+
+          <aside className="hidden lg:block w-[350px] space-y-4 ">
+            <div className="sticky top-24">
+              <RecommendedUsers />
+            </div>
+          </aside>
+        </div>
+        <Toaster />
+      </div>
+      
     </>
   );
 };
 
-export default MainLayout;
+export default Layout_pLayout;

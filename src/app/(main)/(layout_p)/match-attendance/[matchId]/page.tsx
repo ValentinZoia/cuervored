@@ -1,5 +1,4 @@
 import MatchAttendanceCard from "@/components/MatchAttendance/MatchAttendanceCard";
-import { localStorageData } from "@/components/UpcomingMatches/mutation";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -44,5 +43,9 @@ export default function MatchAttendancepage({
     return notFound();
   }
 
-  return <MatchAttendanceCard matchId={params.matchId} />;
+  return(
+    <main className='min-h-screen h-fit w-full col-span-2'>
+          <MatchAttendanceCard matchId={params.matchId} />
+        </main>
+  ) ;
 }
