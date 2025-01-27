@@ -73,8 +73,8 @@ export default function SearchField() {
   };
 
   return (
-    <div className="relative w-48 md:w-80">
-      <form onSubmit={handleSubmit} method="GET" action="/search" role="search">
+    <div className="relative ">
+      <form onSubmit={handleSubmit} method="GET" action="/search" role="search" className="w-48 md:w-80 mx-auto">
         <div className="relative">
           <Input
             ref={inputRef}
@@ -107,7 +107,7 @@ export default function SearchField() {
       {showCard && (
         <Card
           ref={cardRef}
-          className="absolute top-full mt-2 w-full z-10 shadow-lg p-0"
+          className="absolute top-full mt-2 w-72 md:w-full z-10 shadow-lg p-0"
           role="dialog"
           aria-label="Resultados de búsqueda"
         >
