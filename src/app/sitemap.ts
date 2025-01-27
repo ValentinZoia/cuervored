@@ -23,7 +23,7 @@ import { getAllUsers } from "@/data/user";
 import { User } from "@prisma/client";
 import { MetadataRoute } from "next";
 
-const BASE_URL = process.env.NEXT_PUBLIC_URL ?? "http://localhost:3000";
+const BASE_URL = process.env.NEXT_PUBLIC_URL ;
 
 const STATIC_ROUTES = [
   "/auth/login",

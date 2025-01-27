@@ -22,7 +22,7 @@ Ayuda a los motores de búsqueda a indexar tu sitio eficientemente
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_URL ?? 'http://localhost:3000';
+  const baseUrl = process.env.NEXT_PUBLIC_URL ;
 
   return {
     rules: [

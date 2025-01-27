@@ -42,7 +42,7 @@ export default function MatchAttendanceCard({matchId}:{matchId:string}) {
 
     setMatch(foundMatch);
     setIsLoading(false);
-  }, [matchId]);
+  }, [matchId, setMatch, setIsLoading]);
 
   // Render nothing if match is not found
   if (!match) {

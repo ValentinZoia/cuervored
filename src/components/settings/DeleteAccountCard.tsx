@@ -92,7 +92,7 @@ export default function DeleteAccountCard({session}:{session:Session |DefaultSes
           </AlertDialogHeader>
           <div className="my-4">
                   <p className="text-sm text-gray-500 mb-2">
-                    Escribe "Eliminar cuenta {session?.user?.name && session.user.name}" para confirmar:
+                  Escribe &quot;Eliminar cuenta {session?.user?.name && session.user.name}&quot; para confirmar:
                   </p>
                   <input
                     type="text"
