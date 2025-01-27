@@ -1,65 +1,65 @@
-// -----------WEB SCRAPPING-------------
-
 import { BasicMatchData } from "@/types/Match";
 import { NextRequest, NextResponse } from "next/server";
-import   { launchChromium }  from "playwright-aws-lambda";
-
+import chromium from "@sparticuz/chromium";
+import puppeteer from "puppeteer-core";
 
 export async function GET(req: NextRequest) {
   try {
-    //abrimos navegador, pero con la config de que no lo haga con la ventana
-    const browser = await launchChromium({
+    // Configure browser
+    const browser = await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
       headless: true,
+      ignoreHTTPSErrors: true,
     });
 
-    //creamos nueva pagina
+    // Create new page
     const page = await browser.newPage();
 
-    //establecemos url
+    // Set URL
     await page.goto("https://www.promiedos.com.ar/team/san-lorenzo/igf");
 
-    // Esperar a que los botones estén disponibles
+    // Wait for buttons
     await page.waitForSelector(".styles_toggle_button__MNpwf", { timeout: 1000 });
     
-    // Obtener todos los botones
+    // Get all buttons
     const buttons = await page.$$(".styles_toggle_button__MNpwf");
 
-    // Hacer clic en cada botón y esperar su transformación
+    // Click each button and wait for transformation
     for (const button of buttons) {
       try {
-        // Verificar si el botón ya está activado
-        const isActive = await button.evaluate((el) => 
+        const isActive = await button.evaluate((el: Element) => 
           el.classList.contains('styles_active__s3Kv8')
         );
 
         if (!isActive) {
           await button.click();
           
-          // Esperar a que el botón específico tenga la clase active
           await page.waitForFunction(
-            (buttonEl) => buttonEl.classList.contains('styles_active__s3Kv8'),
-            button,
-            { timeout: 1000 }
+            (buttonEl: Element) => buttonEl.classList.contains('styles_active__s3Kv8'),
+            { timeout: 1000 },
+            button
           );
         }
       } catch (err) {
         console.error('Error al procesar botón:', err);
-        continue; // Continuar con el siguiente botón si hay error
+        continue;
       }
     }
 
-    //obtener los partidos proximos
-    const UpcomingMatches:BasicMatchData[] = await page.$$eval(
-      ".tbody_tablebody__cDt0I", // Selecciona todas las tablas con la clase
+    // Get upcoming matches
+    const UpcomingMatches: BasicMatchData[] = await page.$$eval(
+      ".tbody_tablebody__cDt0I",
       (tables) =>
-        Array.from(tables) // Convierte NodeList a Array para manipulación
-          .slice(0, 1) // Solo toma las primeras dos tablas
+        Array.from(tables)
+          .slice(0, 1)
           .flatMap((table) =>
             Array.from(table.querySelectorAll("tr")).map((row) => {
               const cells = row.querySelectorAll("td");
 
               return {
-                id:`${cells[0]?.textContent?.trim().replace('/', '-')}-${cells[1]?.textContent?.trim()}-${cells[2]?.textContent?.trim().replace(/\s/g, '')}`,//Ejemplo de un id: 25/01-L-Talleres
+                id: `${cells[0]?.textContent?.trim().replace('/', '-')}-${cells[1]?.textContent?.trim()}-${cells[2]?.textContent?.trim().replace(/\s/g, '')}`,
                 date: cells[0]?.textContent?.trim(),
                 homeOrAway: cells[1]?.textContent?.trim(),
                 opponent: cells[2]?.textContent?.trim(),
@@ -74,25 +74,25 @@ export async function GET(req: NextRequest) {
           )
     );
 
-    //verificamos que haya Proximos partidos
-    if (!UpcomingMatches.length)
+    if (!UpcomingMatches.length) {
       return NextResponse.json({
         error: "No se encontraron partidos",
         status: 500,
       });
+    }
 
-      //Obtner los partidos pasados
-    const LastMatches:BasicMatchData[] = await page.$$eval(
-      ".tbody_tablebody__cDt0I", // Selecciona todas las tablas con la clase
+    // Get past matches
+    const LastMatches: BasicMatchData[] = await page.$$eval(
+      ".tbody_tablebody__cDt0I",
       (tables) =>
-        Array.from(tables) // Convierte NodeList a Array para manipulación
-          .slice(1, 2) // Solo toma las primeras dos tablas
+        Array.from(tables)
+          .slice(1, 2)
           .flatMap((table) =>
             Array.from(table.querySelectorAll("tr")).map((row) => {
               const cells = row.querySelectorAll("td");
 
               return {
-                id:`${cells[0]?.textContent?.trim().replace('/', '-')}-${cells[1]?.textContent?.trim()}-${cells[2]?.textContent?.trim().replace(/\s/g, '')}`,//Ejemplo de un id: 25/01-L-Talleres
+                id: `${cells[0]?.textContent?.trim().replace('/', '-')}-${cells[1]?.textContent?.trim()}-${cells[2]?.textContent?.trim().replace(/\s/g, '')}`,
                 date: cells[0]?.textContent?.trim(),
                 homeOrAway: cells[1]?.textContent?.trim(),
                 opponent: cells[2]?.textContent?.trim(),
@@ -107,23 +107,29 @@ export async function GET(req: NextRequest) {
           )
     );
 
-    if(!LastMatches.length)
+    if (!LastMatches.length) {
       return NextResponse.json({
         error: "No se encontraron partidos",
         status: 500,
       });
+    }
 
-      
-
-      const UpcomingMatchesSlice = UpcomingMatches.slice(0, 3);
-
-      const LastMatchesSlice = LastMatches.reverse().slice(Math.max(0, LastMatches.length - 3));
-
-    
+    const UpcomingMatchesSlice = UpcomingMatches.slice(0, 3);
+    const LastMatchesSlice = LastMatches.reverse().slice(Math.max(0, LastMatches.length - 3));
 
     await browser.close();
 
-    return NextResponse.json({ AllMatches:{ LastMatches: LastMatches.reverse(), UpcomingMatches: UpcomingMatches }, matchesFiltered: { LastMatches: LastMatchesSlice, UpcomingMatches: UpcomingMatchesSlice }, status: 200 });
+    return NextResponse.json({ 
+      AllMatches: { 
+        LastMatches: LastMatches.reverse(), 
+        UpcomingMatches: UpcomingMatches 
+      }, 
+      matchesFiltered: { 
+        LastMatches: LastMatchesSlice, 
+        UpcomingMatches: UpcomingMatchesSlice 
+      }, 
+      status: 200 
+    });
   } catch (error) {
     return NextResponse.json({ error: error, status: 500 });
   }
