@@ -1,3 +1,7 @@
+
+/*
+WEB SCRAPING
+*/
 import { BasicMatchData } from "@/types/Match";
 import { NextRequest, NextResponse } from "next/server";
 import chromium from "@sparticuz/chromium";
