@@ -54,6 +54,12 @@ export const apiAuthPrefix =[
         component: "ApiAuth",
     },
     {
+        path: "/api/auth/refresh",
+        name: "ApiAuth",
+        component: "ApiAuth",
+    },
+
+    {
         path: "/api/user/[id]",
         name: "ApiUser",
         component: "ApiUser",
