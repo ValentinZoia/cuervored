@@ -151,52 +151,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.name = user?.name;
       }
 
-      // Agregar tokens a la sesión
-      session.accessToken = token.accessToken as string;
-      session.refreshToken = token.refreshToken as string;
-      session.error = token.error as string;
-
-      // Manejar token expirado
-      if (token.error === "RefreshTokenExpired") {
-        await signOut({ redirectTo: '/auth/login' });
-        return session;
-      }
+      
 
       return session;
     },
 
     // Modificar el token JWT
-    async jwt({ token, user, account }) {
+    async jwt({ token }) {
       if (!token.sub) return token;
 
       const existingUser = await getUserById(token.sub);
       if (!existingUser) return token;
 
       token.role = existingUser.role;
-
+      
       // Si es un nuevo inicio de sesión, configurar tokens
-      if (user) {
+      
         return {
           ...token,
-          accessToken: account?.access_token,
-          refreshToken: account?.refresh_token,
-          accessTokenExpires: account?.expires_at ? account.expires_at * 1000 : Date.now() + 3600 * 1000,
-          refreshTokenExpires: Date.now() + (30 * 24 * 60 * 60 * 1000),
-        };
-      }
-
-      // Verificar expiración del refresh token
-      if (Date.now() > (typeof token.refreshTokenExpires === 'number' ? token.refreshTokenExpires : 0)) {
-        return { ...token, error: "RefreshTokenExpired" };
-      }
-
-      // Verificar si el access token necesita renovación
-      if (Date.now() < (typeof token.accessTokenExpires === 'number' ? token.accessTokenExpires : 0)) {
-        return token;
-      }
-
-      // Renovar token si es necesario
-      return await refreshAccessToken(token);
+        }
     },
 
     // Manejar el proceso de inicio de sesión
@@ -279,36 +252,3 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 });
 
 // Función para renovar el access token
-async function refreshAccessToken(token: JWT) {
-  try {
-    // Llamada al endpoint de renovación
-    const response = await fetch("/api/auth/refresh", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        refresh_token: token.refreshToken,
-      }),
-    });
-
-    const refreshedTokens = await response.json();
-
-    if (!response.ok) {
-      throw refreshedTokens;
-    }
-
-    // Retornar token actualizado
-    return {
-      ...token,
-      accessToken: refreshedTokens.access_token,
-      refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
-      accessTokenExpires: Date.now() + 3600 * 1000, // 1 hora
-    };
-  } catch (error) {
-    return {
-      ...token,
-      error: "RefreshAccessTokenError",
-    };
-  }
-}
