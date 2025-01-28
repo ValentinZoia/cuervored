@@ -257,12 +257,24 @@ const matchesData: MatchesDataType = {
   }
 }
 
+const LastMatches = matchesData.AllMatches.LastMatches;
+const UpcomingMatches = matchesData.AllMatches.UpcomingMatches;
+const LastMatchesSlice = matchesData.matchesFiltered.LastMatches;
+const UpcomingMatchesSlice = matchesData.matchesFiltered.UpcomingMatches;
+
 export async function GET(request: NextRequest) {
   try {
     return NextResponse.json({
-      data: matchesData,
-      status: 200
-    });
+            AllMatches: {
+              LastMatches: LastMatches.reverse(),
+              UpcomingMatches: UpcomingMatches,
+            },
+            matchesFiltered: {
+              LastMatches: LastMatchesSlice,
+              UpcomingMatches: UpcomingMatchesSlice,
+            },
+            status: 200,
+          });
   } catch (error) {
     return NextResponse.json({ 
       error: "Error al obtener los datos", 
