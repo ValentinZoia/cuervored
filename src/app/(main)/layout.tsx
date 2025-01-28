@@ -18,6 +18,11 @@ export const metadata:Metadata ={
     default:"Inicio",
     template:" %s | CuervoRed",
   },
+  authors:[{name:"Valentin Zoia"}],
+    creator:"Valentin Zoia",
+    publisher:"Valentin Zoia",
+    keywords:["San Lorenzo","Red Social","Hinchas","Futbol","Argentina","CuervoRed","Cuervo","SL","San Lorenzo de Almagro","Valentin Zoia","Iker Muniain","AzulGrana","oficial","Oficial","Moretti","Valentin","Zoia","Iker","Muniain","Moretti","Azul","Grana","SLdeA","SLdeAlmagro","SLdeAlmagroOficial","SLdeA"],
+  
   
   
 }

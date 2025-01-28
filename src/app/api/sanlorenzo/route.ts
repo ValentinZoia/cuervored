@@ -6,6 +6,7 @@ WEB SCRAPING
 // import chromium from "@sparticuz/chromium-min";
 // import puppeteer from "puppeteer-core";
 
+import { BasicMatchData } from "@/types/Match";
 import { NextRequest, NextResponse } from "next/server";
 
 
@@ -176,10 +177,22 @@ import { NextRequest, NextResponse } from "next/server";
 //   }
 // }
 
-const matchesData = {
+type MatchesDataType = {
+  AllMatches: {
+    LastMatches: BasicMatchData[];
+    UpcomingMatches: BasicMatchData[];
+  };
+  matchesFiltered: {
+    LastMatches: BasicMatchData[];
+    UpcomingMatches: BasicMatchData[];
+  };
+}
+
+const matchesData: MatchesDataType = {
   AllMatches: {
     LastMatches: [
       {
+        id: "2024-01-15-Home-Barcelona",
         date: "2024-01-15",
         homeOrAway: "Home",
         opponent: "Barcelona",
@@ -188,6 +201,7 @@ const matchesData = {
         isPastMatches: true
       },
       {
+        id: "2024-01-08-Away-RealMadrid",
         date: "2024-01-08",
         homeOrAway: "Away", 
         opponent: "Real Madrid",
@@ -198,6 +212,7 @@ const matchesData = {
     ],
     UpcomingMatches: [
       {
+        id: "2024-02-01-Home-Valencia",
         date: "2024-02-01",
         homeOrAway: "Home",
         opponent: "Valencia",
@@ -206,6 +221,7 @@ const matchesData = {
         isPastMatches: false
       },
       {
+        id: "2024-02-08-Away-Sevilla",
         date: "2024-02-08",
         homeOrAway: "Away",
         opponent: "Sevilla",
@@ -218,6 +234,7 @@ const matchesData = {
   matchesFiltered: {
     LastMatches: [
       {
+        id: "2024-01-15-Home-Barcelona",
         date: "2024-01-15",
         homeOrAway: "Home", 
         opponent: "Barcelona",
@@ -228,6 +245,7 @@ const matchesData = {
     ],
     UpcomingMatches: [
       {
+        id: "2024-02-08-Away-Sevilla",
         date: "2024-02-01",
         homeOrAway: "Home",
         opponent: "Valencia", 
@@ -239,6 +257,16 @@ const matchesData = {
   }
 }
 
-export async function GET(req: NextRequest) {
-  return NextResponse.json({ matchesData, status: 200 });
+export async function GET(request: NextRequest) {
+  try {
+    return NextResponse.json({
+      data: matchesData,
+      status: 200
+    });
+  } catch (error) {
+    return NextResponse.json({ 
+      error: "Error al obtener los datos", 
+      status: 500 
+    });
+  }
 }
