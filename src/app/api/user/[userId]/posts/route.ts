@@ -50,11 +50,7 @@ export async function GET(req: NextRequest,{ params: { userId } }: { params: { u
     });
 
     
-    //Chek if there are no posts
-    if (!posts || posts.length === 0) {
-      return NextResponse.json({ error: "No posts found" }, { status: 404 });
-    }
-
+    
     
     
     
