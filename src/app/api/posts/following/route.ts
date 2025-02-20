@@ -9,14 +9,14 @@ export async function GET(req: NextRequest) {
   try {
 
 
-    //get searchParmas
+    //obtener searchParmas
     const cursor = req.nextUrl.searchParams.get("cursor") || undefined;
     const pageSize = 5;
     
 
 
 
-    // Check if the user is authenticated
+    // Verificar si el usuario esta autenticado
     const session = await auth();
     if (!session) {
       return NextResponse.json(
@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
       );
 
 
-    // get posts following to db
+    // obtener posts de los usuarios que sigue
     const postsFollowing = await prisma.post.findMany({
         where:{
           userId:{
