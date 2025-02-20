@@ -15,6 +15,12 @@ const nextConfig = {
             pathname:"/images/team/**",
             port:"",
             search:"",
+          },{
+            protocol: 'https',
+            hostname:"example.com",
+            pathname:"/**",
+            port:"",
+            search:"",
           }
       ],
       
