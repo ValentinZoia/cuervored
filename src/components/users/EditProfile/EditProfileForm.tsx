@@ -66,7 +66,7 @@ export default function EditProfileForm({ user, onClose }: EditProfileFormProps)
       // Para imagen grande de perfil (en página de perfil)
       const largeProfileImage = await transformImageToWebp(file, "profileLarge");
 
-      //Verify if transformedFile exists
+      //Verificamos que las imagenes existan
       if(!smallProfileImage || !largeProfileImage){
         toast({
           variant: "destructive",
