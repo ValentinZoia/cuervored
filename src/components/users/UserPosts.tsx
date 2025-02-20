@@ -2,12 +2,31 @@
 import { useInfiniteQuery, } from "@tanstack/react-query";
 import SkeletonPost from "../Post/SkeletonPost";
 import {PostData as PostType } from "@/types/Post";
-import InfiniteScrollContainer from "@/components/InfiniteScrollContainer";
-import { Post } from "../Post/Post";
+// import InfiniteScrollContainer from "@/components/InfiniteScrollContainer";
+// import { Post } from "../Post/Post";
 import { getUserPosts } from "@/data/posts";
 import { LoadMoreSpinner } from "../LoadMoreSpinner";
 import { ErrorAlert } from "../ErrorAlert";
+import { EmptyState } from "../EmptyState";
+import { memo, Suspense } from "react";
+import dynamic from "next/dynamic";
 
+
+// Dynamic imports para componentes pesados
+const Post = dynamic(() => import("../Post/Post").then(mod => mod.Post), {
+  ssr: false,
+  
+},);
+
+
+const InfiniteScrollContainer = dynamic(() => import("../InfiniteScrollContainer"),{ssr:false});
+
+
+// Componentes memoizados para mejor rendimiento
+const MemoizedPost = memo(({ post }: { post: PostType }) => (
+  <Post post={post} />
+));
+MemoizedPost.displayName = 'MemoizedPost';
 
 
 interface UserPostsProps {
@@ -20,6 +39,7 @@ export default function UserPosts({userId}:UserPostsProps) {
 
   // Configuración de `useInfiniteQuery`
   const {
+    status,
     data,
     isLoading,
     error,
@@ -42,39 +62,39 @@ export default function UserPosts({userId}:UserPostsProps) {
   });
 
   
-
-
-
+  const posts = data?.pages.flatMap((page) => page.posts) || [];
   
-
-  if (isLoading) {
-    return <SkeletonPost />;
-  }
-
-  if (error) {
-    return (
-     <ErrorAlert error={error} />
-    );
-  }
-
-  if (data && data.pages.length > 0) {
-    
+    if (isLoading) {
+      return <SkeletonPost />;
+    }
+  
+    if (error) {
+      return <ErrorAlert error={error} />;
+    }
+  
+    if (status === "success" && !posts.length && !hasNextPage) {
+      return <EmptyState text='No hay publicaciones para mostrar todavia.' />;
+    }
+  
+    const handleLoadMore = () => {
+      if (hasNextPage && !isLoading) {
+        fetchNextPage();
+      }
+    };
+  
     return (
       <InfiniteScrollContainer
-        className="relative z-10 bg-card"
-        onBottomReached={() => hasNextPage && !isLoading && fetchNextPage()}
+        className="relative z-0 space-y-6"
+        onBottomReached={handleLoadMore}
       >
-        {data.pages.flatMap((page) =>
-          page.posts.map((post: PostType) => <Post key={post.id} post={post} />)
-        )}
+        <Suspense fallback={<SkeletonPost />}>
+          {posts.map((post: PostType) => (
+            <MemoizedPost key={post.id} post={post} />
+          ))}
+        </Suspense>
+        
         {isFetchingNextPage && <LoadMoreSpinner />}
       </InfiniteScrollContainer>
     );
-  }
-
-  if(data && data.pages.length === 0) {
-    return (
-      <p>No hay publicaciones</p>
-    )
-  }
+  
 }
