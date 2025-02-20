@@ -236,7 +236,7 @@ const matchesData: MatchesDataType = {
       {
         id: "2024-01-15-Home-Barcelona",
         date: "2024-01-15",
-        homeOrAway: "Home", 
+        homeOrAway: "L", 
         opponent: "Barcelona",
         opponentImage: "https://example.com/barcelona.png",
         result: "2-1",
@@ -247,11 +247,12 @@ const matchesData: MatchesDataType = {
       {
         id: "2024-02-08-Away-Sevilla",
         date: "2024-02-01",
-        homeOrAway: "Home",
+        homeOrAway: "V",
         opponent: "Valencia", 
         opponentImage: "https://example.com/valencia.png",
         result: "VS",
-        isPastMatches: false
+        isPastMatches: false,
+        time: "20:00"
       }
     ]
   }
