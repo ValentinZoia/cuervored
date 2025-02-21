@@ -5,8 +5,7 @@ import { CalendarDays } from 'lucide-react';
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import {MatchAttendanceButton} from "./MatchAttendanceButton";
-import { useSession } from "next-auth/react";
-import { UserData, UserMatchAttendanceInfo } from "@/types/User";
+import { UserData } from "@/types/User";
 
 
 export default function MatchesCard({
