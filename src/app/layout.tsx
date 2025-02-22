@@ -3,9 +3,7 @@ import { Metadata } from 'next'
 import './globals.css'
 import { Providers } from './Provider'
 import { Toaster } from '@/components/ui/toaster'
-import Footer from '@/components/Footer'
-import MenuBar from '@/components/NavBar/MenuBar'
-import NavBar from '@/components/NavBar/NavBar'
+
 
 export const metadata:Metadata ={
     title:{
