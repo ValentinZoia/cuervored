@@ -78,6 +78,7 @@ export function Post({ post }: PostProps) {
           width={500}
           height={500}
           className="cursor-pointer z-0 mb-4 mx-auto size-fit max-h-[30rem]"
+          loading='lazy' //Habilita lazy loading
         />
         ):(
           <p className=" relative z-0 text-sm mb-4 mt-2 whitespace-pre-line break-words">{content}</p>
