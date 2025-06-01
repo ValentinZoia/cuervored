@@ -1,6 +1,6 @@
 "use client"
 import { useToast } from "@/components/ui/use-toast";
-import { PostsPage } from "@/types/Post";
+import { PostFeedType, PostsPage, QueryKeys } from "@/types/Post";
 import {
   InfiniteData,
   QueryFilters,
@@ -48,11 +48,11 @@ export function useUpdateProfileMutation() {
 
       // Actualizamos los datos de los posts en el cache de React Query
       const queryFilter = {
-        queryKey: ["post-feed"],
+        queryKey: [PostFeedType.POST_FEED],
         predicate(query) {
           return (
-            query.queryKey.includes("for-you") ||
-            (query.queryKey.includes("user-posts"))
+            query.queryKey.includes(PostFeedType.FOR_YOU) ||
+            (query.queryKey.includes(QueryKeys.USER_POSTS))
           );
         },
       } satisfies QueryFilters;

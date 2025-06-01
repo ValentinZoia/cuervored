@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-query";
 import { updatePost } from "./action";
 import { useToast } from "@/components/ui/use-toast";
-import { PostsPage } from "@/types/Post";
+import { PostFeedType, PostsPage } from "@/types/Post";
 
 export function useUpdatePostMutation() {
   const { toast } = useToast();
@@ -38,7 +38,7 @@ export function useUpdatePostMutation() {
 
       // Actualizamos los datos de los posts en el cache de React Query
       const queryFilter: QueryFilters = {
-        queryKey: ["post-feed"],
+        queryKey: [PostFeedType.POST_FEED],
       };
 
       await queryClient.cancelQueries(queryFilter);
