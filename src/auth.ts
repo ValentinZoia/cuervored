@@ -205,6 +205,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 image: imageUrl,
                 name: name?.toLowerCase().replace(/\s+/g, ''),//elimino espacios y mayusculas
                 fullName: full_name,
+                image_100: imageUrl,
               },
             });
           }
