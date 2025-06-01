@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { uploadToCloudinary } from "@/utils/uploadToCloudinary";
 import { useQueryClient, useMutation, QueryFilters, InfiniteData } from "@tanstack/react-query";
 import { transformImageToWebp } from "@/utils/transformImageToWebP";
-import { PostData, PostFeedType, PostsPage } from "@/types/Post";
+import { PostFeedType, PostsPage, QueryKeys } from "@/types/Post";
 
 interface useNewPostProps {
   initialPreviewUrl: string | null;
@@ -47,7 +47,7 @@ export const useNewPost = ({
           predicate(query) {
             return (
               query.queryKey.includes(PostFeedType.FOR_YOU) ||
-              (query.queryKey.includes("user-posts"))
+              (query.queryKey.includes(QueryKeys.USER_POSTS))
             );
           },
         } satisfies QueryFilters;
