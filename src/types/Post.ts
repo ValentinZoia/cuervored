@@ -83,3 +83,26 @@ import { getUserDataSelect, UserData } from "./User";
   }
 
   
+  export enum PostFeedType {
+    POST_FEED="post-feed",
+    FOR_YOU = 'for-you',
+    FOLLOWING = 'following'
+  }
+
+  export enum QueryKeys {
+    USER_POSTS = 'user-posts',
+    LIKE_INFO = "like-info",
+    COMMENTS = 'comments',
+    COMMENT_COUNT = "commentCount"
+    
+  }
+
+  export interface FetchPostsParams {
+  pageParam?: string | number | null;
+  userId?: string;
+  queryKey?: string; // Añadido para casos donde se necesite
+}
+
+export type FetchPostsFunction = (
+  params: FetchPostsParams
+) => Promise<PostsPage>;
