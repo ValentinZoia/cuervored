@@ -165,7 +165,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       token.role = existingUser.role;
       
-      // Si es un nuevo inicio de sesión, configurar tokens
+      
       
         return {
           ...token,
@@ -184,14 +184,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (existingUser) {
           // Actualizar imagen y nombre según el proveedor
           let imageUrl = existingUser.image;
-          let name = existingUser.name;
+          let name = existingUser.name?.toLowerCase().replace(/\s+/g, ''); //elimino espacios y mayusculas
+          let full_name = existingUser.fullName;
 
           if (account.provider === "github") {
             imageUrl = (profile as any)?.avatar_url || imageUrl;
             name = (profile as any)?.name || name;
+            full_name =(profile as any)?.name || full_name
           } else if (account.provider === "google") {
             imageUrl = (profile as any)?.picture || imageUrl;
             name = (profile as any)?.name || name;
+            full_name =(profile as any)?.name || full_name
           }
 
           // Actualizar datos de usuario si han cambiado
@@ -200,7 +203,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               where: { id: existingUser.id },
               data: {
                 image: imageUrl,
-                name: name,
+                name: name?.toLowerCase().replace(/\s+/g, ''),//elimino espacios y mayusculas
+                fullName: full_name,
               },
             });
           }
