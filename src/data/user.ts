@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { getUserDataSelect, UserPage, UserData } from "@/types/User";
 import { User } from "@prisma/client";
 import axios from "axios";
+import instance from "@/lib/axios";
 import { notFound } from "next/navigation";
 
 
@@ -84,7 +85,7 @@ export const getAllUsersByUsername =  async ({
   }) => {
     try {
         
-        const response = await axios.get<UserPage>(
+        const response = await instance.get<UserPage>(
           `/api/search/${username}${pageParam ? `?cursor=${pageParam}` : ""}`
         );
     
@@ -142,7 +143,7 @@ export const getAllUsersByIdToMatchAttendance =  async ({
 }) => {
   try {
       
-      const response = await axios.get<UserPage>(
+      const response = await instance.get<UserPage>(
         `/api/matchAttendance/${matchId}${pageParam ? `?cursor=${pageParam}` : ""}`
       );
   
