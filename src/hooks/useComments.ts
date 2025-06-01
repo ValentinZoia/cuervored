@@ -1,19 +1,11 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import { getComments } from '@/data/posts';
-import { PostData,CommentData} from '@/types/Post';
+import { PostData,CommentData, QueryKeys} from '@/types/Post';
 
 export function useComments(post: PostData) {
   //traer todos los comentarios del post con post.id
-  const {
-    data,
-    isLoading,
-    isFetching,
-    error,
-    status,
-    fetchNextPage,
-    hasNextPage,
-  } = useInfiniteQuery({
-    queryKey: ["comments", post.id],
+  return useSuspenseInfiniteQuery({
+    queryKey: [QueryKeys.COMMENTS, post.id],
     queryFn: ({ pageParam }) => getComments({ 
       pageParam, 
       postId: post.id 
@@ -24,19 +16,11 @@ export function useComments(post: PostData) {
       pages: [...data.pages].reverse(),
       pageParams: [...data.pageParams].reverse(),
     }),
-    staleTime: Infinity,
-    gcTime: 1000 * 60 * 60, // 1 hora
+    staleTime: 5 * 60 * 1000, // 5 minutos
+    gcTime: 30 * 60 * 1000,   // 30 minutos
   });
 
-  const comments:CommentData[] = data?.pages.flatMap(page => page.comments) || [];
+  
 
-  return {
-    comments,
-    isLoading,
-    isFetching,
-    error,
-    status,
-    fetchNextPage,
-    hasNextPage,
-  };
+  
 }
