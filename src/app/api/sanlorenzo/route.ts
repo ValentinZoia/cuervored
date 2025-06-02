@@ -1,17 +1,22 @@
 /*
 WEB SCRAPING
 */
-// import { BasicMatchData } from "@/types/Match";
-// import { NextRequest, NextResponse } from "next/server";
-// import chromium from "@sparticuz/chromium-min";
-// import puppeteer from "puppeteer-core";
 
-import { BasicMatchData } from "@/types/Match";
+
+
+
+
 import { NextRequest, NextResponse } from "next/server";
 
+import prisma from "@/lib/prisma";
+import { AllMatchesData, MatchesData, ResponseMatchesData } from "@/types/Match";
 
-  
-//   chromium.setGraphicsMode = false;
+
+  // import chromium from "@sparticuz/chromium-min";
+  // import puppeteer from "puppeteer-core";
+  // import { BasicMatchData } from "@/types/Match";
+  // import { Match } from "@prisma/client";
+  // chromium.setGraphicsMode = false;
 
 
 
@@ -91,7 +96,7 @@ import { NextRequest, NextResponse } from "next/server";
 //                   )}-${cells[1]?.textContent?.trim()}-${cells[2]?.textContent
 //                   ?.trim()
 //                   .replace(/\s/g, "")}`,
-//                 date: cells[0]?.textContent?.trim(),
+//                 date: cells[0]?.textContent?.trim() ,
 //                 homeOrAway: cells[1]?.textContent?.trim(),
 //                 opponent: cells[2]?.textContent?.trim(),
 //                 opponentImage: `${cells[2]
@@ -151,18 +156,66 @@ import { NextRequest, NextResponse } from "next/server";
 //         status: 500,
 //       });
 //     }
-    
-
-//     const UpcomingMatchesSlice = UpcomingMatches.slice(0, 3);
-//     const LastMatchesSlice = LastMatches.reverse().slice(
-//       Math.max(0, LastMatches.length - 3)
-//     );
-
 //     await browser.close();
+//     const AllMatches:BasicMatchData[] = [...LastMatches.reverse(), ...UpcomingMatches];
+
+//     // Save matches to database using upsert to avoid duplicates
+//     const savedMatches = [];
+
+//     for(const match of AllMatches){
+//       try {
+//         const savedMatch = await prisma.match.upsert({
+//           where: { 
+//             customId:match.id 
+//           },
+//           update: {
+//             date: match.date,
+//             homeOrAway: match.homeOrAway,
+//             opponent: match.opponent,
+//             opponentImage: match.opponentImage,
+//             isPastMatches: match.isPastMatches,
+//             result: match.result,
+//             time: match.time,
+//           },
+//           create: {
+//             customId: match.id,
+//             date: match.date,
+//             homeOrAway: match.homeOrAway,
+//             opponent: match.opponent,
+//             opponentImage: match.opponentImage,
+//             isPastMatches: match.isPastMatches,
+//             result: match.result,
+//             time: match.time,
+//           },
+//         });
+//         savedMatches.push(savedMatch);
+//       } catch (error) {
+//         throw new Error(`Error al guardar partidos: ${error}`);
+//       }
+//     }
+
+
+//     // Fetch all matches from database for response
+//     const dbLastMatches = await prisma.match.findMany({
+//       where: { isPastMatches: true },
+//       orderBy: { createdAt: 'desc' }
+//     });
+
+//     const dbUpcomingMatches = await prisma.match.findMany({
+//       where: { isPastMatches: false },
+//       orderBy: { createdAt: 'asc' }
+//     });
+
+//     // Create filtered slices
+//     const UpcomingMatchesSlice = dbUpcomingMatches.slice(0, 3);
+//     const LastMatchesSlice = dbLastMatches.slice(0, 3).reverse();
+
+
+    
 
 //     return NextResponse.json({
 //       AllMatches: {
-//         LastMatches: LastMatches.reverse(),
+//         LastMatches: LastMatches,
 //         UpcomingMatches: UpcomingMatches,
 //       },
 //       matchesFiltered: {
@@ -174,112 +227,48 @@ import { NextRequest, NextResponse } from "next/server";
 //   } catch (error) {
 //     console.error("Error al obtener datos:", error);
 //     return NextResponse.json({ error: error, status: 500 });
+//   } finally{
+//     await prisma.$disconnect();
 //   }
 // }
 
-type MatchesDataType = {
-  AllMatches: {
-    LastMatches: BasicMatchData[];
-    UpcomingMatches: BasicMatchData[];
-  };
-  matchesFiltered: {
-    LastMatches: BasicMatchData[];
-    UpcomingMatches: BasicMatchData[];
-  };
-}
-
-const matchesData: MatchesDataType = {
-  AllMatches: {
-    LastMatches: [
-      {
-        id: "2024-01-15-Home-Barcelona",
-        date: "2024-01-15",
-        homeOrAway: "Home",
-        opponent: "Barcelona",
-        opponentImage: "https://example.com/barcelona.png",
-        result: "2-1",
-        isPastMatches: true
-      },
-      {
-        id: "2024-01-08-Away-RealMadrid",
-        date: "2024-01-08",
-        homeOrAway: "Away", 
-        opponent: "Real Madrid",
-        opponentImage: "https://example.com/real-madrid.png",
-        result: "0-3",
-        isPastMatches: true
-      }
-    ],
-    UpcomingMatches: [
-      {
-        id: "2024-02-01-Home-Valencia",
-        date: "2024-02-01",
-        homeOrAway: "Home",
-        opponent: "Valencia",
-        opponentImage: "https://example.com/valencia.png",
-        result: "VS",
-        isPastMatches: false
-      },
-      {
-        id: "2024-02-08-Away-Sevilla",
-        date: "2024-02-08",
-        homeOrAway: "Away",
-        opponent: "Sevilla",
-        opponentImage: "https://example.com/sevilla.png", 
-        result: "VS",
-        isPastMatches: false
-      }
-    ]
-  },
-  matchesFiltered: {
-    LastMatches: [
-      {
-        id: "2024-01-15-Home-Barcelona",
-        date: "2024-01-15",
-        homeOrAway: "L", 
-        opponent: "Barcelona",
-        opponentImage: "https://example.com/barcelona.png",
-        result: "2-1",
-        isPastMatches: true
-      }
-    ],
-    UpcomingMatches: [
-      {
-        id: "2024-02-08-Away-Sevilla",
-        date: "2024-02-01",
-        homeOrAway: "V",
-        opponent: "Valencia", 
-        opponentImage: "https://example.com/valencia.png",
-        result: "VS",
-        isPastMatches: false,
-        time: "20:00"
-      }
-    ]
-  }
-}
-
-const LastMatches = matchesData.AllMatches.LastMatches;
-const UpcomingMatches = matchesData.AllMatches.UpcomingMatches;
-const LastMatchesSlice = matchesData.matchesFiltered.LastMatches;
-const UpcomingMatchesSlice = matchesData.matchesFiltered.UpcomingMatches;
 
 export async function GET(request: NextRequest) {
   try {
-    return NextResponse.json({
-            AllMatches: {
-              LastMatches: LastMatches.reverse(),
-              UpcomingMatches: UpcomingMatches,
-            },
-            matchesFiltered: {
-              LastMatches: LastMatchesSlice,
-              UpcomingMatches: UpcomingMatchesSlice,
-            },
-            status: 200,
-          });
+    // Fetch all matches from database for response
+    const dbLastMatches = await prisma.match.findMany({
+      where: { isPastMatches: true },
+      orderBy: { createdAt: 'desc' }
+    });
+
+    const dbUpcomingMatches = await prisma.match.findMany({
+      where: { isPastMatches: false },
+      orderBy: { createdAt: 'asc' }
+    });
+
+    // Create filtered slices
+    const UpcomingMatchesSlice = dbUpcomingMatches.slice(0, 3);
+    const LastMatchesSlice = dbLastMatches.slice(0, 3).reverse();
+
+    const dataResponse: ResponseMatchesData ={
+      AllMatches: {
+        LastMatches: dbLastMatches,
+        UpcomingMatches: dbUpcomingMatches,
+      },
+      matchesFiltered: {
+        LastMatches: LastMatchesSlice,
+        UpcomingMatches: UpcomingMatchesSlice,
+      },
+    }
+    
+
+    return NextResponse.json(dataResponse);
   } catch (error) {
     return NextResponse.json({ 
       error: "Error al obtener los datos", 
       status: 500 
     });
+  } finally{
+    await prisma.$disconnect();
   }
 }
