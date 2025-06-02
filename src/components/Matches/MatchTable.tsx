@@ -25,7 +25,7 @@ export default function MatchTable({matches, isPastMatches}: MatchTableProps) {
     const visibleMatches = showAll ? matches : matches.slice(0, 7);
 
     //ponerle colores a los resultados si perdio, gano o empato
-    const getResultColor = (result: string | undefined, homeOrAway: string | undefined) => {
+    const getResultColor = (result: string | null, homeOrAway: string | null) => {
         if (!result) return '';
         const [goalsFor, goalsAgainst] = result.split('-').map(Number);
         if ((goalsFor > goalsAgainst && homeOrAway === 'L') || (goalsFor < goalsAgainst && homeOrAway === 'V')) return 'text-green-500';
