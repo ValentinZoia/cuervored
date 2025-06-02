@@ -1,4 +1,4 @@
-import { CommentsPage, PostData } from "@/types/Post";
+import { CommentsPage, PostData, QueryKeys } from "@/types/Post";
 import {
   InfiniteData,
   QueryKey,
@@ -26,7 +26,7 @@ export function useSubmitCommentMutation(postId: string) {
         }
       
 
-        const queryKey: QueryKey = ["comments", postId];
+        const queryKey: QueryKey = [QueryKeys.COMMENTS, postId];
 
         await queryClient.cancelQueries({ queryKey });
 
@@ -59,7 +59,7 @@ export function useSubmitCommentMutation(postId: string) {
         );
 
          // Incrementa el contador global
-      queryClient.setQueryData<number>(["commentCount", postId], (oldCount) => (oldCount || 0) + 1);
+      queryClient.setQueryData<number>([QueryKeys.COMMENT_COUNT, postId], (oldCount) => (oldCount || 0) + 1);
 
 
         // Fuerza una actualización para consultas sin datos, asegurando que se sincronicen.
@@ -104,7 +104,7 @@ export function useDeleteCommentMutation() {
       //recuperamos la respuesta de la api
       const { deletedComment, ok, message } = data;
 
-      const queryKey: QueryKey = ["comments", deletedComment?.postId];
+      const queryKey: QueryKey = [QueryKeys.COMMENTS, deletedComment?.postId];
 
       // Cancela las consultas relacionadas con el comentario eliminado.
       await queryClient.cancelQueries({ queryKey });
@@ -128,7 +128,7 @@ export function useDeleteCommentMutation() {
       );
 
        // Decrementa el contador global
-       queryClient.setQueryData<number>(["commentCount", deletedComment?.postId], (oldCount) =>
+       queryClient.setQueryData<number>([QueryKeys.COMMENT_COUNT, deletedComment?.postId], (oldCount) =>
         oldCount ? oldCount - 1 : 0
       );
 

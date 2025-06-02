@@ -49,36 +49,39 @@ export default function SignUpForm() {
       )}
 
       {/* Email*/}
-      <div>
+      
+        <div className="flex-1">
         <Label htmlFor="email" className={`${state?.errors?.email && "text-red-500"}`}>Email</Label>
-        <Input type="email" id="email" name="email" />
+        <Input type="email" id="email" name="email" className="h-8 md:h-9"  />
       </div>
       {state?.errors?.email && (
         <small className="text-sm text-red-500">{state.errors.email[0]}</small>
       )}
 
       {/* FullName*/}
-      <div>
+      <div className="flex-1">
         <Label htmlFor="email" className={`${state?.errors?.full_name && "text-red-500"}`}>Nombre Completo</Label>
-        <Input type="text" id="full_name" name="full_name" />
+        <Input type="text" id="full_name" name="full_name" className="h-8 md:h-9"/>
       </div>
       {state?.errors?.full_name && (
         <small className="text-sm text-red-500">{state.errors.full_name[0]}</small>
       )}
-
+      
+      
+      
       {/* UserName*/}
-      <div>
+      <div className="flex-1">
         <Label htmlFor="email" className={`${state?.errors?.username && "text-red-500"}`}>Nombre de usuario</Label>
-        <Input type="text" id="username" name="username" />
+        <Input type="text" id="username" name="username" className="h-8 md:h-9" />
       </div>
       {state?.errors?.username && (
         <small className="text-sm text-red-500">{state.errors.username[0]}</small>
       )}
 
       {/* Password*/}
-      <div>
+      <div className="flex-1">
         <Label htmlFor="password" className={`${state?.errors?.password && "text-red-500"}`}>Contraseña</Label>
-        <InputPassword type="password" id="password" name="password" />
+        <InputPassword type="password" id="password" name="password" className="h-8 md:h-9" />
       </div>
       {state?.errors?.password && (
         <div className="text-sm text-red-500">
@@ -90,6 +93,8 @@ export default function SignUpForm() {
           </ul>
         </div>
       )}
+      
+      
 
       {/* Confirm Password*/}
       <div>
@@ -98,6 +103,7 @@ export default function SignUpForm() {
           type="password"
           id="confirmPassword"
           name="confirmPassword"
+          className="h-8 md:h-9"
         />
       </div>
       {state?.errors?.confirmPassword && (

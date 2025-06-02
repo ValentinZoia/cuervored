@@ -1,6 +1,6 @@
 "use client";
 import { toast } from "@/components/ui/use-toast";
-import {  PostsPage } from "@/types/Post";
+import {  PostFeedType, PostsPage } from "@/types/Post";
 import { FollowerInfo } from "@/types/Follower";
 import {
   InfiniteData,
@@ -76,12 +76,12 @@ export function useFollowerUserMutation({
       
 
       await queryClient.cancelQueries({
-        queryKey: ["post-feed","following"],
+        queryKey: [PostFeedType.POST_FEED,PostFeedType.FOLLOWING],
       });
 
       //Actualizar la lista de publicaciones en cache de la pestaña "Siguiendo" 
       queryClient.setQueryData<InfiniteData<PostsPage, string | null>>(
-        ["post-feed","following"],
+        [PostFeedType.POST_FEED,PostFeedType.FOLLOWING],
         (oldData) => {
           if (!oldData) return;
 

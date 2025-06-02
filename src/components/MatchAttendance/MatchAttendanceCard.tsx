@@ -8,9 +8,10 @@ import MatchAttendanceHeader from './MatchAttendanceHeader'
 import { localStorageData } from '../UpcomingMatches/mutation'
 import { set } from 'zod';
 import { LoadMoreSpinner } from '../LoadMoreSpinner';
+import { BasicMatchData } from '@/types/Match';
 
 export default function MatchAttendanceCard({matchId}:{matchId:string}) {
-  const [match, setMatch] = useState<any>(null);
+  const [match, setMatch] = useState<BasicMatchData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -25,11 +26,11 @@ export default function MatchAttendanceCard({matchId}:{matchId:string}) {
     const MatchesParsed: localStorageData = JSON.parse(getMatches);
     
     const isInUpcomingMatches = MatchesParsed.data.matchesFiltered.UpcomingMatches.find(
-      (match) => match.id === matchId
+      (match) => match.customId === matchId
     );
 
     const isInPastMatches = MatchesParsed.data.matchesFiltered.LastMatches.find(
-      (match) => match.id === matchId
+      (match) => match.customId === matchId
     );
   
     const foundMatch = isInUpcomingMatches || isInPastMatches;

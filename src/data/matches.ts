@@ -1,14 +1,15 @@
 
-import { AllMatchesData, MatchesData } from "@/types/Match";
+import { AllMatchesData, MatchesData, ResponseMatchesData } from "@/types/Match";
 import axios from "axios";
-const urlProyect = process.env.NEXT_PUBLIC_URL;
-
-const url = `${urlProyect}/api/sanlorenzo`;
+import instance from "@/lib/axios";
 
 
-export async function getUpcomingAndLastMatches(){
+const url = `/api/sanlorenzo`;
+
+
+export async function getUpcomingAndLastMatches():Promise<MatchesData>{
     try {
-        const response = await axios.get<MatchesData>(url);
+        const response = await instance.get<ResponseMatchesData>(url);
 
         if(!response || !response.data) throw new Error("Error fetching matches");
 
@@ -55,9 +56,9 @@ export async function getUpcomingAndLastMatches(){
       }
 }
 
-export async function getAllMatches(){
+export async function getAllMatches():Promise<AllMatchesData>{
   try {
-    const response = await axios.get<AllMatchesData>(url);
+    const response = await instance.get<ResponseMatchesData>(url);
 
     if(!response || !response.data) throw new Error("Error fetching matches");
 
@@ -69,6 +70,7 @@ export async function getAllMatches(){
         LastMatches: response.data.AllMatches.LastMatches,
         UpcomingMatches: response.data.AllMatches.UpcomingMatches
       }
+      
     }
 
 } catch (error: any) {

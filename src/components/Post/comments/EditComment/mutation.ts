@@ -1,5 +1,5 @@
 import { useToast } from "@/components/ui/use-toast";
-import { CommentsPage } from "@/types/Post";
+import { CommentsPage, QueryKeys } from "@/types/Post";
 import {
   useQueryClient,
   useMutation,
@@ -39,8 +39,8 @@ export function useUpdateCommentMutation() {
         return;
       }
 
-      // Actualizamos los datos de los posts en el cache de React Query
-      const queryKey: QueryKey = ["comments", updatedComment?.postId];
+      // Actualizamos los datos de los comentarios del post en el cache de React Query
+      const queryKey: QueryKey = [QueryKeys.COMMENTS, updatedComment?.postId];
 
       await queryClient.cancelQueries({ queryKey });
 

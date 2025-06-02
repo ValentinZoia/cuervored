@@ -90,17 +90,17 @@ router.push(`/match-attendance/${id}`)
                 {match.homeOrAway === "L" && (
                   <div className="mt-2 flex justify-between">
                     {match.isPastMatches ? (
-                    <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes fueron" onClick={()=>{handleClick(match.id)}}>
+                    <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes fueron" onClick={()=>{handleClick(match.customId)}}>
                       Ver quienes fueron
                     </CaslaButton>
                   ) : (
                     <>
-                      <MatchAttendanceButton loggedInUserId={user.id} matchId={match.id} initialState={
+                      <MatchAttendanceButton loggedInUserId={user.id} matchId={match.customId} initialState={
                         {isUserAttendingMatch: user.matchesAttendance.some(
-                          (AttendanceMatch) => AttendanceMatch.matchId === match.id
+                          (AttendanceMatch) => AttendanceMatch.matchId === match.customId
                         )}
                       } />
-                      <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes van" onClick={()=>{handleClick(match.id)}}>
+                      <CaslaButton size="sm" variant="redToBlue" aria-label="Ver quienes van" onClick={()=>{handleClick(match.customId)}}>
                         Ver quienes van
                       </CaslaButton>
                     </>

@@ -1,69 +1,20 @@
+import { Match } from "@prisma/client";
+
 export interface MatchesData {
   matchesFiltered: {
-    LastMatches: [
-      {
-        id:string;
-        date: string | undefined;
-       
-        homeOrAway: string | undefined;
-        opponent: string | undefined;
-        isPastMatches: boolean | undefined;
-        opponentImage: string | undefined;
-        result: string | undefined;
-      }
-    ];
-    UpcomingMatches: [
-      {
-        id:string;
-        date: string | undefined;
-    
-        homeOrAway: string | undefined;
-        opponent: string | undefined;
-        isPastMatches: boolean | undefined;
-        opponentImage: string | undefined;
-        time: string | undefined;
-      }
-    ];
+    LastMatches: BasicMatchData[];
+    UpcomingMatches: BasicMatchData[];
   };
 }
 
 export interface AllMatchesData {
   AllMatches: {
-    LastMatches: [
-      {
-        id:string;
-        date: string | undefined;
-       
-        homeOrAway: string | undefined;
-        opponent: string | undefined;
-        isPastMatches: boolean | undefined;
-        opponentImage: string | undefined;
-        result: string | undefined;
-      }
-    ];
-    UpcomingMatches: [
-      {
-        id:string;
-        date: string | undefined;
-       
-        homeOrAway: string | undefined;
-        opponent: string | undefined;
-        isPastMatches: boolean | undefined;
-        opponentImage: string | undefined;
-        time: string | undefined;
-      }
-    ];
+    LastMatches: BasicMatchData[];
+    UpcomingMatches: BasicMatchData[];
   };
 }
+export interface ResponseMatchesData extends AllMatchesData, MatchesData {}
 
-export interface BasicMatchData {
-  id:string;
-  date: string | undefined;
+export type BasicMatchData =  Match & {
 
-  homeOrAway: string | undefined;
-  opponent: string | undefined;
-  opponentImage: string | undefined;
-  isPastMatches: boolean | undefined;
-  result?: string | undefined;
-  time?: string | undefined;
 }

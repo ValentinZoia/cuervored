@@ -11,7 +11,14 @@ export const SignUpFormSchema = z
     .string()
     .min(1, { message: "Este campo no puede estar vacío." })
     .max(30, { message: "El username debe tener como máximo 30 caracteres." })
-    .trim(),
+    .trim()
+    .refine((val) => val === val.toLowerCase(), {
+      message: "El username debe estar en minúsculas.",
+    })
+    .refine((val) => !/\s/.test(val), {
+      message: "El username no debe contener espacios.",
+    }),
+    
   full_name: z
     .string()
     .min(1, { message: "El campo del Nombre Completo no puede estar vacío." })

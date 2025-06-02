@@ -1,5 +1,5 @@
 import { useToast } from "@/components/ui/use-toast";
-import { LikeInfo, PostsPage } from "@/types/Post";
+import { LikeInfo, PostFeedType, PostsPage, QueryKeys } from "@/types/Post";
 import {
   InfiniteData,
   QueryFilters,
@@ -23,9 +23,9 @@ export function useDeletePostMutation() {
     onSuccess: async (data) => {
       if (data.ok) {
         const queryFilter = {
-          queryKey: ["post-feed"],
+          queryKey: [PostFeedType.POST_FEED],
           predicate(query) {
-            return query.queryKey.includes("for-you");
+            return query.queryKey.includes(PostFeedType.FOR_YOU);
           },
         } satisfies QueryFilters;
 
@@ -94,7 +94,7 @@ export function useLikePostMutation({
 
   const queryClient = useQueryClient();
 
-  const queryKey: QueryKey = ["like-info", postId];
+  const queryKey: QueryKey = [QueryKeys.LIKE_INFO, postId];
 
   const { data, isLoading } = useQuery({
     queryKey,

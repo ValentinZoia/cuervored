@@ -145,3 +145,16 @@ model MatchAttendance {
   @@unique([userId, matchId])
   @@index([expiresAt])
 }
+
+model Match{
+  id            String @id @default(auto()) @map("_id") @db.ObjectId
+  customId      String @unique
+  date          String?
+  homeOrAway    String?
+  opponent      String?
+  opponentImage String?
+  isPastMatches Boolean?
+  result        String?
+  time          String?
+  createdAt     DateTime @default(now())
+}

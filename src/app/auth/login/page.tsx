@@ -30,11 +30,11 @@ export default function LoginPage() {
       </div>
 
       {/* Formulario */}
-      <div className="flex-1 flex flex-col justify-center items-center px-4 py-8 lg:px-8">
+      <div className="max-h-screen flex-1 flex flex-col justify-center items-center px-4 gap-2">
         <div className="mb-8">
           <CuervoLogo />
         </div>
-        <div className="w-full max-w-md space-y-6">
+        <div className="w-full max-w-md px-2 overflow-y-auto">
           <h1 className="text-3xl font-bold">Iniciar Sesión</h1>
           <LoginForm />
         </div>

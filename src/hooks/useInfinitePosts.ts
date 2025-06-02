@@ -1,26 +1,34 @@
-// useInfinitePosts.ts
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { PostData } from "@/types/Post";
+import {  useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import {  FetchPostsFunction, PostFeedType, QueryKeys } from "@/types/Post";
 
-interface PostsResponse {
-  posts: PostData[];
-  nextCursor: string | null;
+
+
+
+export interface UseInfinitePostsProps {
+  queryKey: PostFeedType | string;
+  fetchFn: FetchPostsFunction;
+  isUserPagePosts?:boolean
 }
 
-interface UseInfinitePostsProps {
-  queryKey: string;
-  fetchFn: (params: { pageParam?: string | number | null }) => Promise<PostsResponse>;
-}
-
-export function useInfinitePosts({ queryKey, fetchFn }: UseInfinitePostsProps) {
-  return useInfiniteQuery({
-    queryKey: ["post-feed", queryKey],
-    queryFn: ({ pageParam  }) => fetchFn({ pageParam }),
+export function useInfinitePosts({ queryKey, fetchFn, isUserPagePosts = false }: UseInfinitePostsProps) {
+  
+  //si isUserPagePosts es verdadero, la queryKey vendria a ser el userId.
+  const userId = isUserPagePosts ? queryKey : undefined;
+  return useSuspenseInfiniteQuery({
+    queryKey: isUserPagePosts 
+      ?[PostFeedType.POST_FEED,QueryKeys.USER_POSTS,userId]
+      :[PostFeedType.POST_FEED,queryKey],
+    queryFn: ({ pageParam  }) => 
+      isUserPagePosts
+    ?fetchFn({ pageParam, userId })
+    :fetchFn({ pageParam }),
+      
     initialPageParam: null as string | null,
     getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
-    staleTime: Infinity,
-    gcTime: 1000 * 60 * 60 * 24,
+    staleTime: 5 * 60 * 1000, // 5 minutos
+    gcTime: 30 * 60 * 1000,   // 30 minutos
     refetchOnWindowFocus: false,
     retry: 2,
+    maxPages: 10,
   });
 }

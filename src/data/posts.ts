@@ -1,15 +1,16 @@
-import { CommentsPage, PostsPage } from "@/types/Post";
+import { CommentsPage, FetchPostsFunction, PostsPage } from "@/types/Post";
 import axios from "axios";
+import instance from "@/lib/axios";
 
-export const getPostsForYou = async ({
+
+
+export const getPostsForYou: FetchPostsFunction = async ({
   pageParam = null,
-}: {
-  pageParam?: string | number | null | undefined;
-}) => {
+}) =>  {
   try {
    
 
-    const response = await axios.get<PostsPage>(
+    const response = await instance.get<PostsPage>(
       `/api/posts/for-you${pageParam ? `?cursor=${pageParam}` : ""}`
     );
 
@@ -45,15 +46,13 @@ export const getPostsForYou = async ({
   }
 };
 
-export const getPostsFollowing = async ({
-  pageParam = null,
-}: {
-  pageParam?: string | number | null | undefined;
+export const getPostsFollowing:FetchPostsFunction = async ({
+  pageParam = null
 }) => {
   try {
    
 
-    const response = await axios.get<PostsPage>(
+    const response = await instance.get<PostsPage>(
       `/api/posts/following${pageParam ? `?cursor=${pageParam}` : ""}`
     );
 
@@ -96,9 +95,9 @@ export const getComments = async ({
 }: {
   pageParam?: string | number | null | undefined;
   postId?: string | null | undefined;
-}) => {
+}):Promise<CommentsPage> => {
   try {
-    const response = await axios.get<CommentsPage>(
+    const response = await instance.get<CommentsPage>(
       `/api/posts/${postId}/comments${pageParam ? `?cursor=${pageParam}` : ""}`
     );
 
@@ -134,12 +133,9 @@ export const getComments = async ({
   }
 };
 
-export const getUserPosts = async ({
+export const getUserPosts:FetchPostsFunction = async ({
   pageParam = null,
   userId
-}: {
-  pageParam?: string | number | null | undefined;
-  userId: string
 }) => {
   try {
     if(!userId ){
@@ -147,7 +143,7 @@ export const getUserPosts = async ({
     }
 
 
-    const response = await axios.get<PostsPage>(
+    const response = await instance.get<PostsPage>(
       `/api/user/${userId}/posts${pageParam ? `?cursor=${pageParam}` : ""}`
     );
 
