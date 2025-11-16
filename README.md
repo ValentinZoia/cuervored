@@ -19,6 +19,41 @@
 ### The Challenge
 ## ⚡ Highlights
 ## 👁️ Pages Preview
+
+### '/auth/login'
+<img src='/public/readme-images/login.png' >
+
+### '/auth/register'
+<img src='/public/readme-images/register.png' >
+
+### '/'
+<img src='/public/readme-images/home.png' >
+
+### '/' - Post Modal
+<img src='/public/readme-images/post-modal.png' >
+
+### '/:username' - My profile
+<img src='/public/readme-images/perfil.png' >
+
+### '/:username' - Edit Profile
+<img src='/public/readme-images/editar-perfil.png' >
+
+
+### '/:username' - Other profile
+<img src='/public/readme-images/perfil-de-otro.png' >
+
+### '/matches'
+<img src='/public/readme-images/matches.png' >
+
+### '/settings'
+<img src='/public/readme-images/config.png' >
+
+### '/match-attendance/:matchId'
+<img src='/public/readme-images/quienes-van.png' >
+
+### '/search?q=:query'
+<img src='/public/readme-images/search.png' >
+
 ## 🏗️ Architecture
 ## 🛠️ Technology Stack
 ## ⭐ Features
