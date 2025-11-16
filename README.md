@@ -6,7 +6,7 @@
  
 <!-- <img src='/public/CuervoRed-LOGO-192x192.png'  width='60px' > -->
 
-# ❤️🩵 Cuervored | Social Network
+# 🩵❤️ Cuervored | Social Network
 > hola
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178c6?logo=typescript)](https://www.typescriptlang.org/)
