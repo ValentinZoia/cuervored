@@ -16,6 +16,6 @@
     "public/readme-images/search.png",
    
   ],
-  "tags": ["javascript", "react", "vite", "zustand", "tailwind"],
+  "tags": ["nextjs", "react-query", "prisma", "mongodb"],
   "published": true
 } 
