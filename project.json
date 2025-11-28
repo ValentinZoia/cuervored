@@ -13,7 +13,7 @@
     "public/readme-images/matches.png",
     "public/readme-images/config.png",
     "public/readme-images/quienes-van.png",
-    "public/readme-images/search.png",
+    "public/readme-images/search.png"
    
   ],
   "tags": ["nextjs", "react-query", "prisma", "mongodb"],
