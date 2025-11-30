@@ -3,6 +3,7 @@
   "description": "A dedicated social network for fans of San Lorenzo de Almagro",
   "preview": "public/readme-images/miniatura-cuervored.png",
   "screenshots": [
+    "public/readme-images/miniatura-cuervored.png",
     "public/readme-images/login.png",
     "public/readme-images/register.png",
     "public/readme-images/home.png",
