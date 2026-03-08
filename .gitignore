@@ -36,3 +36,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 next-auth.d.ts
+
+# prisma
+/generated
+
+#script
+/scripts/scrape-matches.ts
