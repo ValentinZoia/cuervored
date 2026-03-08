@@ -1,4 +1,3 @@
-
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -6,9 +5,9 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  previewFeatures = ["interactiveTransactions"]
-  log             = ["query"]
+  provider = "prisma-client"
+  log      = ["query"]
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -16,37 +15,32 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 enum UserRole {
   ADMIN
   USER
 }
 
 model User {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
-  name              String? @unique
-  fullName          String? 
+  id                String            @id @default(auto()) @map("_id") @db.ObjectId
+  name              String?           @unique
+  fullName          String?
   bio               String?
-  email             String @unique
+  email             String            @unique
   emailVerified     DateTime?
-  password          String? 
-  role              UserRole @default(USER)
+  password          String?
+  role              UserRole          @default(USER)
   image             String?
   image_100         String?
   provider          String?
   accounts          Account[]
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
   post              Post[]
-  following         Follow[]       @relation("Following")
-  followers         Follow[]       @relation("Followers")
+  following         Follow[]          @relation("Following")
+  followers         Follow[]          @relation("Followers")
   comments          Comment[]
   likes             Like[]
   matchesAttendance MatchAttendance[]
-
-
-  
 }
 
 model Account {
@@ -62,93 +56,81 @@ model Account {
   scope             String?
   id_token          String? @db.String
   session_state     String?
- 
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
- 
-  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@unique([provider, providerAccountId])
 }
 
 model Follow {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
   followerId  String
-  follower    User @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
+  follower    User   @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
   followingId String
-  following   User @relation("Followers", fields: [followingId], references: [id], onDelete: Cascade)
+  following   User   @relation("Followers", fields: [followingId], references: [id], onDelete: Cascade)
 
   @@unique([followerId, followingId])
 }
 
-
-
-
-
-
 model Post {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   content   String?
   image     String?
-  userId    String  @db.ObjectId
-  createdAt DateTime @default(now())
+  userId    String    @db.ObjectId
+  createdAt DateTime  @default(now())
   likes     Like[]
   comments  Comment[]
 
   //Relación Inversa con los comentarios
-  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Comment {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  postId    String  @db.ObjectId
-  userId    String  @db.ObjectId
-  content  String
-  createdAt DateTime  @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  postId    String   @db.ObjectId
+  userId    String   @db.ObjectId
+  content   String
+  createdAt DateTime @default(now())
 
   //Relación inversa con el modelo Post
-  post      Post  @relation(fields: [postId], references: [id], onDelete:Cascade)
-  user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Like {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
   userId String @db.ObjectId
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   postId String @db.ObjectId
-  post   Post  @relation(fields: [postId], references: [id], onDelete:Cascade)
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@unique([userId, postId])
-  
 }
 
-
-
 model MatchAttendance {
-  id                String @id @default(auto()) @map("_id") @db.ObjectId
-  
-  userId            String @db.ObjectId
-  user              User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id String @id @default(auto()) @map("_id") @db.ObjectId
 
-  matchId           String
-  matchDate         DateTime
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  matchId   String
+  matchDate DateTime
   createdAt DateTime @default(now())
-  status            String   @default("confirmed")
-  expiresAt         DateTime
+  status    String   @default("confirmed")
+  expiresAt DateTime
 
   @@unique([userId, matchId])
   @@index([expiresAt])
 }
 
-model Match{
-  id            String @id @default(auto()) @map("_id") @db.ObjectId
-  customId      String @unique
+model Match {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  customId      String   @unique
   date          String?
   homeOrAway    String?
   opponent      String?
