@@ -2,31 +2,26 @@
 WEB SCRAPING
 */
 
-
-
-
-
 import { NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/lib/prisma";
-import { AllMatchesData, MatchesData, ResponseMatchesData } from "@/types/Match";
+import {
+    AllMatchesData,
+    MatchesData,
+    ResponseMatchesData,
+} from "@/types/Match";
 
+// import chromium from "@sparticuz/chromium-min";
+// import puppeteer from "puppeteer-core";
 
-  // import chromium from "@sparticuz/chromium-min";
-  // import puppeteer from "puppeteer-core";
-  // import { BasicMatchData } from "@/types/Match";
-  // import { Match } from "@prisma/client";
-  // chromium.setGraphicsMode = false;
-
-
-
+// import { Match } from "@prisma/client";
+// chromium.setGraphicsMode = false;
 
 // export async function GET(req: NextRequest) {
 //   try {
-   
+
 //     const isLocal = !!process.env.CHROME_EXECUTABLE_PATH;
-    
-    
+
 //     // Configure browser
 //     const browser = await puppeteer.launch({
 //       args: isLocal ? puppeteer.defaultArgs() : chromium.args,
@@ -34,8 +29,6 @@ import { AllMatchesData, MatchesData, ResponseMatchesData } from "@/types/Match"
 //     executablePath: process.env.CHROME_EXECUTABLE_PATH || await chromium.executablePath('https://<Bucket Name>.s3.amazonaws.com/chromium-v126.0.0-pack.tar'),
 //     headless: chromium.headless,
 //     });
-    
-    
 
 //     // Create new page
 //     const page = await browser.newPage();
@@ -88,7 +81,7 @@ import { AllMatchesData, MatchesData, ResponseMatchesData } from "@/types/Match"
 //               const cells = row.querySelectorAll("td");
 
 //               return {
-//                 id: `${cells[0]?.textContent
+//                 customId: `${cells[0]?.textContent
 //                   ?.trim()
 //                   .replace(
 //                     "/",
@@ -104,7 +97,8 @@ import { AllMatchesData, MatchesData, ResponseMatchesData } from "@/types/Match"
 //                   ?.getAttribute("src")
 //                   ?.trim()}`,
 //                 time: cells[3]?.textContent?.trim(),
-//                 isPastMatches: false,
+//                   isPastMatches: false,
+
 //               };
 //             })
 //           )
@@ -128,7 +122,7 @@ import { AllMatchesData, MatchesData, ResponseMatchesData } from "@/types/Match"
 //               const cells = row.querySelectorAll("td");
 
 //               return {
-//                 id: `${cells[0]?.textContent
+//                 customId: `${cells[0]?.textContent
 //                   ?.trim()
 //                   .replace(
 //                     "/",
@@ -165,8 +159,8 @@ import { AllMatchesData, MatchesData, ResponseMatchesData } from "@/types/Match"
 //     for(const match of AllMatches){
 //       try {
 //         const savedMatch = await prisma.match.upsert({
-//           where: { 
-//             customId:match.id 
+//           where: {
+//             customId:match.customId
 //           },
 //           update: {
 //             date: match.date,
@@ -178,7 +172,7 @@ import { AllMatchesData, MatchesData, ResponseMatchesData } from "@/types/Match"
 //             time: match.time,
 //           },
 //           create: {
-//             customId: match.id,
+//             customId: match.customId,
 //             date: match.date,
 //             homeOrAway: match.homeOrAway,
 //             opponent: match.opponent,
@@ -194,7 +188,6 @@ import { AllMatchesData, MatchesData, ResponseMatchesData } from "@/types/Match"
 //       }
 //     }
 
-
 //     // Fetch all matches from database for response
 //     const dbLastMatches = await prisma.match.findMany({
 //       where: { isPastMatches: true },
@@ -209,9 +202,6 @@ import { AllMatchesData, MatchesData, ResponseMatchesData } from "@/types/Match"
 //     // Create filtered slices
 //     const UpcomingMatchesSlice = dbUpcomingMatches.slice(0, 3);
 //     const LastMatchesSlice = dbLastMatches.slice(0, 3).reverse();
-
-
-    
 
 //     return NextResponse.json({
 //       AllMatches: {
@@ -232,43 +222,41 @@ import { AllMatchesData, MatchesData, ResponseMatchesData } from "@/types/Match"
 //   }
 // }
 
-
 export async function GET(request: NextRequest) {
-  try {
-    // Fetch all matches from database for response
-    const dbLastMatches = await prisma.match.findMany({
-      where: { isPastMatches: true },
-      orderBy: { createdAt: 'desc' }
-    });
+    try {
+        // Fetch all matches from database for response
+        const dbLastMatches = await prisma.match.findMany({
+            where: { isPastMatches: true },
+            orderBy: { createdAt: "desc" },
+        });
 
-    const dbUpcomingMatches = await prisma.match.findMany({
-      where: { isPastMatches: false },
-      orderBy: { createdAt: 'asc' }
-    });
+        const dbUpcomingMatches = await prisma.match.findMany({
+            where: { isPastMatches: false },
+            orderBy: { createdAt: "asc" },
+        });
 
-    // Create filtered slices
-    const UpcomingMatchesSlice = dbUpcomingMatches.slice(0, 3);
-    const LastMatchesSlice = dbLastMatches.slice(0, 3).reverse();
+        // Create filtered slices
+        const UpcomingMatchesSlice = dbUpcomingMatches.slice(0, 3);
+        const LastMatchesSlice = dbLastMatches.slice(0, 3).reverse();
 
-    const dataResponse: ResponseMatchesData ={
-      AllMatches: {
-        LastMatches: dbLastMatches,
-        UpcomingMatches: dbUpcomingMatches,
-      },
-      matchesFiltered: {
-        LastMatches: LastMatchesSlice,
-        UpcomingMatches: UpcomingMatchesSlice,
-      },
+        const dataResponse: ResponseMatchesData = {
+            AllMatches: {
+                LastMatches: dbLastMatches,
+                UpcomingMatches: dbUpcomingMatches,
+            },
+            matchesFiltered: {
+                LastMatches: LastMatchesSlice,
+                UpcomingMatches: UpcomingMatchesSlice,
+            },
+        };
+
+        return NextResponse.json(dataResponse);
+    } catch (error) {
+        return NextResponse.json({
+            error: "Error al obtener los datos",
+            status: 500,
+        });
+    } finally {
+        await prisma.$disconnect();
     }
-    
-
-    return NextResponse.json(dataResponse);
-  } catch (error) {
-    return NextResponse.json({ 
-      error: "Error al obtener los datos", 
-      status: 500 
-    });
-  } finally{
-    await prisma.$disconnect();
-  }
 }
