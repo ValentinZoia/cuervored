@@ -42,3 +42,7 @@ next-auth.d.ts
 
 #script
 /scripts/scrape-matches.ts
+
+/src/generated/prisma
+
+/generated/prisma

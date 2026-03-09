@@ -1,3 +1,4 @@
+"use server";
 /**
  * Script de scraping para obtener partidos de San Lorenzo
  * Uso: npx tsx scripts/scrape-matches.ts
@@ -29,8 +30,8 @@ async function scrapeMatches() {
     const browser = await puppeteer.launch({
         args: isLocal ? puppeteer.defaultArgs() : chromium.args,
         defaultViewport: chromium.defaultViewport,
-        executablePath: isLocal 
-            ? process.env.CHROME_EXECUTABLE_PATH 
+        executablePath: isLocal
+            ? process.env.CHROME_EXECUTABLE_PATH
             : await chromium.executablePath(),
         headless: chromium.headless,
     });

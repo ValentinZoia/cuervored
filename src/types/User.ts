@@ -1,59 +1,48 @@
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@/generated/prisma/client";
 
-
-
-
-  export function getUserDataSelect(loggedInUserId: string) {
-    return{
-      id:true,
-      name: true,
-      fullName: true,
-      bio: true,
-      image:true,
-      image_100:true,
-      createdAt: true,
-      followers:{
-        
-        select:{
-          followerId:true,
-          
+export function getUserDataSelect(loggedInUserId: string) {
+    return {
+        id: true,
+        name: true,
+        fullName: true,
+        bio: true,
+        image: true,
+        image_100: true,
+        createdAt: true,
+        followers: {
+            select: {
+                followerId: true,
+            },
         },
-      },
-      following: {
-        select: {
-          followingId: true,
+        following: {
+            select: {
+                followingId: true,
+            },
         },
-      },
-      _count: {
-        select: {
-          post: true,
-          followers: true,
-          following:true,
-
-          
+        _count: {
+            select: {
+                post: true,
+                followers: true,
+                following: true,
+            },
         },
-      },
-      matchesAttendance:{
-        select:{
-          matchId:true
-        }
-      },
-
-      
-      
+        matchesAttendance: {
+            select: {
+                matchId: true,
+            },
+        },
     } satisfies Prisma.UserSelect;
-  }
+}
 
-  export type UserData = Prisma.UserGetPayload<{
+export type UserData = Prisma.UserGetPayload<{
     select: ReturnType<typeof getUserDataSelect>;
-  }>;
+}>;
 
-
-  export interface UserPage {
+export interface UserPage {
     users: UserData[];
     nextCursor: string | null;
-  }
+}
 
-  export interface UserMatchAttendanceInfo{
-    isUserAttendingMatch:boolean;
-  }
+export interface UserMatchAttendanceInfo {
+    isUserAttendingMatch: boolean;
+}

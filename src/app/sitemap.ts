@@ -20,51 +20,49 @@ Acelera la indexación de nuevo contenido
 */
 
 import { getAllUsers } from "@/data/user";
-import { User } from "@prisma/client";
+import { User } from "../../generated/prisma/client";
 import { MetadataRoute } from "next";
 
-const BASE_URL = process.env.NEXT_PUBLIC_URL ;
+const BASE_URL = process.env.NEXT_PUBLIC_URL;
 
 const STATIC_ROUTES = [
-  "/auth/login",
-  "/auth/register",
-  "/",
-  "/search",
-  "/matches",
-  "/settings",
+    "/auth/login",
+    "/auth/register",
+    "/",
+    "/search",
+    "/matches",
+    "/settings",
 ] as const;
 
 type SitemapEntry = {
-  url: string;
-  lastModified: Date;
-  changeFrequency?: "daily" | "yearly";
-  priority: number;
+    url: string;
+    lastModified: Date;
+    changeFrequency?: "daily" | "yearly";
+    priority: number;
 };
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Get all users in parallel with static route processing
-  const usersPromise = await getAllUsers();
+    // Get all users in parallel with static route processing
+    const usersPromise = await getAllUsers();
 
-  // Generate static routes while waiting for users
-  const staticEntries: SitemapEntry[] = STATIC_ROUTES.map((route) => ({
-    url: `${BASE_URL}${route}`,
-    lastModified: new Date(),
-    changeFrequency: "yearly",
-    priority: 0.5,
-  }));
+    // Generate static routes while waiting for users
+    const staticEntries: SitemapEntry[] = STATIC_ROUTES.map((route) => ({
+        url: `${BASE_URL}${route}`,
+        lastModified: new Date(),
+        changeFrequency: "yearly",
+        priority: 0.5,
+    }));
 
-  // Process user routes once data is available
-  const users = await usersPromise;
-  const userEntries: SitemapEntry[] = users.map(
-    ({ name, createdAt }: User) => ({
-      url: `${BASE_URL}/${name}`,
-      lastModified: new Date(createdAt),
-      changeFrequency: "daily",
-      priority: 0.8,
-    })
-  );
+    // Process user routes once data is available
+    const users = await usersPromise;
+    const userEntries: SitemapEntry[] = users.map(
+        ({ name, createdAt }: User) => ({
+            url: `${BASE_URL}/${name}`,
+            lastModified: new Date(createdAt),
+            changeFrequency: "daily",
+            priority: 0.8,
+        }),
+    );
 
-  
-
-  return [...staticEntries, ...userEntries];
+    return [...staticEntries, ...userEntries];
 }
