@@ -25,23 +25,6 @@ const nextConfig = {
             },
         ],
     },
-    webpack: (config, { isServer }) => {
-        if (isServer) {
-            // Externalize any module that mentions prisma
-            config.externals.push(({ context, request }, callback) => {
-                if (
-                    request.includes('prisma') ||
-                    request.includes('generated/prisma') ||
-                    context?.includes('generated/prisma') ||
-                    context?.includes('@prisma')
-                ) {
-                    return callback(null, 'commonjs ' + request);
-                }
-                callback();
-            });
-        }
-        return config;
-    },
 };
 
 export default nextConfig;
