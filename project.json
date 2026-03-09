@@ -1,0 +1,22 @@
+{
+  "title": "🩵❤️ Cuervored | Social Network",
+  "description": "A dedicated social network for fans of San Lorenzo de Almagro",
+  "preview": "public/readme-images/miniatura-cuervored.png",
+  "screenshots": [
+    "public/readme-images/miniatura-cuervored.png",
+    "public/readme-images/login.png",
+    "public/readme-images/register.png",
+    "public/readme-images/home.png",
+    "public/readme-images/post-modal.png",
+    "public/readme-images/perfil.png",
+    "public/readme-images/editar-perfil.png",
+    "public/readme-images/perfil-de-otro.png",
+    "public/readme-images/matches.png",
+    "public/readme-images/config.png",
+    "public/readme-images/quienes-van.png",
+    "public/readme-images/search.png"
+   
+  ],
+  "tags": ["nextjs", "react-query", "prisma", "mongodb"],
+  "published": true
+} 
