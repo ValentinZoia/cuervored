@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MatchAttendanceButton } from "./MatchAttendanceButton";
 import { UserData } from "@/types/User";
-import { MatchAttendance } from "../../../generated/prisma/client";
+import { MatchAttendance } from "@/generated/prisma/client";
 
 export default function MatchesCard({
     title,
@@ -122,17 +122,15 @@ export default function MatchesCard({
                                             </CaslaButton>
                                         ) : (
                                             <>
-<MatchAttendanceButton
+                                                <MatchAttendanceButton
                                                     loggedInUserId={user.id}
                                                     matchId={match.customId}
                                                     initialState={{
                                                         isUserAttendingMatch:
                                                             user.matchesAttendance.some(
-                                                                (
-                                                                    attendance,
-                                                                ) =>
+                                                                (attendance) =>
                                                                     attendance.matchId ===
-                                                                    match.customId
+                                                                    match.customId,
                                                             ),
                                                     }}
                                                 />

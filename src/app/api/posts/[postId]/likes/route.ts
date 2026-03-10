@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { getLikeDataInclude, LikeInfo } from "@/types/Post";
-import { Prisma } from "../../../../../../generated/prisma/client";
+import { Prisma } from "@/generated/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(

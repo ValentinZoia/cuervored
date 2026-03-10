@@ -1,4 +1,4 @@
-import { Match } from "../../generated/prisma/client";
+import { Match } from "@/generated/prisma/client";
 
 export interface MatchesData {
     matchesFiltered: {
