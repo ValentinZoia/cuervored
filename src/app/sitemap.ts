@@ -20,7 +20,7 @@ Acelera la indexación de nuevo contenido
 */
 
 import { getAllUsers } from "@/data/user";
-import { User } from "@/generated/prisma/client";
+import { User } from "@prisma/client";
 import { MetadataRoute } from "next";
 
 const BASE_URL = process.env.NEXT_PUBLIC_URL;

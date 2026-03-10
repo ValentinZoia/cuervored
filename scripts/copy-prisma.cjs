@@ -2,15 +2,26 @@ const fs = require('fs');
 const path = require('path');
 
 const rootDir = path.join(__dirname, '..');
-const srcDir = path.join(rootDir, 'src/generated/prisma');
+const nodeModulesPrisma = path.join(rootDir, 'node_modules/.prisma/client');
 const destDir = path.join(rootDir, '.prisma/client');
 
-console.log('=== Copy Prisma Script ===');
-console.log('Root dir:', rootDir);
-console.log('Source dir:', srcDir);
-console.log('Dest dir:', destDir);
-console.log('Source exists:', fs.existsSync(srcDir));
+console.log('=== Copy Prisma Engine ===');
+console.log('Source:', nodeModulesPrisma);
+console.log('Dest:', destDir);
 
+// Create .prisma/client if it doesn't exist
+if (!fs.existsSync(destDir)) {
+    fs.mkdirSync(destDir, { recursive: true });
+}
+
+// Check if source exists
+if (!fs.existsSync(nodeModulesPrisma)) {
+    console.log('Source not found, running prisma generate...');
+    // The postinstall will run prisma generate first
+    process.exit(0);
+}
+
+// Copy all files from node_modules/.prisma/client to .prisma/client
 function copyRecursive(src, dest) {
     const exists = fs.existsSync(src);
     const stats = exists && fs.statSync(src);
@@ -28,16 +39,9 @@ function copyRecursive(src, dest) {
     }
 }
 
-// Create .prisma/client if it doesn't exist
-if (!fs.existsSync(destDir)) {
-    fs.mkdirSync(destDir, { recursive: true });
-}
-
-// Copy all files from src/generated/prisma to .prisma/client
-copyRecursive(srcDir, destDir);
+copyRecursive(nodeModulesPrisma, destDir);
 
 // Verify
 const engineFiles = fs.readdirSync(destDir).filter(f => f.includes('libquery_engine'));
-console.log('Engine files copied:', engineFiles);
-
-console.log('Done copying Prisma client files');
+console.log('Engine files:', engineFiles);
+console.log('Done!');
