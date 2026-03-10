@@ -3,40 +3,30 @@ const path = require('path');
 
 const rootDir = path.join(__dirname, '..');
 const nodeModulesPrisma = path.join(rootDir, 'node_modules/.prisma/client');
-const prismaClientDir = path.join(rootDir, 'node_modules/@prisma/client');
+const destDir = path.join(rootDir, '.prisma/client');
 
 console.log('=== Copy Prisma Engine ===');
 console.log('Source:', nodeModulesPrisma);
-console.log('Dest:', prismaClientDir);
+console.log('Dest:', destDir);
 
-// Check if source exists
-if (!fs.existsSync(nodeModulesPrisma)) {
-    console.log('Source not found, running prisma generate first');
-    process.exit(0);
-}
-
-// Copy engine files to @prisma/client
-const engineFiles = fs.readdirSync(nodeModulesPrisma).filter(f => f.includes('libquery_engine'));
-console.log('Engine files found:', engineFiles);
-
-engineFiles.forEach(file => {
-    const src = path.join(nodeModulesPrisma, file);
-    const dest = path.join(prismaClientDir, file);
-    fs.copyFileSync(src, dest);
-    console.log('Copied:', file);
-});
-
-// Also ensure .prisma/client exists (for runtime)
-const destDir = path.join(rootDir, '.prisma/client');
+// Create destination directory
 if (!fs.existsSync(destDir)) {
     fs.mkdirSync(destDir, { recursive: true });
 }
 
-// Copy everything to .prisma/client for runtime
+// Check if source exists
+if (!fs.existsSync(nodeModulesPrisma)) {
+    console.log('ERROR: Source not found! Prisma generate may have failed.');
+    process.exit(1);
+}
+
+// Copy everything recursively
 function copyRecursive(src, dest) {
     const exists = fs.existsSync(src);
-    const stats = exists && fs.statSync(src);
-    const isDirectory = exists && stats.isDirectory();
+    if (!exists) return;
+    
+    const stats = fs.statSync(src);
+    const isDirectory = stats.isDirectory();
 
     if (isDirectory) {
         if (!fs.existsSync(dest)) {
@@ -52,6 +42,7 @@ function copyRecursive(src, dest) {
 
 copyRecursive(nodeModulesPrisma, destDir);
 
-const finalEngines = fs.readdirSync(prismaClientDir).filter(f => f.includes('libquery_engine'));
-console.log('Engines in @prisma/client:', finalEngines);
+// Verify
+const engineFiles = fs.readdirSync(destDir).filter(f => f.includes('libquery_engine'));
+console.log('Engine files in .prisma/client:', engineFiles);
 console.log('Done!');
