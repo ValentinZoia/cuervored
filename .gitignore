@@ -38,11 +38,11 @@ next-env.d.ts
 next-auth.d.ts
 
 # prisma
-/generated
+# /generated
 
 #script
 /scripts/scrape-matches.ts
 
-/src/generated/prisma
-
-/generated/prisma
+# generated/prisma - needed for production build
+# /src/generated/prisma
+# /generated/prisma
