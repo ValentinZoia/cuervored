@@ -1,6 +1,6 @@
 // src/types/Post.ts
 
-import { Prisma } from "../../generated/prisma/client";
+import { Prisma } from "@/generated/prisma/client";
 import { getUserDataSelect, UserData } from "./User";
 
 export function getPostDataInclude(loggedInUserId: string) {

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getPostDataInclude, PostsPage } from "@/types/Post";
 import { auth } from "@/auth";
-import { Follow, Prisma } from "../../../../../generated/prisma/client";
+import { Follow, Prisma } from "@/generated/prisma/client";
 import { getUserByUsername } from "@/data/user";
 
 export async function GET(req: NextRequest) {
