@@ -39,7 +39,7 @@ next-auth.d.ts
 
 # prisma
 # /generated
-.prisma
+# .prisma  <-- commented to include in repo for Vercel
 
 #script
 /scripts/scrape-matches.ts

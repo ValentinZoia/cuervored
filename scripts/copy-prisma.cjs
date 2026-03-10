@@ -3,25 +3,36 @@ const path = require('path');
 
 const rootDir = path.join(__dirname, '..');
 const nodeModulesPrisma = path.join(rootDir, 'node_modules/.prisma/client');
-const destDir = path.join(rootDir, '.prisma/client');
+const prismaClientDir = path.join(rootDir, 'node_modules/@prisma/client');
 
 console.log('=== Copy Prisma Engine ===');
 console.log('Source:', nodeModulesPrisma);
-console.log('Dest:', destDir);
+console.log('Dest:', prismaClientDir);
 
-// Create .prisma/client if it doesn't exist
+// Check if source exists
+if (!fs.existsSync(nodeModulesPrisma)) {
+    console.log('Source not found, running prisma generate first');
+    process.exit(0);
+}
+
+// Copy engine files to @prisma/client
+const engineFiles = fs.readdirSync(nodeModulesPrisma).filter(f => f.includes('libquery_engine'));
+console.log('Engine files found:', engineFiles);
+
+engineFiles.forEach(file => {
+    const src = path.join(nodeModulesPrisma, file);
+    const dest = path.join(prismaClientDir, file);
+    fs.copyFileSync(src, dest);
+    console.log('Copied:', file);
+});
+
+// Also ensure .prisma/client exists (for runtime)
+const destDir = path.join(rootDir, '.prisma/client');
 if (!fs.existsSync(destDir)) {
     fs.mkdirSync(destDir, { recursive: true });
 }
 
-// Check if source exists
-if (!fs.existsSync(nodeModulesPrisma)) {
-    console.log('Source not found, running prisma generate...');
-    // The postinstall will run prisma generate first
-    process.exit(0);
-}
-
-// Copy all files from node_modules/.prisma/client to .prisma/client
+// Copy everything to .prisma/client for runtime
 function copyRecursive(src, dest) {
     const exists = fs.existsSync(src);
     const stats = exists && fs.statSync(src);
@@ -41,7 +52,6 @@ function copyRecursive(src, dest) {
 
 copyRecursive(nodeModulesPrisma, destDir);
 
-// Verify
-const engineFiles = fs.readdirSync(destDir).filter(f => f.includes('libquery_engine'));
-console.log('Engine files:', engineFiles);
+const finalEngines = fs.readdirSync(prismaClientDir).filter(f => f.includes('libquery_engine'));
+console.log('Engines in @prisma/client:', finalEngines);
 console.log('Done!');
