@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getPostDataInclude, PostsPage } from "@/types/Post";
 import { auth } from "@/auth";
-import { Prisma } from "@/generated/prisma/client";
+import { Prisma } from "@prisma/client";
 
 export async function GET(
     req: NextRequest,

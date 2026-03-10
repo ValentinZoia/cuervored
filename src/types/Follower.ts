@@ -1,4 +1,4 @@
-import { Prisma } from "@/generated/prisma/client";
+import { Prisma } from "@prisma/client";
 import { getUserDataSelect } from "./User";
 
 export function getFollowerDataInclude(loggedInUserId: string) {

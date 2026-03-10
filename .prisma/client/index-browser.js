@@ -12,7 +12,7 @@ const {
   Public,
   getRuntime,
   skip
-} = require('./runtime/index-browser.js')
+} = require('@prisma/client/runtime/index-browser.js')
 
 
 const Prisma = {}

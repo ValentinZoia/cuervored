@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { MatchAttendanceButton } from "./MatchAttendanceButton";
 import { UserData } from "@/types/User";
-import { MatchAttendance } from "@/generated/prisma/client";
+import { MatchAttendance } from "@prisma/client";
 
 export default function MatchesCard({
     title,
