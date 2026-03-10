@@ -84,9 +84,10 @@ export async function GET(
             );
         }
 
-        // Error genérico para casos no manejados
+        // SECURITY: Never expose internal error details
+        console.error("[LIKES_GET_ERROR]", error);
         return NextResponse.json(
-            { error: "Server error: " + (error.message || "Unknown error") },
+            { error: "Internal server error" },
             { status: 500 },
         );
     }
@@ -193,9 +194,10 @@ export async function POST(
             );
         }
 
-        // Error genérico para casos no manejados
+        // SECURITY: Never expose internal error details
+        console.error("[LIKES_POST_ERROR]", error);
         return NextResponse.json(
-            { error: "Server error: " + (error.message || "Unknown error") },
+            { error: "Internal server error" },
             { status: 500 },
         );
     }

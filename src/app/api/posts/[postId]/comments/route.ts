@@ -84,9 +84,10 @@ export async function GET(
             );
         }
 
-        // Error genérico para casos no manejados
+        // SECURITY: Never expose internal error details
+        console.error("[COMMENTS_GET_ERROR]", error);
         return NextResponse.json(
-            { error: "Server error: " + (error.message || "Unknown error") },
+            { error: "Internal server error" },
             { status: 500 },
         );
     }
