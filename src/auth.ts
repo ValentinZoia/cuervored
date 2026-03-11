@@ -10,6 +10,12 @@ import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
 
+export const ERRORS = {
+    CredentialError: "CredentialErrors",
+    UserNotFoundError: "UserNotFoundError",
+    GenericError: "GenericError",
+} as const;
+
 // Extendemos el tipo Session de NextAuth para incluir nuestros tokens personalizados
 declare module "next-auth" {
     interface Session {
@@ -63,7 +69,8 @@ export const authOptions = {
                 });
 
                 if (!user) {
-                    throw new Error("Email o contraseña incorrectos.");
+                    // SECURITY: Use generic message to prevent user enumeration
+                    throw new Error(ERRORS.CredentialError);
                 }
 
                 // Si el usuario se registró con OAuth, no permitir login con password
@@ -78,7 +85,8 @@ export const authOptions = {
                 );
 
                 if (!isPasswordCorrect) {
-                    throw new Error("La contraseña no es correcta.");
+                    // SECURITY: Use generic message (same as user not found) to prevent enumeration
+                    throw new Error(ERRORS.CredentialError);
                 }
 
                 // Retornar datos básicos del usuario
